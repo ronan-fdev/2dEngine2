@@ -77,7 +77,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -96,7 +96,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -115,7 +115,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -150,28 +150,40 @@
   <ItemGroup>
     <ClCompile Include="ENGINE\INPUT\KeyListener.cpp" />
     <ClCompile Include="ENGINE\INPUT\MouseListener.cpp" />
+    <ClCompile Include="ENGINE\RENDERER\CORE\Camera2D.cpp" />
     <ClCompile Include="ENGINE\RENDERER\SHADER\Shader.cpp" />
     <ClCompile Include="ENGINE\RENDERER\TEXTURE\Texture.cpp" />
     <ClCompile Include="ENGINE\SRC\main.cpp" />
     <ClCompile Include="ENGINE\UTILITIES\Time.cpp" />
     <ClCompile Include="ENGINE\WINDOW\Window.cpp" />
     <ClCompile Include="ENGINE\LOGGER\log.cpp" />
+    <ClCompile Include="ENGINE\ECS\Registry.cpp" />
+    <ClCompile Include="ENGINE\ECS\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
     <None Include="ASSETS\SHADER\shader.frag" />
     <None Include="ASSETS\SHADER\shader.vert" />
+    <None Include="ENGINE\ECS\Entity.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\Identification.h" />
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\SpriteComponent.h" />
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\TransformComponent.h" />
     <ClInclude Include="ENGINE\INPUT\KeyListener.h" />
     <ClInclude Include="ENGINE\INPUT\MouseListener.h" />
+    <ClInclude Include="ENGINE\RENDERER\CORE\Camera2D.h" />
     <ClInclude Include="ENGINE\RENDERER\ESSENTIALS\Vertex.h" />
     <ClInclude Include="ENGINE\RENDERER\SHADER\Shader.h" />
+    <ClInclude Include="ENGINE\RENDERER\SHADER\ShaderLoader.h" />
     <ClInclude Include="ENGINE\RENDERER\TEXTURE\Texture.h" />
+    <ClInclude Include="ENGINE\RENDERER\TEXTURE\TextureLoader.h" />
     <ClInclude Include="ENGINE\UTILITIES\Time.h" />
     <ClInclude Include="ENGINE\WINDOW\Window.h" />
     <ClInclude Include="ENGINE\LOGGER\log.h" />
+    <ClInclude Include="ENGINE\ECS\Registry.h" />
+    <ClInclude Include="ENGINE\ECS\Entity.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -21,7 +21,7 @@ Texture::Texture(const char* filePath) : filePath(filePath)
 
     // load image, create texture and generate mipmaps
     int nrChannels;
-    stbi_set_flip_vertically_on_load(true);
+    //stbi_set_flip_vertically_on_load(true);
 
     unsigned char* data = stbi_load(filePath, &width, &height, &nrChannels, 0);
     if (data)

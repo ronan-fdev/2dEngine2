@@ -11,7 +11,7 @@ struct Color
 struct Vertex
 {
 	glm::vec2 position{ 0.0f };
-	glm::vec2 uv{ 0.0f };
+	glm::vec2 uvs{ 0.0f };
 	Color color{ .r = 225,.g = 225,.b = 225,.a = 225 };
 
 	void set_color(GLubyte r, GLubyte g, GLubyte b, GLubyte a)
