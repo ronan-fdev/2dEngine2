@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ENGINE\SRC\Application.cpp" />
     <ClCompile Include="ENGINE\RESOURCES\AssetManager.cpp" />
     <ClCompile Include="ENGINE\INPUT\KeyListener.cpp" />
     <ClCompile Include="ENGINE\INPUT\MouseListener.cpp" />
@@ -169,6 +170,7 @@
     <None Include="ENGINE\ECS\Entity.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ENGINE\SRC\Application.h" />
     <ClInclude Include="ENGINE\RESOURCES\AssetManager.h" />
     <ClInclude Include="ENGINE\ECS\COMPONENTS\Identification.h" />
     <ClInclude Include="ENGINE\ECS\COMPONENTS\SpriteComponent.h" />

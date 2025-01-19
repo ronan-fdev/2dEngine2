@@ -66,6 +66,9 @@ bool Window::init(unsigned int width, unsigned int height, const char* title) {
     //Setup of KeyListener:
     glfwSetKeyCallback(m_window, KeyListener::keyCallback);
 
+    // Set initial viewport
+    glViewport(0, 0, width, height);
+
     //Delta Time Initialization:
     beginTime = Time::getTime();
     endTime;
