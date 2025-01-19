@@ -2,8 +2,7 @@
 
 #include "../WINDOW/Window.h"
 #include "../LOGGER/log.h"
-#include "../RENDERER/TEXTURE/TextureLoader.h"
-#include "../RENDERER/SHADER/ShaderLoader.h"
+#include "../RESOURCES/AssetManager.h"
 #include "../RENDERER/CORE/Camera2D.h"
 #include "../RENDERER/ESSENTIALS/Vertex.h"
 #include "../ECS/Entity.h";
@@ -23,17 +22,24 @@ int main()
 
 	Window::init(640, 480, "2DENGINE");
 	
-
-	auto texture = TextureLoader::createTexture("ASSETS/IMAGES/spritesheet.png");
-	if (!texture)
+	auto assetManager = std::make_shared<AssetManager>();
+	if (!assetManager)
 	{
-		LOG_ERROR("Failed to create a texture!");
+		LOG_ERROR("Failed to create the asset manager");
 		return -1;
 	}
+
+	if (!assetManager->AddTexture("texture1", "ASSETS/IMAGES/spritesheet.png"))
+	{
+		LOG_ERROR("Failed to add texture!");
+		return -1;
+	}
+	auto texture = assetManager->GetTexture("texture1");
+
 	// Let's make some temporary UVs
 	UVs uVs{};
-	LOG_INFO("Loaded Texture: [width = {0}, height = {1}]", texture->getWidth(), texture->getHeight());
-	LOG_WARN("Loaded Texture: [width = {0}, height = {1}]", texture->getWidth(), texture->getHeight());
+	LOG_INFO("Loaded Texture: [width = {0}, height = {1}]", texture.getWidth(), texture.getHeight());
+	LOG_WARN("Loaded Texture: [width = {0}, height = {1}]", texture.getWidth(), texture.getHeight());
 
 	// Create a new entity -- for test
 	//auto ent1 = pRegistry->create();
@@ -59,7 +65,7 @@ int main()
 		}
 	);
 
-	sprite.generate_uvs(texture->getWidth(), texture->getHeight());
+	sprite.generate_uvs(texture.getWidth(), texture.getHeight());
 
 	std::vector<Vertex> vertices{};
 	Vertex vTL{}, vTR{}, vBL{}, vBR{};
@@ -148,13 +154,13 @@ int main()
 
 	glBindVertexArray(0);
 
-	auto shader = ShaderLoader::createShader("ASSETS/SHADER/shader.vert"
-		, "ASSETS/SHADER/shader.frag");
-	if (!shader)
+	if (!assetManager->AddShader("shader1", "ASSETS/SHADER/shader.vert"
+		, "ASSETS/SHADER/shader.frag"))
 	{
-		LOG_ERROR("Failed to create the shader!");
+		LOG_ERROR("Failed to add shader!");
 		return -1;
 	}
+	auto shader = assetManager->GetShader("shader1");
 
 	Camera2D camera{};
 	camera.SetScale(15.f);
@@ -165,21 +171,22 @@ int main()
 		Window::processInput();
 		if (Window::getdt() > 0.0f)
 		{
-			shader->use();
+			shader.use();
 			glBindVertexArray(VAO);
 			
 			auto projection = camera.GetCameraMatrix();
-			shader->setMat4("uProjection", projection);
+			shader.setMat4("uProjection", projection);
 
 			glActiveTexture(GL_TEXTURE0);
-			texture->bind();
+			texture.bind();
 
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
 			glBindVertexArray(0);
 
 			camera.Update();
-			shader->unuse();
+			texture.unbind();
+			shader.unuse();
 		}
 		Window::update();
 	}
