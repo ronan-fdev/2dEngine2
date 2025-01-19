@@ -13,6 +13,8 @@
 #include "../ECS/COMPONENTS/TransformComponent.h";
 #include "../ECS/COMPONENTS/Identification.h"
 
+#include "../SCRIPTING/ScriptingSystem.h"
+
 #include <glm/glm.hpp>
 
 class Application

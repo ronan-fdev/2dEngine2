@@ -54,6 +54,9 @@
     <ClCompile Include="ENGINE\SRC\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ENGINE\SCRIPTING\ScriptingSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
@@ -63,6 +66,7 @@
     <None Include="ENGINE\ECS\Entity.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="ASSETS\SCRIPTS\main.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\WINDOW\Window.h">
@@ -117,6 +121,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ENGINE\SRC\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\ScriptComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\SCRIPTING\ScriptingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -179,6 +179,44 @@ bool Application::Initialize()
 
 	glBindVertexArray(0);
 
+	//Create the lua state
+	auto lua = std::make_shared<sol::state>();
+	if (!lua)
+	{
+		LOG_ERROR("Failed to create the lua state!");
+		return false;
+	}
+	lua->open_libraries(
+		sol::lib::base,
+		sol::lib::math,
+		sol::lib::os,
+		sol::lib::table,
+		sol::lib::io,
+		sol::lib::string
+	);
+	if (!pRegistry->AddToContext<std::shared_ptr<sol::state>>(lua))
+	{
+		LOG_ERROR("Failed to add the sol::state to the registry context");
+		return false;
+	}
+
+	auto scriptSystem = std::make_shared<ScriptingSystem>(*pRegistry);
+	if (!scriptSystem)
+	{
+		LOG_ERROR("Failed to create the script system!");
+		return false;
+	}
+
+	if (!scriptSystem->LoadMainScript(*lua))
+	{
+		LOG_ERROR("Failed to load the main lua script");
+	}
+	if (!pRegistry->AddToContext<std::shared_ptr<ScriptingSystem>>(scriptSystem))
+	{
+		LOG_ERROR("Failed to add the scriptSystem to the registry context");
+		return false;
+	}
+
 	// Create a temp camera
 	auto camera = std::make_shared<Camera2D>();
 	camera->SetScale(15.f);
@@ -233,6 +271,9 @@ void Application::Update()
 	}
 
 	camera->Update();
+
+	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
+	scriptSystem->Update();
 }
 
 void Application::Render()
@@ -248,6 +289,10 @@ void Application::Render()
 	glActiveTexture(GL_TEXTURE0);
 	auto texture = assetManager->GetTexture("texture1");
 	texture.bind();
+
+	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
+	scriptSystem->Render();
+
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
 	texture.unbind();
