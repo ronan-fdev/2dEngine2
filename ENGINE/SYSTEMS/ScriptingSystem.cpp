@@ -26,6 +26,7 @@ bool ScriptingSystem::LoadMainScript(sol::state& lua)
 	}
 	sol::table update_script = main_lua[1];
 	sol::function update = update_script["update"];
+
 	sol::optional<sol::table> bRenderExists = main_lua[2];
 	if (bRenderExists == sol::nullopt)
 	{

@@ -14,7 +14,7 @@ public:
 	Texture(const char* filePath);
 	void bind();
 	void unbind();
-	unsigned int getID() { return texture1; }
+	unsigned int getID() const { return texture1; }
 	int getWidth() const { return width; }
 	int getHeight() const { return height; }
 private:

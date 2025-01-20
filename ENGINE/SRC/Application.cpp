@@ -9,7 +9,6 @@ Application& Application::GetInstance()
 Application::Application()
 	:
 	pRegistry{ nullptr }, m_bIsRunning{ true }
-	, VAO{ 0 }, VBO{ 0 }, IBO{ 0 }// TEMP remove later
 {
 }
 
@@ -79,7 +78,7 @@ bool Application::Initialize()
 
 	auto& transform = ent1.AddComponent<TransformComponent>(TransformComponent{
 				.position = glm::vec2{10.f, 10.f},
-				.scale = glm::vec2{1.f, 1.f},
+				.scale = glm::vec2{3.f, 3.f},
 				.rotation = 0.f
 		}
 	);
@@ -88,96 +87,18 @@ bool Application::Initialize()
 				.height = 16.f,
 				.color = Color{.r = 255, .g = 0, .b = 255, .a = 255},
 				.start_x = 1,
-				.start_y = 2
+				.start_y = 2,
+				.layer = 0,
+				.texture_name = "texture1"
 		}
 	);
 
 	sprite.generate_uvs(texture.getWidth(), texture.getHeight());
 
-	std::vector<Vertex> vertices{};
-	Vertex vTL{}, vTR{}, vBL{}, vBR{};
 
-	vTL.position = glm::vec2{ transform.position.x, transform.position.y + sprite.height };
-	vTL.uvs = glm::vec2{ sprite.uvs.u, sprite.uvs.v + sprite.uvs.uv_height };
-	vTR.position = glm::vec2{ transform.position.x + sprite.width, transform.position.y + sprite.height };
-	vTR.uvs = glm::vec2{ sprite.uvs.u + sprite.uvs.uv_width, sprite.uvs.v + sprite.uvs.uv_height };
-	vBL.position = glm::vec2{ transform.position.x, transform.position.y };
-	vBL.uvs = glm::vec2{ sprite.uvs.u, sprite.uvs.v };
-	vBR.position = glm::vec2{ transform.position.x + sprite.width, transform.position.y };
-	vBR.uvs = glm::vec2{ sprite.uvs.u + sprite.uvs.uv_width, sprite.uvs.v };
-	vertices.push_back(vTL);
-	vertices.push_back(vBL);
-	vertices.push_back(vBR);
-	vertices.push_back(vTR);
 
 	auto& id = ent1.GetComponent<Identification>();
 	LOG_INFO("Name :{0}, GROUP :{1},ID: {2}", id.name, id.group, id.entity_id);
-
-	GLuint indices[] =
-	{
-		0, 1, 2,
-		2, 3, 0
-	};
-
-	// Let's generate the VAO
-	glGenVertexArrays(1, &VAO);
-
-	// Generate the VBO
-	glGenBuffers(1, &VBO);
-
-	// Bind the VAO and VBO
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-	glBufferData(
-		GL_ARRAY_BUFFER,										// The target buffer type
-		vertices.size() * sizeof(Vertex),		// The size in bytes of the buffer object's new data store
-		vertices.data(),										// A pointer to the data that will be copied into the data store
-		GL_STATIC_DRAW											// The expected usage pattern of the data store
-	);
-
-	glGenBuffers(1, &IBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-
-	glBufferData(
-		GL_ELEMENT_ARRAY_BUFFER,								// The target buffer type
-		6 * sizeof(GLuint),										// The size in bytes of the buffer object's new data store
-		indices,												// A pointer to the data that will be copied into the data store
-		GL_STATIC_DRAW											// The expected usage pattern of the data store
-	);
-
-	glVertexAttribPointer(
-		0,														// Attribute 0	-- The layout position in the shader
-		2,														// Size			-- Number of components per vertex
-		GL_FLOAT,												// Type			-- The data type of the above components
-		GL_FALSE,												// Normalized	-- Specifies if fixed-point data values should be normalized
-		sizeof(Vertex),						// Stride		-- Specifies the byte offset between consecutive attributes
-		(void*)offsetof(Vertex, position)		// Pointer		-- Specifies the offset of the first component
-	);
-
-	glEnableVertexAttribArray(0);
-
-	glVertexAttribPointer(
-		1,
-		2,
-		GL_FLOAT,
-		GL_FALSE,
-		sizeof(Vertex),
-		(void*)offsetof(Vertex, uvs)			// This the offset of the positional data to the first UV coordinate
-	);
-
-	glEnableVertexAttribArray(1);
-
-	glVertexAttribPointer(
-		2,
-		4,
-		GL_UNSIGNED_BYTE,
-		GL_TRUE,
-		sizeof(Vertex),
-		(void*)offsetof(Vertex, color)			// This the offset of the positional data to the first UV coordinate
-	);
-
-	glBindVertexArray(0);
 
 	//Create the lua state
 	auto lua = std::make_shared<sol::state>();
@@ -217,9 +138,22 @@ bool Application::Initialize()
 		return false;
 	}
 
+	//Setting up the rendersystem:
+	auto renderSystem = std::make_shared<RenderSystem>(*pRegistry);
+	if (!renderSystem)
+	{
+		LOG_ERROR("Failed to create the render system!");
+		return false;
+	}
+	if (!pRegistry->AddToContext<std::shared_ptr<RenderSystem>>(renderSystem))
+	{
+		LOG_ERROR("Failed to add the rendersystem to the registry context");
+		return false;
+	}
+
 	// Create a temp camera
 	auto camera = std::make_shared<Camera2D>();
-	camera->SetScale(15.f);
+
 	if (!pRegistry->AddToContext<std::shared_ptr<AssetManager>>(assetManager))
 	{
 		LOG_ERROR("Failed to add the asset manager to the registry context!");
@@ -263,6 +197,8 @@ void Application::ProcessEvents()
 
 void Application::Update()
 {
+	auto view = pRegistry->GetRegistry().view<TransformComponent, SpriteComponent>();
+
 	auto& camera = pRegistry->GetContext<std::shared_ptr<Camera2D>>();
 	if (!camera)
 	{
@@ -274,29 +210,41 @@ void Application::Update()
 
 	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
 	scriptSystem->Update();
+
+	//TRYING SOMETHING FUN!
+	static float rotation{ 0.f };
+	static float x_pos{ 10.f };
+	static bool bMoveRight{ true };
+	if (rotation >= 360.f)
+		rotation = 0.f;
+	if (bMoveRight && x_pos < 300.f)
+		x_pos += 3;
+	else if (bMoveRight && x_pos >= 300.f)
+		bMoveRight = false;
+	if (!bMoveRight && x_pos > 10.f)
+		x_pos -= 3;
+	else if (!bMoveRight && x_pos <= 10.f)
+		bMoveRight = true;
+	for (const auto& entity : view)
+	{
+		Entity ent{ *pRegistry, entity };
+		auto& transform = ent.GetComponent<TransformComponent>();
+		transform.rotation = rotation;
+		transform.position.x = x_pos;
+	}
+	rotation += bMoveRight ? 9 : -9;
 }
 
 void Application::Render()
 {
-	auto& assetManager = pRegistry->GetContext<std::shared_ptr<AssetManager>>();
-	auto& camera = pRegistry->GetContext<std::shared_ptr<Camera2D>>();
-	auto& shader = assetManager->GetShader("shader1");
-	auto projection = camera->GetCameraMatrix();
+	auto& renderSystem = pRegistry->GetContext<std::shared_ptr<RenderSystem>>();
 
-	shader.use();
-	glBindVertexArray(VAO);
-	shader.setMat4("uProjection", projection);
-	glActiveTexture(GL_TEXTURE0);
-	auto texture = assetManager->GetTexture("texture1");
-	texture.bind();
 
 	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
 	scriptSystem->Render();
 
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-	glBindVertexArray(0);
-	texture.unbind();
-	shader.unuse();
+
+	renderSystem->Update();
 }
 
 void Application::CleanUp()

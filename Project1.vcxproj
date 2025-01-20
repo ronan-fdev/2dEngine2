@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ENGINE\RENDERER\CORE\BatchRenderer.cpp" />
     <ClCompile Include="ENGINE\SRC\Application.cpp" />
     <ClCompile Include="ENGINE\RESOURCES\AssetManager.cpp" />
     <ClCompile Include="ENGINE\INPUT\KeyListener.cpp" />
@@ -161,7 +162,8 @@
     <ClCompile Include="ENGINE\LOGGER\log.cpp" />
     <ClCompile Include="ENGINE\ECS\Registry.cpp" />
     <ClCompile Include="ENGINE\ECS\Entity.cpp" />
-    <ClCompile Include="ENGINE\SCRIPTING\ScriptingSystem.cpp" />
+    <ClCompile Include="ENGINE\SYSTEMS\ScriptingSystem.cpp" />
+    <ClCompile Include="ENGINE\SYSTEMS\RenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
@@ -172,6 +174,7 @@
     <None Include="ENGINE\ECS\Entity.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ENGINE\RENDERER\CORE\BatchRenderer.h" />
     <ClInclude Include="ENGINE\ECS\COMPONENTS\ScriptComponent.h" />
     <ClInclude Include="ENGINE\SRC\Application.h" />
     <ClInclude Include="ENGINE\RESOURCES\AssetManager.h" />
@@ -191,7 +194,8 @@
     <ClInclude Include="ENGINE\LOGGER\log.h" />
     <ClInclude Include="ENGINE\ECS\Registry.h" />
     <ClInclude Include="ENGINE\ECS\Entity.h" />
-    <ClInclude Include="ENGINE\SCRIPTING\ScriptingSystem.h" />
+    <ClInclude Include="ENGINE\SYSTEMS\ScriptingSystem.h" />
+    <ClInclude Include="ENGINE\SYSTEMS\RenderSystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -13,7 +13,8 @@
 #include "../ECS/COMPONENTS/TransformComponent.h";
 #include "../ECS/COMPONENTS/Identification.h"
 
-#include "../SCRIPTING/ScriptingSystem.h"
+#include "../SYSTEMS/ScriptingSystem.h"
+#include "../SYSTEMS/RenderSystem.h"
 
 #include <glm/glm.hpp>
 
@@ -24,9 +25,6 @@ public:
 	~Application();
 	std::unique_ptr<Registry> pRegistry;
 	bool m_bIsRunning;
-
-	// TEMP for testing
-	GLuint VAO, VBO, IBO;
 
 	static Application& GetInstance();
 	void Run();
