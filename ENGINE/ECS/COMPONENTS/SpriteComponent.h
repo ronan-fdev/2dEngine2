@@ -1,6 +1,11 @@
 #pragma once
 
+#include <sol/sol.hpp>
+
 #include "../../RENDERER/ESSENTIALS/Vertex.h"
+#include "../Registry.h"
+#include "../../RESOURCES/AssetManager.h"
+#include "../../LOGGER/log.h"
 
 struct UVs
 {
@@ -21,4 +26,6 @@ struct SpriteComponent
 		uvs.u = start_x * uvs.uv_width;
 		uvs.v = start_y * uvs.uv_height;
 	}
+
+	static void CreateSpriteLuaBind(sol::state& lua, Registry& registry);
 };

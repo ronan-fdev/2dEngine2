@@ -148,6 +148,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\SpriteComponent.cpp" />
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\TransformComponent.cpp" />
     <ClCompile Include="ENGINE\RENDERER\CORE\BatchRenderer.cpp" />
     <ClCompile Include="ENGINE\SRC\Application.cpp" />
     <ClCompile Include="ENGINE\RESOURCES\AssetManager.cpp" />
@@ -164,6 +166,7 @@
     <ClCompile Include="ENGINE\ECS\Entity.cpp" />
     <ClCompile Include="ENGINE\SYSTEMS\ScriptingSystem.cpp" />
     <ClCompile Include="ENGINE\SYSTEMS\RenderSystem.cpp" />
+    <ClCompile Include="ENGINE\ECS\MetaUtilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
@@ -196,6 +199,7 @@
     <ClInclude Include="ENGINE\ECS\Entity.h" />
     <ClInclude Include="ENGINE\SYSTEMS\ScriptingSystem.h" />
     <ClInclude Include="ENGINE\SYSTEMS\RenderSystem.h" />
+    <ClInclude Include="ENGINE\ECS\MetaUtilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

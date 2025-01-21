@@ -63,6 +63,15 @@
     <ClCompile Include="ENGINE\SYSTEMS\RenderSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ENGINE\ECS\MetaUtilities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\TransformComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\SpriteComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
@@ -139,6 +148,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ENGINE\SYSTEMS\RenderSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\ECS\MetaUtilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

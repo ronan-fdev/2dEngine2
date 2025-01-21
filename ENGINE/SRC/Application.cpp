@@ -61,12 +61,6 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to add texture!");
 		return -1;
 	}
-	auto texture = assetManager->GetTexture("texture1");
-
-	// Let's make some temporary UVs
-	UVs uVs{};
-	LOG_INFO("Loaded Texture: [width = {0}, height = {1}]", texture.getWidth(), texture.getHeight());
-	LOG_WARN("Loaded Texture: [width = {0}, height = {1}]", texture.getWidth(), texture.getHeight());
 
 	// Create a new entity -- for test
 	pRegistry = std::make_unique<Registry>();
@@ -74,31 +68,6 @@ bool Application::Initialize()
 	{
 		LOG_ERROR("Failed to create a entt registry!");
 	}
-	Entity ent1{ *pRegistry,"Ent1","Test" };
-
-	auto& transform = ent1.AddComponent<TransformComponent>(TransformComponent{
-				.position = glm::vec2{10.f, 10.f},
-				.scale = glm::vec2{3.f, 3.f},
-				.rotation = 0.f
-		}
-	);
-	auto& sprite = ent1.AddComponent<SpriteComponent>(SpriteComponent{
-				.width = 16.f,
-				.height = 16.f,
-				.color = Color{.r = 255, .g = 0, .b = 255, .a = 255},
-				.start_x = 1,
-				.start_y = 2,
-				.layer = 0,
-				.texture_name = "texture1"
-		}
-	);
-
-	sprite.generate_uvs(texture.getWidth(), texture.getHeight());
-
-
-
-	auto& id = ent1.GetComponent<Identification>();
-	LOG_INFO("Name :{0}, GROUP :{1},ID: {2}", id.name, id.group, id.entity_id);
 
 	//Create the lua state
 	auto lua = std::make_shared<sol::state>();
@@ -128,10 +97,6 @@ bool Application::Initialize()
 		return false;
 	}
 
-	if (!scriptSystem->LoadMainScript(*lua))
-	{
-		LOG_ERROR("Failed to load the main lua script");
-	}
 	if (!pRegistry->AddToContext<std::shared_ptr<ScriptingSystem>>(scriptSystem))
 	{
 		LOG_ERROR("Failed to add the scriptSystem to the registry context");
@@ -170,6 +135,15 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to load the shaders!");
 		return false;
 	}
+
+	//Lua and ENTT::meta BINDING
+	ScriptingSystem::RegisterLuaBindings(*lua, *pRegistry);
+
+	if (!scriptSystem->LoadMainScript(*lua))
+	{
+		LOG_ERROR("Failed to load the main lua script");
+	}
+
 	return true;
 }
 
@@ -211,28 +185,6 @@ void Application::Update()
 	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
 	scriptSystem->Update();
 
-	//TRYING SOMETHING FUN!
-	static float rotation{ 0.f };
-	static float x_pos{ 10.f };
-	static bool bMoveRight{ true };
-	if (rotation >= 360.f)
-		rotation = 0.f;
-	if (bMoveRight && x_pos < 300.f)
-		x_pos += 3;
-	else if (bMoveRight && x_pos >= 300.f)
-		bMoveRight = false;
-	if (!bMoveRight && x_pos > 10.f)
-		x_pos -= 3;
-	else if (!bMoveRight && x_pos <= 10.f)
-		bMoveRight = true;
-	for (const auto& entity : view)
-	{
-		Entity ent{ *pRegistry, entity };
-		auto& transform = ent.GetComponent<TransformComponent>();
-		transform.rotation = rotation;
-		transform.position.x = x_pos;
-	}
-	rotation += bMoveRight ? 9 : -9;
 }
 
 void Application::Render()
