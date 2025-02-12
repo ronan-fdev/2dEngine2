@@ -82,6 +82,9 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="ASSETS\SCRIPTS\main.lua" />
+    <None Include="ENGINE\ECS\Registry.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\WINDOW\Window.h">

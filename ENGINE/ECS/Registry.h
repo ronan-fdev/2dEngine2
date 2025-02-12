@@ -1,6 +1,7 @@
 #pragma once
 
 #include <entt/entt.hpp>
+#include <sol/sol.hpp>
 
 class Registry
 {
@@ -37,16 +38,20 @@ public:
 	template <typename TContext>
 	TContext& GetContext();
 
+	static void CreateLuaRegistryBind(sol::state& lua, Registry& registry);
+	
+	template <typename TComponent>
+	static void RegisterMetaComponent();
+
 private:
 	std::unique_ptr<entt::registry> m_pRegistry;
 };
-template<typename TContext>
-inline TContext Registry::AddToContext(TContext context)
-{
-	return m_pRegistry->ctx().emplace<TContext>(context);
-}
-template<typename TContext>
-inline TContext& Registry::GetContext()
-{
-	return m_pRegistry->ctx().get<TContext>();
-}
+
+template <typename TComponent>
+entt::runtime_view& add_component_to_view(Registry* registry, entt::runtime_view& view);
+
+template <typename TComponent>
+entt::runtime_view& exclude_component_from_view(Registry* registry, entt::runtime_view& view);
+
+#include "Registry.inl"
+

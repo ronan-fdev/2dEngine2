@@ -175,6 +175,7 @@
     <None Include="ASSETS\SHADER\shader.frag" />
     <None Include="ASSETS\SHADER\shader.vert" />
     <None Include="ENGINE\ECS\Entity.inl" />
+    <None Include="ENGINE\ECS\Registry.inl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\RENDERER\CORE\BatchRenderer.h" />
