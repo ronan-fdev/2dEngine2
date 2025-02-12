@@ -6,6 +6,7 @@
 #include "../ECS/COMPONENTS/SpriteComponent.h"
 #include "../ECS/Entity.h"
 #include "../LOGGER/log.h"
+#include "../SCRIPTING/GLMLuaBindings.h"
 
 #include <sol/sol.hpp>
 

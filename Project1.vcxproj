@@ -151,6 +151,7 @@
     <ClCompile Include="ENGINE\ECS\COMPONENTS\SpriteComponent.cpp" />
     <ClCompile Include="ENGINE\ECS\COMPONENTS\TransformComponent.cpp" />
     <ClCompile Include="ENGINE\RENDERER\CORE\BatchRenderer.cpp" />
+    <ClCompile Include="ENGINE\SCRIPTING\GLMLuaBindings.cpp" />
     <ClCompile Include="ENGINE\SRC\Application.cpp" />
     <ClCompile Include="ENGINE\RESOURCES\AssetManager.cpp" />
     <ClCompile Include="ENGINE\INPUT\KeyListener.cpp" />
@@ -180,6 +181,7 @@
   <ItemGroup>
     <ClInclude Include="ENGINE\RENDERER\CORE\BatchRenderer.h" />
     <ClInclude Include="ENGINE\ECS\COMPONENTS\ScriptComponent.h" />
+    <ClInclude Include="ENGINE\SCRIPTING\GLMLuaBindings.h" />
     <ClInclude Include="ENGINE\SRC\Application.h" />
     <ClInclude Include="ENGINE\RESOURCES\AssetManager.h" />
     <ClInclude Include="ENGINE\ECS\COMPONENTS\Identification.h" />
