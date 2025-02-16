@@ -1,8 +1,13 @@
 
 
 gEntity = Entity("TestEntity", "Groupy")
+
 gEntity2 = Entity("BigTesty", "Groupy")
 gEntity2:add_component(Transform(vec2(100, 100), vec2(10, 10), 0))
+local sprite2 = gEntity2:add_component(Sprite("texture1", 16.0, 16.0, 4, 0, 0))
+sprite2:generate_uvs()
+gEntity2:add_component(Animation(4, 1, 4, false)) 
+
 local transform = gEntity:add_component(
 	Transform(100, 100, 10, 10, 0)
 )

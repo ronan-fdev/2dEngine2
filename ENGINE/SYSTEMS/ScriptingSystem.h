@@ -4,6 +4,7 @@
 #include "../ECS/COMPONENTS/ScriptComponent.h"
 #include "../ECS/COMPONENTS/TransformComponent.h"
 #include "../ECS/COMPONENTS/SpriteComponent.h"
+#include "../ECS/Components/AnimationComponent.h"
 #include "../ECS/Entity.h"
 #include "../LOGGER/log.h"
 #include "../SCRIPTING/GLMLuaBindings.h"

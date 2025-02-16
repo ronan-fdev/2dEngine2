@@ -75,6 +75,12 @@
     <ClCompile Include="ENGINE\SCRIPTING\GLMLuaBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\AnimationComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ENGINE\SYSTEMS\AnimationSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
@@ -160,6 +166,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ENGINE\SCRIPTING\GLMLuaBindings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\AnimationComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\SYSTEMS\AnimationSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

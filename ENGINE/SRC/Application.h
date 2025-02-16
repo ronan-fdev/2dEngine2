@@ -15,6 +15,7 @@
 
 #include "../SYSTEMS/ScriptingSystem.h"
 #include "../SYSTEMS/RenderSystem.h"
+#include "../SYSTEMS/AnimationSystem.h"
 
 #include <glm/glm.hpp>
 

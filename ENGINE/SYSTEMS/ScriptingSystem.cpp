@@ -94,14 +94,20 @@ void ScriptingSystem::Render()
 
 void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 {
+	Entity::CreateLuaEntityBind(lua, registry);
+	Registry::CreateLuaRegistryBind(lua, registry);
 	GLMBindings::CreateGLMBindings(lua);
+
 
 	TransformComponent::CreateLuaTransformBind(lua);
 	SpriteComponent::CreateSpriteLuaBind(lua, registry);
+	AnimationComponent::CreateAnimationLuaBind(lua);
+
 	Entity::RegisterMetaComponent<TransformComponent>();
 	Entity::RegisterMetaComponent<SpriteComponent>();
+	Entity::RegisterMetaComponent<AnimationComponent>();
+
 	Registry::RegisterMetaComponent<TransformComponent>();
 	Registry::RegisterMetaComponent<SpriteComponent>();
-	Entity::CreateLuaEntityBind(lua, registry);
-	Registry::CreateLuaRegistryBind(lua, registry);
+	Registry::RegisterMetaComponent<AnimationComponent>();
 }

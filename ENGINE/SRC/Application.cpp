@@ -116,6 +116,19 @@ bool Application::Initialize()
 		return false;
 	}
 
+	//Setting up the animation system
+	auto animationSystem = std::make_shared<AnimationSystem>(*pRegistry);
+	if (!animationSystem)
+	{
+		LOG_ERROR("Failed to create the animation system!");
+		return false;
+	}
+	if (!pRegistry->AddToContext<std::shared_ptr<AnimationSystem>>(animationSystem))
+	{
+		LOG_ERROR("Failed to add the animation system to the registry context!");
+		return false;
+	}
+
 	// Create a temp camera
 	auto camera = std::make_shared<Camera2D>();
 
@@ -191,10 +204,13 @@ void Application::Render()
 {
 	auto& renderSystem = pRegistry->GetContext<std::shared_ptr<RenderSystem>>();
 
+	
 
 	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
 	scriptSystem->Render();
 
+	auto& animationSystem = pRegistry->GetContext<std::shared_ptr<AnimationSystem>>();
+	animationSystem->Update();
 
 	renderSystem->Update();
 }

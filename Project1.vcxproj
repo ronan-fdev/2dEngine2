@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\AnimationComponent.cpp" />
     <ClCompile Include="ENGINE\ECS\COMPONENTS\SpriteComponent.cpp" />
     <ClCompile Include="ENGINE\ECS\COMPONENTS\TransformComponent.cpp" />
     <ClCompile Include="ENGINE\RENDERER\CORE\BatchRenderer.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="ENGINE\RENDERER\SHADER\Shader.cpp" />
     <ClCompile Include="ENGINE\RENDERER\TEXTURE\Texture.cpp" />
     <ClCompile Include="ENGINE\SRC\main.cpp" />
+    <ClCompile Include="ENGINE\SYSTEMS\AnimationSystem.cpp" />
     <ClCompile Include="ENGINE\UTILITIES\Time.cpp" />
     <ClCompile Include="ENGINE\WINDOW\Window.cpp" />
     <ClCompile Include="ENGINE\LOGGER\log.cpp" />
@@ -179,6 +181,7 @@
     <None Include="ENGINE\ECS\Registry.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\AnimationComponent.h" />
     <ClInclude Include="ENGINE\RENDERER\CORE\BatchRenderer.h" />
     <ClInclude Include="ENGINE\ECS\COMPONENTS\ScriptComponent.h" />
     <ClInclude Include="ENGINE\SCRIPTING\GLMLuaBindings.h" />
@@ -195,6 +198,7 @@
     <ClInclude Include="ENGINE\RENDERER\SHADER\ShaderLoader.h" />
     <ClInclude Include="ENGINE\RENDERER\TEXTURE\Texture.h" />
     <ClInclude Include="ENGINE\RENDERER\TEXTURE\TextureLoader.h" />
+    <ClInclude Include="ENGINE\SYSTEMS\AnimationSystem.h" />
     <ClInclude Include="ENGINE\UTILITIES\Time.h" />
     <ClInclude Include="ENGINE\WINDOW\Window.h" />
     <ClInclude Include="ENGINE\LOGGER\log.h" />
