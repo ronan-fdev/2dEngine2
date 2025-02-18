@@ -182,6 +182,7 @@ void Application::ProcessEvents()
 {
 	auto& inputManager = InputManager::GetInstance();
 	auto& keyboard = inputManager.GetKeyboard();
+	auto& mouse = inputManager.GetMouse();
 
 	// Process Events
 	glfwPollEvents();
@@ -209,6 +210,36 @@ void Application::ProcessEvents()
 			keyboard.OnKeyReleased(key);
 		}
 		});
+
+	// Set up mouse button callback
+	glfwSetMouseButtonCallback(Window::getGLFWWindow(), [](GLFWwindow* window, int button, int action, int mods) {
+		auto& inputManager = InputManager::GetInstance();
+		auto& mouse = inputManager.GetMouse();
+
+		if (action == GLFW_PRESS) {
+			mouse.OnBtnPressed(button);
+		}
+		else if (action == GLFW_RELEASE) {
+			mouse.OnBtnReleased(button);
+		}
+		});
+
+	// Set up mouse scroll callback
+	glfwSetScrollCallback(Window::getGLFWWindow(), [](GLFWwindow* window, double xoffset, double yoffset) {
+		auto& inputManager = InputManager::GetInstance();
+		auto& mouse = inputManager.GetMouse();
+
+		mouse.SetMouseWheelX(static_cast<int>(xoffset));
+		mouse.SetMouseWheelY(static_cast<int>(yoffset));
+		});
+
+	// Set up mouse movement callback
+	glfwSetCursorPosCallback(Window::getGLFWWindow(), [](GLFWwindow* window, double xpos, double ypos) {
+		auto& inputManager = InputManager::GetInstance();
+		auto& mouse = inputManager.GetMouse();
+
+		mouse.SetMouseMoving(true);
+		});
 }
 
 void Application::Update()
@@ -234,6 +265,8 @@ void Application::Update()
 	auto& inputManager = InputManager::GetInstance();
 	auto& keyboard = inputManager.GetKeyboard();
 	keyboard.Update();
+	auto& mouse = inputManager.GetMouse();
+	mouse.Update();
 
 }
 

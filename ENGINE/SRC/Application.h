@@ -19,6 +19,7 @@
 
 #include "../SCRIPTING/InputManager.h"
 #include "../WINDOW/INPUT/Keyboard.h"
+#include "../WINDOW/INPUT/Mouse.h"
 
 #include <glm/glm.hpp>
 

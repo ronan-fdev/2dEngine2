@@ -165,6 +165,7 @@
     <ClCompile Include="ENGINE\SYSTEMS\AnimationSystem.cpp" />
     <ClCompile Include="ENGINE\UTILITIES\Time.cpp" />
     <ClCompile Include="ENGINE\WINDOW\INPUT\Keyboard.cpp" />
+    <ClCompile Include="ENGINE\WINDOW\INPUT\Mouse.cpp" />
     <ClCompile Include="ENGINE\WINDOW\Window.cpp" />
     <ClCompile Include="ENGINE\LOGGER\log.cpp" />
     <ClCompile Include="ENGINE\ECS\Registry.cpp" />
@@ -206,6 +207,8 @@
     <ClInclude Include="ENGINE\WINDOW\INPUT\Button.h" />
     <ClInclude Include="ENGINE\WINDOW\INPUT\Keyboard.h" />
     <ClInclude Include="ENGINE\WINDOW\INPUT\Keys.h" />
+    <ClInclude Include="ENGINE\WINDOW\INPUT\Mouse.h" />
+    <ClInclude Include="ENGINE\WINDOW\INPUT\MouseButtons.h" />
     <ClInclude Include="ENGINE\WINDOW\Window.h" />
     <ClInclude Include="ENGINE\LOGGER\log.h" />
     <ClInclude Include="ENGINE\ECS\Registry.h" />
