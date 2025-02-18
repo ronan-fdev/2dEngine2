@@ -180,6 +180,35 @@ bool Application::LoadShaders()
 
 void Application::ProcessEvents()
 {
+	auto& inputManager = InputManager::GetInstance();
+	auto& keyboard = inputManager.GetKeyboard();
+
+	// Process Events
+	glfwPollEvents();
+
+	// Check if window should close
+	if (glfwWindowShouldClose(Window::getGLFWWindow())) {
+		m_bIsRunning = false;
+	}
+
+	// Check ESC key directly for quitting
+	if (glfwGetKey(Window::getGLFWWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		m_bIsRunning = false;
+	}
+
+	// Instead of directly handling keyboard events here, you'll want to set up GLFW callbacks
+	// Add this during window/input initialization:
+	glfwSetKeyCallback(Window::getGLFWWindow(), [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+		auto& inputManager = InputManager::GetInstance();
+		auto& keyboard = inputManager.GetKeyboard();
+
+		if (action == GLFW_PRESS) {
+			keyboard.OnKeyPressed(key);
+		}
+		else if (action == GLFW_RELEASE) {
+			keyboard.OnKeyReleased(key);
+		}
+		});
 }
 
 void Application::Update()
@@ -198,6 +227,14 @@ void Application::Update()
 	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
 	scriptSystem->Update();
 
+	auto& animationSystem = pRegistry->GetContext<std::shared_ptr<AnimationSystem>>();
+	animationSystem->Update();
+
+	// Update inputs
+	auto& inputManager = InputManager::GetInstance();
+	auto& keyboard = inputManager.GetKeyboard();
+	keyboard.Update();
+
 }
 
 void Application::Render()
@@ -208,9 +245,6 @@ void Application::Render()
 
 	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
 	scriptSystem->Render();
-
-	auto& animationSystem = pRegistry->GetContext<std::shared_ptr<AnimationSystem>>();
-	animationSystem->Update();
 
 	renderSystem->Update();
 }

@@ -97,6 +97,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	Entity::CreateLuaEntityBind(lua, registry);
 	Registry::CreateLuaRegistryBind(lua, registry);
 	GLMBindings::CreateGLMBindings(lua);
+	InputManager::CreateLuaInputBindings(lua);
 
 
 	TransformComponent::CreateLuaTransformBind(lua);

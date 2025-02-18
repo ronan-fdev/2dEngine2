@@ -8,6 +8,7 @@
 #include "../ECS/Entity.h"
 #include "../LOGGER/log.h"
 #include "../SCRIPTING/GLMLuaBindings.h"
+#include "../SCRIPTING/InputManager.h"
 
 #include <sol/sol.hpp>
 

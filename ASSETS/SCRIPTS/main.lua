@@ -6,7 +6,7 @@ gEntity2 = Entity("BigTesty", "Groupy")
 gEntity2:add_component(Transform(vec2(100, 100), vec2(10, 10), 0))
 local sprite2 = gEntity2:add_component(Sprite("texture1", 16.0, 16.0, 4, 0, 0))
 sprite2:generate_uvs()
-gEntity2:add_component(Animation(4, 1, 4, false)) 
+gEntity2:add_component(Animation(4, 5, 0, false)) 
 
 local transform = gEntity:add_component(
 	Transform(100, 100, 10, 10, 0)
@@ -73,6 +73,17 @@ main = {
 
 			--local sprite2 = gEntity:get_component(Sprite)
 			--print("Texture Name: " ..sprite2.texture_name)
+
+			if Keyboard.just_pressed(KEY_W) then 
+				print("Key W was just pressed")
+			elseif Keyboard.pressed(KEY_S) then 
+				print("Key S was just pressed")
+			elseif Keyboard.pressed(KEY_A) then 
+				print("Key A was just pressed")
+			elseif Keyboard.pressed(KEY_D) then 
+				print("Key D was just pressed")
+			end
+
 		end
 	},
 	[2] = {

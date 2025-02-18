@@ -17,6 +17,9 @@
 #include "../SYSTEMS/RenderSystem.h"
 #include "../SYSTEMS/AnimationSystem.h"
 
+#include "../SCRIPTING/InputManager.h"
+#include "../WINDOW/INPUT/Keyboard.h"
+
 #include <glm/glm.hpp>
 
 class Application
