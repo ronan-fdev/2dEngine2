@@ -106,6 +106,7 @@
     <None Include="ASSETS\SCRIPTS\ASTERIODS\entityDefs.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\assetDefs.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\utilities.lua" />
+    <None Include="ASSETS\SCRIPTS\ASTERIODS\ship.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\WINDOW\Window.h">
@@ -204,5 +205,16 @@
     <ClInclude Include="ENGINE\WINDOW\INPUT\Mouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ASSETS\TEXTURES\asteroid_1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ASSETS\TEXTURES\asteroid_2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ASSETS\TEXTURES\ship.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

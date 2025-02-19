@@ -179,6 +179,7 @@
     <None Include=".gitignore" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\assetDefs.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\entityDefs.lua" />
+    <None Include="ASSETS\SCRIPTS\ASTERIODS\ship.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\utilities.lua" />
     <None Include="ASSETS\SCRIPTS\main.lua" />
     <None Include="ASSETS\SHADER\shader.frag" />
@@ -219,6 +220,11 @@
     <ClInclude Include="ENGINE\SYSTEMS\ScriptingSystem.h" />
     <ClInclude Include="ENGINE\SYSTEMS\RenderSystem.h" />
     <ClInclude Include="ENGINE\ECS\MetaUtilities.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ASSETS\TEXTURES\asteroid_1.png" />
+    <Image Include="ASSETS\TEXTURES\asteroid_2.png" />
+    <Image Include="ASSETS\TEXTURES\ship.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
