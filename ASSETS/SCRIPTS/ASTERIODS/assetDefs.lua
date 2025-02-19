@@ -5,6 +5,7 @@ AssetDefs =
 		{ name = "ship", path = "C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/TEXTURES/ship.png"},
 		{ name = "ast_1", path = "C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/TEXTURES/asteroid_1.png"},
 		{ name = "ast_2", path = "C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/TEXTURES/asteroid_2.png"},
+		{ name = "bg", path = "C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/TEXTURES/purple.png"}
 	}
 }
 function LoadAssets()

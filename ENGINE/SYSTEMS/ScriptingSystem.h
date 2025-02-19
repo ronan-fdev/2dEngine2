@@ -10,6 +10,7 @@
 #include "../SCRIPTING/GLMLuaBindings.h"
 #include "../SCRIPTING/InputManager.h"
 #include "../RESOURCES/AssetManager.h"
+#include "../UTILITIES/Timer.h"
 
 #include <sol/sol.hpp>
 

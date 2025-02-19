@@ -12,13 +12,15 @@ AsteroidDefs =
 			}, 
 			sprite = {
 				asset_name = "ast_1",
-				width = 112,
-				height = 80,
+				width = 98,
+				height = 96,
 				start_x = 0, start_y = 0,
 				layer = 2
 			}
 		},
-		type = "big"
+		type = "big",
+		min_speed = -2,
+		max_speed = 5
 	},
 	asteroid_small = 
 	{
@@ -32,13 +34,15 @@ AsteroidDefs =
 			}, 
 			sprite = {
 				asset_name = "ast_2",
-				width = 32,
-				height = 32,
+				width = 43,
+				height = 43,
 				start_x = 0, start_y = 0,
 				layer = 2
 			}
 		},
-		type = "small"
+		type = "small",
+		min_speed = -5,
+		max_speed = 5
 	},
 }
 ShipDefs = 

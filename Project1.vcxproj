@@ -164,6 +164,7 @@
     <ClCompile Include="ENGINE\SRC\main.cpp" />
     <ClCompile Include="ENGINE\SYSTEMS\AnimationSystem.cpp" />
     <ClCompile Include="ENGINE\UTILITIES\Time.cpp" />
+    <ClCompile Include="ENGINE\UTILITIES\Timer.cpp" />
     <ClCompile Include="ENGINE\WINDOW\INPUT\Keyboard.cpp" />
     <ClCompile Include="ENGINE\WINDOW\INPUT\Mouse.cpp" />
     <ClCompile Include="ENGINE\WINDOW\Window.cpp" />
@@ -178,6 +179,7 @@
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\assetDefs.lua" />
+    <None Include="ASSETS\SCRIPTS\ASTERIODS\asteroid.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\entityDefs.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\ship.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\utilities.lua" />
@@ -208,6 +210,7 @@
     <ClInclude Include="ENGINE\RENDERER\TEXTURE\TextureLoader.h" />
     <ClInclude Include="ENGINE\SYSTEMS\AnimationSystem.h" />
     <ClInclude Include="ENGINE\UTILITIES\Time.h" />
+    <ClInclude Include="ENGINE\UTILITIES\Timer.h" />
     <ClInclude Include="ENGINE\WINDOW\INPUT\Button.h" />
     <ClInclude Include="ENGINE\WINDOW\INPUT\Keyboard.h" />
     <ClInclude Include="ENGINE\WINDOW\INPUT\Keys.h" />

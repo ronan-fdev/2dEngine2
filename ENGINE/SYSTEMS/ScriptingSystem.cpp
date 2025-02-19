@@ -92,6 +92,27 @@ void ScriptingSystem::Render()
 	}
 }
 
+auto create_timer = [](sol::state& lua) {
+	lua.new_usertype<Timer>(
+		"Timer",
+		sol::call_constructor,
+		sol::factories([]() {return Timer{}; }),
+		"start", &Timer::Start,
+		"stop", &Timer::Stop,
+		"pause", &Timer::Pause,
+		"resume", &Timer::Resume,
+		"is_paused", &Timer::IsPaused,
+		"is_running", &Timer::IsRunning,
+		"elapsed_ms", &Timer::ElapsedMS,
+		"elapsed_sec", &Timer::ElapsedSec,
+		"restart", [](Timer& timer) {
+			if (timer.IsRunning())
+				timer.Stop();
+			timer.Start();
+		}
+	);
+};
+
 void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 {
 	Entity::CreateLuaEntityBind(lua, registry);
@@ -100,6 +121,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	InputManager::CreateLuaInputBindings(lua);
 	AssetManager::CreateLuaAssetManager(lua, registry);
 
+	create_timer(lua);
 
 	TransformComponent::CreateLuaTransformBind(lua);
 	SpriteComponent::CreateSpriteLuaBind(lua, registry);
