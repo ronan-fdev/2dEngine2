@@ -93,6 +93,12 @@
     <ClCompile Include="ENGINE\UTILITIES\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\BoxColliderComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\CircleColliderComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
@@ -111,6 +117,7 @@
     <None Include="ASSETS\SCRIPTS\ASTERIODS\utilities.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\ship.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\asteroid.lua" />
+    <None Include="ASSETS\SCRIPTS\ASTERIODS\collision_system.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\WINDOW\Window.h">
@@ -210,6 +217,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ENGINE\UTILITIES\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\BoxColliderComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\CircleColliderComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

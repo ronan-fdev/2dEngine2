@@ -126,14 +126,20 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	TransformComponent::CreateLuaTransformBind(lua);
 	SpriteComponent::CreateSpriteLuaBind(lua, registry);
 	AnimationComponent::CreateAnimationLuaBind(lua);
+	BoxColliderComponent::CreateLuaBoxColliderBind(lua);
+	CircleColliderComponent::CreateLuaCircleColliderBind(lua);
 
 	Entity::RegisterMetaComponent<TransformComponent>();
 	Entity::RegisterMetaComponent<SpriteComponent>();
 	Entity::RegisterMetaComponent<AnimationComponent>();
+	Entity::RegisterMetaComponent<BoxColliderComponent>();
+	Entity::RegisterMetaComponent<CircleColliderComponent>();
 
 	Registry::RegisterMetaComponent<TransformComponent>();
 	Registry::RegisterMetaComponent<SpriteComponent>();
 	Registry::RegisterMetaComponent<AnimationComponent>();
+	Registry::RegisterMetaComponent<BoxColliderComponent>();
+	Registry::RegisterMetaComponent<CircleColliderComponent>();
 }
 
 void ScriptingSystem::RegisterLuaFunctions(sol::state& lua)

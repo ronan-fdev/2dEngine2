@@ -5,6 +5,8 @@
 #include "../ECS/COMPONENTS/TransformComponent.h"
 #include "../ECS/COMPONENTS/SpriteComponent.h"
 #include "../ECS/Components/AnimationComponent.h"
+#include "../ECS/Components/BoxColliderComponent.h"
+#include "../ECS/Components/CircleColliderComponent.h"
 #include "../ECS/Entity.h"
 #include "../LOGGER/log.h"
 #include "../SCRIPTING/GLMLuaBindings.h"

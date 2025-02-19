@@ -149,6 +149,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ENGINE\ECS\COMPONENTS\AnimationComponent.cpp" />
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\BoxColliderComponent.cpp" />
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\CircleColliderComponent.cpp" />
     <ClCompile Include="ENGINE\ECS\COMPONENTS\SpriteComponent.cpp" />
     <ClCompile Include="ENGINE\ECS\COMPONENTS\TransformComponent.cpp" />
     <ClCompile Include="ENGINE\RENDERER\CORE\BatchRenderer.cpp" />
@@ -180,6 +182,7 @@
     <None Include=".gitignore" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\assetDefs.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\asteroid.lua" />
+    <None Include="ASSETS\SCRIPTS\ASTERIODS\collision_system.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\entityDefs.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\ship.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\utilities.lua" />
@@ -191,6 +194,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\ECS\COMPONENTS\AnimationComponent.h" />
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\BoxColliderComponent.h" />
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\CircleColliderComponent.h" />
     <ClInclude Include="ENGINE\RENDERER\CORE\BatchRenderer.h" />
     <ClInclude Include="ENGINE\ECS\COMPONENTS\ScriptComponent.h" />
     <ClInclude Include="ENGINE\SCRIPTING\GLMLuaBindings.h" />
