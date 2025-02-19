@@ -177,6 +177,9 @@
   <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
+    <None Include="ASSETS\SCRIPTS\ASTERIODS\assetDefs.lua" />
+    <None Include="ASSETS\SCRIPTS\ASTERIODS\entityDefs.lua" />
+    <None Include="ASSETS\SCRIPTS\ASTERIODS\utilities.lua" />
     <None Include="ASSETS\SCRIPTS\main.lua" />
     <None Include="ASSETS\SHADER\shader.frag" />
     <None Include="ASSETS\SHADER\shader.vert" />

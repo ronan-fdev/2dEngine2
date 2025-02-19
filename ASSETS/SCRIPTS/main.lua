@@ -1,4 +1,10 @@
+run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/entityDefs.lua")
+run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/assetDefs.lua")
+run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/utilities.lua")
 
+LoadAssets()
+
+local entity = LoadEntity(ShipDefs["blue_ship"])
 
 gEntity = Entity("TestEntity", "Groupy")
 

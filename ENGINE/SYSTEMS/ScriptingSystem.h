@@ -9,6 +9,7 @@
 #include "../LOGGER/log.h"
 #include "../SCRIPTING/GLMLuaBindings.h"
 #include "../SCRIPTING/InputManager.h"
+#include "../RESOURCES/AssetManager.h"
 
 #include <sol/sol.hpp>
 
@@ -22,6 +23,9 @@ public:
 	void Render();
 
 	static void RegisterLuaBindings(sol::state& lua, Registry& registry);
+
+	static void RegisterLuaFunctions(sol::state& lua);
+
 
 private:
 	Registry& m_Registry;

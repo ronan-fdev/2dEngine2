@@ -103,6 +103,9 @@
     <None Include="ENGINE\ECS\Registry.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="ASSETS\SCRIPTS\ASTERIODS\entityDefs.lua" />
+    <None Include="ASSETS\SCRIPTS\ASTERIODS\assetDefs.lua" />
+    <None Include="ASSETS\SCRIPTS\ASTERIODS\utilities.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\WINDOW\Window.h">

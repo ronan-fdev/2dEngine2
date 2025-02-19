@@ -59,3 +59,21 @@ Shader& AssetManager::GetShader(const std::string& shaderName)
     return *shaderItr->second;
 
 }
+
+void AssetManager::CreateLuaAssetManager(sol::state& lua, Registry& registry)
+{
+    auto& asset_manager = registry.GetContext<std::shared_ptr<AssetManager>>();
+    if (!asset_manager)
+    {
+        LOG_ERROR("Failed to bind the asset manager to lua - Does not exist in the registry!");
+        return;
+    }
+    lua.new_usertype<AssetManager>(
+        "AssetManager",
+        sol::no_constructor,
+        "add_texture", [&](const std::string& assetName, const std::string& filepath)
+        {
+            return asset_manager->AddTexture(assetName, filepath);
+        }
+    );
+}

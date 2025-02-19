@@ -2,6 +2,9 @@
 
 #include "../RENDERER/TEXTURE/TextureLoader.h";
 #include "../RENDERER/SHADER/ShaderLoader.h";
+#include "../ECS/Registry.h"
+
+#include "sol/sol.hpp"
 
 class AssetManager
 {
@@ -40,6 +43,9 @@ public:
 	* @return Returns the desired shader if it exists, else returns an empty Shader object
 	*/
 	Shader& GetShader(const std::string& shaderName);
+
+	static void CreateLuaAssetManager(sol::state& lua, Registry& registry);
+
 private:
 	std::map<std::string, std::shared_ptr<Texture>> m_mapTextures{};
 	std::map<std::string, std::shared_ptr<Shader>> m_mapShader{};

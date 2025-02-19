@@ -98,6 +98,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	Registry::CreateLuaRegistryBind(lua, registry);
 	GLMBindings::CreateGLMBindings(lua);
 	InputManager::CreateLuaInputBindings(lua);
+	AssetManager::CreateLuaAssetManager(lua, registry);
 
 
 	TransformComponent::CreateLuaTransformBind(lua);
@@ -111,4 +112,23 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	Registry::RegisterMetaComponent<TransformComponent>();
 	Registry::RegisterMetaComponent<SpriteComponent>();
 	Registry::RegisterMetaComponent<AnimationComponent>();
+}
+
+void ScriptingSystem::RegisterLuaFunctions(sol::state& lua)
+{
+	lua.set_function(
+		"run_script", [&](const std::string& path)
+		{
+			try
+			{
+				lua.safe_script_file(path);
+			}
+			catch (const sol::error& error)
+			{
+				LOG_ERROR("Error loading Lua Script: {}", error.what());
+				return false;
+			}
+			return true;
+		}
+	);
 }
