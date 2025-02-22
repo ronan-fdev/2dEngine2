@@ -13,6 +13,9 @@ function CollisionSystem:Update()
 	-- TODO: Add box collision
 end
 function CollisionSystem:UpdateCircleCollision()
+	
+	entitiesToDestroy = {};
+
 	local entities = Registry.get_entities(CircleCollider)
 	entities:for_each(
 		function(entity_a)
@@ -37,6 +40,21 @@ function CollisionSystem:UpdateCircleCollision()
 					end
 					
 					if self:Intersect(entity_a, entity_b) then 
+						if group_a == "projectiles" and group_b == "asteroids" then
+							collider_a.bColliding = true
+							collider_b.bColliding = true
+							table.insert(entitiesToDestroy, entity_b:id())
+						elseif group_b == "projectiles" and group_a == "asteroids" then
+							collider_a.bColliding = true
+							collider_b.bColliding = true
+							table.insert(entitiesToDestroy, entity_a:id())
+						elseif name_b == "ship" and group_a == "asteroids" then
+							collider_b.bColliding = true
+							table.insert(entitiesToDestroy, entity_b:id())
+						elseif name_a == "ship" and group_b == "asteroids" then
+							collider_a.bColliding = true
+							table.insert(entitiesToDestroy, entity_a:id())
+						end
 						print("ID: " ..entity_a:id() ..", is colliding with ID: " ..entity_b:id())
 					end
 					::continue::
@@ -44,6 +62,16 @@ function CollisionSystem:UpdateCircleCollision()
 			)
 		end
 	)
+
+	for k,v in pairs(entitiesToDestroy) do
+		local entity = Entity(v)
+		if entity:group() == "asteroids" then 
+			RemoveAsteroid(entity:id())
+		elseif entity:name() == "ship" then
+			gData:RemoveLives()
+		end
+	end
+
 end
 function CollisionSystem:GetCenter(entity)
 	local transform = entity:get_component(Transform)

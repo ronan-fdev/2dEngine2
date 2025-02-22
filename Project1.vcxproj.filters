@@ -118,6 +118,8 @@
     <None Include="ASSETS\SCRIPTS\ASTERIODS\ship.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\asteroid.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\collision_system.lua" />
+    <None Include="ASSETS\SCRIPTS\ASTERIODS\projectile.lua" />
+    <None Include="ASSETS\SCRIPTS\ASTERIODS\game_data.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\WINDOW\Window.h">
@@ -234,6 +236,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="ASSETS\TEXTURES\ship.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ASSETS\TEXTURES\purple.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ASSETS\TEXTURES\laserBlue04.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

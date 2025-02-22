@@ -5,7 +5,9 @@ AssetDefs =
 		{ name = "ship", path = "ASSETS/TEXTURES/ship.png"},
 		{ name = "ast_1", path = "ASSETS/TEXTURES/asteroid_1.png"},
 		{ name = "ast_2", path = "ASSETS/TEXTURES/asteroid_2.png"},
-		{ name = "bg", path = "ASSETS/TEXTURES/purple.png"}
+		{ name = "bg", path = "ASSETS/TEXTURES/purple.png"},
+		{ name = "proj_1", path = "ASSETS/TEXTURES/laserBlue04.png"}
+
 	}
 }
 function LoadAssets()

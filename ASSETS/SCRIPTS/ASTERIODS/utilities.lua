@@ -121,3 +121,48 @@ function SpawnAsteroid()
 		gSpawnTimer:stop()
 	end
 end
+
+function RemoveAsteroid(asteroid_id)
+	for k,v in pairs(Asteroids) do
+		if v.m_EntityID == asteroid_id then
+			if v.m_Type == "big" then
+				CreateSmallFromBig(v)
+				gData:AddToScore(LARGE_ASTEROID_SCORE)
+			elseif v.m_Type == "small" then
+				gData:AddToScore(SMALL_ASTEROID_SCORE)
+			end
+
+			local asteroid = Entity(v.m_EntityID)
+			asteroid:kill()
+			Asteroids[k] = nil
+		end
+	end
+end
+
+function CreateSmallFromBig(asteroid)
+	local transform = Entity(asteroid.m_EntityID):get_component(Transform)
+	for i=1,2 do
+		local small = Asteroid:Create("asteroid_small")
+		local small_trasform = Entity(small.m_EntityID):get_component(Transform)
+		small_trasform.position = transform.position
+		AddAsteroid(small)
+	end
+end
+
+
+Projectiles = {}
+
+function AddProjectile(projectile)
+	table.insert(Projectiles,projectile)
+end
+
+function UpdateProjectiles()
+	for k,v in pairs(Projectiles) do
+		if v:TimesUp() then
+			v:Destroy()
+			Projectiles[k] = nil
+		else
+			v:Update()
+		end
+	end
+end

@@ -4,6 +4,8 @@ run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/utilit
 run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/ship.lua")
 run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/asteroid.lua")
 run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/collision_system.lua")
+run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/projectile.lua")
+run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/game_data.lua")
 
 math.randomseed(os.time())
 
@@ -19,8 +21,10 @@ main = {
 		update = function()
 			gShip:UpdateShip()
 			UpdateAsteroids()
+			UpdateProjectiles()
 			gCollisionSystem:Update()
 			SpawnAsteroid()
+			print("SCORE :"..gData:GetScore())
 		end
 	},
 	[2] = {
