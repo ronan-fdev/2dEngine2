@@ -54,4 +54,3 @@ gData = GameData:Create()
 SMALL_ASTEROID_SCORE = 15
 LARGE_ASTEROID_SCORE = 100
 
-

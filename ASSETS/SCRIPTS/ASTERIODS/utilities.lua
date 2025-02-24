@@ -38,6 +38,7 @@ function LoadEntity(def)
 				def.components.sprite.layer
 			)
 		)
+		sprite.bHidden = def.components.sprite.bHidden or false
 		sprite:generate_uvs()
 	end
 	if def.components.circle_collider then
@@ -47,6 +48,19 @@ function LoadEntity(def)
 			)
 		)
 	end
+
+	if def.components.animation then
+		newEntity:add_component(
+			Animation(
+				def.components.animation.num_frames,
+				def.components.animation.frame_rate,
+				def.components.animation.frame_offset,
+				def.components.animation.bVertical,
+				def.components.animation.bLooped
+			)
+		)
+	end
+
 	return newEntity:id()
 end
 
@@ -149,6 +163,13 @@ function CreateSmallFromBig(asteroid)
 	end
 end
 
+function ResetAsteroids()
+	for k, v in pairs(Asteroids) do 
+		local asteroid = Entity(v.m_EntityID)
+		asteroid:kill()
+		Asteroids[k] = nil
+	end
+end
 
 Projectiles = {}
 
@@ -165,4 +186,10 @@ function UpdateProjectiles()
 			v:Update()
 		end
 	end
+end
+
+function GetDigit(num, digit)
+	local n = 10 ^ digit
+	local n1 = 10 ^ (digit - 1)
+	return math.floor((num % n) / n1)
 end

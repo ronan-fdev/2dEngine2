@@ -6,7 +6,12 @@ AssetDefs =
 		{ name = "ast_1", path = "ASSETS/TEXTURES/asteroid_1.png"},
 		{ name = "ast_2", path = "ASSETS/TEXTURES/asteroid_2.png"},
 		{ name = "bg", path = "ASSETS/TEXTURES/purple.png"},
-		{ name = "proj_1", path = "ASSETS/TEXTURES/laserBlue04.png"}
+		{ name = "proj_1", path = "ASSETS/TEXTURES/laserBlue04.png"},
+		{ name = "lives", path = "ASSETS/TEXTURES/playerLife1_blue.png"},
+		{ name = "game_over", path = "ASSETS/TEXTURES/game_over.png"},
+		{ name = "score", path = "ASSETS/TEXTURES/score.png"},
+		{ name = "numbers", path = "ASSETS/TEXTURES/numeral-sheet.png"},
+		{ name = "ship_explosion", path = "ASSETS/TEXTURES/explosions_sheet.png"}
 
 	}
 }

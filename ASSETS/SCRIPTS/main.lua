@@ -1,11 +1,12 @@
-run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/entityDefs.lua")
-run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/assetDefs.lua")
-run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/utilities.lua")
-run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/ship.lua")
-run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/asteroid.lua")
-run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/collision_system.lua")
-run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/projectile.lua")
-run_script("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/ASTERIODS/game_data.lua")
+run_script("ASSETS/SCRIPTS/ASTERIODS/utilities.lua")
+run_script("ASSETS/SCRIPTS/ASTERIODS/entityDefs.lua")
+run_script("ASSETS/SCRIPTS/ASTERIODS/assetDefs.lua")
+run_script("ASSETS/SCRIPTS/ASTERIODS/ship.lua")
+run_script("ASSETS/SCRIPTS/ASTERIODS/asteroid.lua")
+run_script("ASSETS/SCRIPTS/ASTERIODS/collision_system.lua")
+run_script("ASSETS/SCRIPTS/ASTERIODS/projectile.lua")
+run_script("ASSETS/SCRIPTS/ASTERIODS/game_data.lua")
+run_script("ASSETS/SCRIPTS/ASTERIODS/hud.lua")
 
 math.randomseed(os.time())
 
@@ -15,6 +16,7 @@ LoadBackground()
 local entity = LoadEntity(ShipDefs["blue_ship"])
 gShip = Ship:Create({id = entity})
 gCollisionSystem = CollisionSystem:Create()
+gHud = Hud:Create()
 
 main = {
 	[1] = {
@@ -23,8 +25,18 @@ main = {
 			UpdateAsteroids()
 			UpdateProjectiles()
 			gCollisionSystem:Update()
-			SpawnAsteroid()
-			print("SCORE :"..gData:GetScore())
+			gHud:Update()
+			if not gData:IsGameOver() then
+				SpawnAsteroid()
+			else 
+				if Keyboard.just_pressed(KEY_ENTER) then 
+					gData:Reset()
+					gHud:Reset()
+					gShip:Reset()
+					ResetAsteroids()
+					ResetProjectiles()
+				end
+			end
 		end
 	},
 	[2] = {

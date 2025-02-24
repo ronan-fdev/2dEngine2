@@ -185,6 +185,7 @@
     <None Include="ASSETS\SCRIPTS\ASTERIODS\collision_system.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\entityDefs.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\game_data.lua" />
+    <None Include="ASSETS\SCRIPTS\ASTERIODS\hud.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\projectile.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\ship.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\utilities.lua" />
@@ -234,9 +235,15 @@
   <ItemGroup>
     <Image Include="ASSETS\TEXTURES\asteroid_1.png" />
     <Image Include="ASSETS\TEXTURES\asteroid_2.png" />
+    <Image Include="ASSETS\TEXTURES\explosions_sheet.png" />
+    <Image Include="ASSETS\TEXTURES\game_over.png" />
     <Image Include="ASSETS\TEXTURES\laserBlue04.png" />
+    <Image Include="ASSETS\TEXTURES\numeral-sheet.png" />
+    <Image Include="ASSETS\TEXTURES\playerLife1_blue.png" />
     <Image Include="ASSETS\TEXTURES\purple.png" />
+    <Image Include="ASSETS\TEXTURES\score.png" />
     <Image Include="ASSETS\TEXTURES\ship.png" />
+    <Image Include="ASSETS\TEXTURES\SpriteLetters.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

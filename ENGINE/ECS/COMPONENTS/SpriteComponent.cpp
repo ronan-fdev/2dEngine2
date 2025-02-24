@@ -17,6 +17,21 @@ void SpriteComponent::CreateSpriteLuaBind(sol::state& lua, Registry& registry)
 		"a", &Color::a
 	);
 
+	lua.new_usertype<UVs>(
+		"UVs",
+		sol::call_constructor,
+		sol::factories(
+			[](float u, float v)
+			{
+				return UVs{ .u = u, .v = v };
+			}
+		),
+		"u", &UVs::u,
+		"v", &UVs::v,
+		"uv_width", &UVs::uv_width,
+		"uv_height", &UVs::uv_height
+	);
+
 	lua.new_usertype<SpriteComponent>(
 		"Sprite",
 		"type_id", &entt::type_hash<SpriteComponent>::value,
@@ -42,6 +57,8 @@ void SpriteComponent::CreateSpriteLuaBind(sol::state& lua, Registry& registry)
 		"start_y", &SpriteComponent::start_y,
 		"layer", &SpriteComponent::layer,
 		"color", &SpriteComponent::color,
+		"bHidden", &SpriteComponent::bHidden,
+		"uvs", &SpriteComponent::uvs,
 		"generate_uvs", [&](SpriteComponent& sprite) {
 			auto& assetManager = registry.GetContext<std::shared_ptr<AssetManager>>();
 			auto& texture = assetManager->GetTexture(sprite.texture_name);

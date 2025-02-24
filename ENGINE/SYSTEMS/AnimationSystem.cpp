@@ -19,10 +19,16 @@ void AnimationSystem::Update()
         // Calculate elapsed time in seconds
         double currentTime = glfwGetTime();
 
+        if (animation.numFrames <= 0)
+            continue;
+
+        // if we are not looped and the current_frame == num_frame, skip
+        if (!animation.bLooped && animation.currentFrame >= animation.numFrames - 1)
+            continue;
+
         // Calculate current frame based on time and frame rate
         // frameRate is in frames per second, so we multiply by time to get current frame
-        animation.currentFrame = static_cast<int>((currentTime * animation.frameRate)) % animation.numFrames;
-
+        animation.currentFrame = static_cast<int>(((currentTime - animation.startTime) * animation.frameRate)) % animation.numFrames;
         // Update UV coordinates based on animation direction
         if (animation.bVertical)
         {

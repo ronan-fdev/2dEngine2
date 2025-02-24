@@ -72,6 +72,14 @@ ShipDefs =
 			},
 			circle_collider = {
 				radius = 38
+			},
+			animation = 
+			{
+				num_frames = 0,
+				frame_rate = 0,
+				frame_offset = 0,
+				bVertical = false,
+				bLooped = false
 			}
 		}
 	}
@@ -102,5 +110,86 @@ ProjectileDefs =
 		},
 		life_time = 2000,
 		proj_speed = 10
+	}
+}
+
+HudDefs = 
+{
+	lives = 
+	{
+		group = "lives",
+		components = 
+		{
+			transform = {
+				position = { x = 0, y = 0},
+				scale = { x = 1, y = 1},
+				rotation = 0
+			}, 
+			sprite = {
+				asset_name = "lives",
+				width = 33,
+				height = 26,
+				start_x = 0, start_y = 0,
+				layer = 10
+			}
+		}
+	},
+	score = 
+	{
+		tag = "score",
+		components = 
+		{
+			transform = {
+				position = { x = 200, y = 0},
+				scale = { x = 2, y = 2},
+				rotation = 0
+			}, 
+			sprite = {
+				asset_name = "score",
+				width = 80,
+				height = 16,
+				start_x = 0, start_y = 0,
+				layer = 10
+			}
+		}
+	},
+	number = 
+	{
+		group = "numbers",
+		components = 
+		{
+			transform = {
+				position = { x = 380, y = 0},
+				scale = { x = 2, y = 2},
+				rotation = 0
+			}, 
+			sprite = {
+				asset_name = "numbers",
+				width = 19,
+				height = 19,
+				start_x = 0, start_y = 0,
+				layer = 10
+			}
+		}
+	},
+	game_over = 
+	{
+		group = "game_over",
+		components = 
+		{
+			transform = {
+				position = { x = (WINDOW_WIDTH/2) - 144, y = (WINDOW_HEIGHT/2) - 16},
+				scale = { x = 2, y = 2},
+				rotation = 0
+			}, 
+			sprite = {
+				asset_name = "game_over",
+				width = 144,
+				height = 16,
+				start_x = 0, start_y = 0,
+				layer = 10,
+				bHidden = true
+			}
+		}
 	}
 }

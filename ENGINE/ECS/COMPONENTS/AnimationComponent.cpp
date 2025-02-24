@@ -6,12 +6,13 @@ void AnimationComponent::CreateAnimationLuaBind(sol::state& lua)
 		"Animation",
 		"type_id", &entt::type_hash<AnimationComponent>::value,
 		sol::call_constructor,
-		sol::factories([](int numFrames, int frameRate, int frameOffset, bool bVertical) {
+		sol::factories([](int numFrames, int frameRate, int frameOffset, bool bVertical, bool bLooped) {
 			return AnimationComponent{
 					.numFrames = numFrames,
 					.frameRate = frameRate,
 					.frameOffset = frameOffset,
-					.bVertical = bVertical
+					.bVertical = bVertical,
+					.bLooped = bLooped
 			};
 			}
 		),
@@ -19,6 +20,13 @@ void AnimationComponent::CreateAnimationLuaBind(sol::state& lua)
 		"frame_rate", &AnimationComponent::frameRate,
 		"frame_offset", &AnimationComponent::frameOffset,
 		"current_frame", &AnimationComponent::currentFrame,
-		"bVertical", &AnimationComponent::bVertical
+		"bVertical", &AnimationComponent::bVertical,
+		"bLooped", &AnimationComponent::bLooped,
+		"start_time", &AnimationComponent::startTime,
+		"reset", [](AnimationComponent& anim)
+		{
+			anim.currentFrame = 0;
+			anim.startTime = glfwGetTime();
+		}
 	);
 }
