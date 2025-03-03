@@ -18,6 +18,8 @@ gShip = Ship:Create({id = entity})
 gCollisionSystem = CollisionSystem:Create()
 gHud = Hud:Create()
 
+Music.play("space")
+
 main = {
 	[1] = {
 		update = function()

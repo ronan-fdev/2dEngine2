@@ -21,6 +21,8 @@
 #include "../WINDOW/INPUT/Keyboard.h"
 #include "../WINDOW/INPUT/Mouse.h"
 
+#include "../SOUNDS/MUSICPLAYER/MusicPlayer.h"
+
 #include <glm/glm.hpp>
 
 class Application
