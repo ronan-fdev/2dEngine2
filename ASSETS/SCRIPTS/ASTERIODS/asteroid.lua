@@ -16,6 +16,14 @@ function Asteroid:Create(def)
 	}
 	this.m_EntityID = LoadEntity(asteroid)
 	local entity = Entity(this.m_EntityID)
+
+	local asteroidSound = entity:add_component(
+		SoundEmitter(
+			"event:/ASTEROID/asteroid"
+		)
+	)
+	asteroidSound:play()
+
 	local transform = entity:get_component(Transform)
 	transform.position = GetRandomPosition()
 	setmetatable(this, self)

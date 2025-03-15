@@ -13,8 +13,16 @@ math.randomseed(os.time())
 LoadAssets()
 LoadBackground()
 
+SoundSystem:play_music_track("event:/BACKGROUND/background")
+
 local entity = LoadEntity(ShipDefs["blue_ship"])
 gShip = Ship:Create({id = entity})
+local sound = Entity(entity):add_component(
+	SoundListener(
+		true
+	)
+)
+
 gCollisionSystem = CollisionSystem:Create()
 gHud = Hud:Create()
 

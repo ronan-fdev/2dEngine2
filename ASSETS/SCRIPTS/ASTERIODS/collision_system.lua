@@ -51,10 +51,13 @@ function CollisionSystem:UpdateCircleCollision()
 						elseif name_b == "ship" and group_a == "asteroids" then
 							collider_b.bColliding = true
 							table.insert(entitiesToDestroy, entity_b:id())
+							SoundSystem:play_one_shot("event:/ASTEROID/asteroid_collision",0,0)
 						elseif name_a == "ship" and group_b == "asteroids" then
 							collider_a.bColliding = true
 							table.insert(entitiesToDestroy, entity_a:id())
+							SoundSystem:play_one_shot("event:/ASTEROID/asteroid_collision",0,0)
 						end
+						
 						print("ID: " ..entity_a:id() ..", is colliding with ID: " ..entity_b:id())
 					end
 					::continue::

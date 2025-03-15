@@ -16,6 +16,7 @@
 #include "../SYSTEMS/ScriptingSystem.h"
 #include "../SYSTEMS/RenderSystem.h"
 #include "../SYSTEMS/AnimationSystem.h"
+#include "../SYSTEMS/SoundSystem.h"
 
 #include "../SCRIPTING/InputManager.h"
 #include "../WINDOW/INPUT/Keyboard.h"

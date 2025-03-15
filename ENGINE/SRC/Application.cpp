@@ -47,7 +47,7 @@ bool Application::Initialize()
 	//Logger
 	log::Init();
 
-	Window::init(640, 480, "2DENGINE");
+	Window::init(1280, 720, "2DENGINE");
 
 	auto assetManager = std::make_shared<AssetManager>();
 	if (!assetManager)
@@ -147,6 +147,23 @@ bool Application::Initialize()
 	{
 		LOG_ERROR("Failed to load the shaders!");
 		return false;
+	}
+
+	//Initialize SoundSystems:
+	auto soundSystem = std::make_shared<SoundSystem>();
+	if (!pRegistry->AddToContext<std::shared_ptr<SoundSystem>>(soundSystem))
+	{
+		LOG_ERROR("Failed to add the camera to the registry context!");
+		return false;
+	}
+	if (!soundSystem->Initialize())
+	{
+		LOG_ERROR("Failed to initialize the SoundSystem");
+	}
+
+	if (!soundSystem->LoadBanks("C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SPACESHOOTER/MUSIC/spaceshooter/Build/Desktop"))
+	{
+		LOG_ERROR("Failed to LoadBanks for SoundSystem");
 	}
 
 	//Lua and ENTT::meta BINDING
@@ -268,6 +285,10 @@ void Application::Update()
 	keyboard.Update();
 	auto& mouse = inputManager.GetMouse();
 	mouse.Update();
+
+	//Update SoundSystem
+	auto& soundSystem = pRegistry->GetContext<std::shared_ptr<SoundSystem>>();
+	soundSystem->Update(Window::getdt(), *pRegistry);
 
 }
 

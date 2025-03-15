@@ -73,6 +73,7 @@ function Ship:UpdateShip()
 					rotation = transform.rotation
 				}
 			)
+			SoundSystem:play_one_shot("event:/LASER/laser", transform.position.x + sprite.width/2,transform.position.y + sprite.height/2)
 			self.m_CooldownTimer:start()
 			AddProjectile(projectile)
 		end
