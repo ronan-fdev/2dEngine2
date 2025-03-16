@@ -13,7 +13,6 @@
 #include "../LOGGER/log.h"
 #include "../SCRIPTING/GLMLuaBindings.h"
 #include "../SCRIPTING/InputManager.h"
-#include "../SCRIPTING/SoundBinding.h"
 #include "../RESOURCES/AssetManager.h"
 #include "../UTILITIES/Timer.h"
 

@@ -2,7 +2,6 @@
 
 #include "../RENDERER/TEXTURE/TextureLoader.h";
 #include "../RENDERER/SHADER/ShaderLoader.h";
-#include "../SOUNDS/ESSENTIALS/Music.h"
 #include "../ECS/Registry.h"
 
 #include "sol/sol.hpp"
@@ -45,14 +44,10 @@ public:
 	*/
 	Shader& GetShader(const std::string& shaderName);
 
-	bool AddMusic(const std::string& musicName, const std::string& filepath);
-	std::shared_ptr<Music> GetMusic(const std::string& musicName);
-
 	static void CreateLuaAssetManager(sol::state& lua, Registry& registry);
 
 private:
 	std::map<std::string, std::shared_ptr<Texture>> m_mapTextures{};
 	std::map<std::string, std::shared_ptr<Shader>> m_mapShader{};
-	std::map<std::string, std::shared_ptr<Music>> m_mapMusic{};
 };
 

@@ -60,50 +60,6 @@ Shader& AssetManager::GetShader(const std::string& shaderName)
 
 }
 
-bool AssetManager::AddMusic(const std::string& musicName, const std::string& filepath)
-{
-    if (m_mapMusic.find(musicName) != m_mapMusic.end())
-    {
-        LOG_ERROR("Failed to add music [{0}] -- Already exists!", musicName);
-        return false;
-    }
-
-    // Create the sound parameters
-    SoundParams params{
-        .name = musicName,
-        .filename = filepath,
-        .duration = 0.0  // Will be calculated when the music is loaded
-    };
-
-    // Create the music object
-    auto musicPtr = std::make_shared<Music>(params);
-    if (!musicPtr)
-    {
-        LOG_ERROR("Failed to create the music ptr for [{0}]", musicName);
-        return false;
-    }
-
-    // Preload the music to get its duration and verify it can be loaded
-    if (!musicPtr->Load())
-    {
-        return false;
-    }
-
-    m_mapMusic.emplace(musicName, std::move(musicPtr));
-    return true;
-}
-
-std::shared_ptr<Music> AssetManager::GetMusic(const std::string& musicName)
-{
-    auto musicItr = m_mapMusic.find(musicName);
-    if (musicItr == m_mapMusic.end())
-    {
-        LOG_ERROR("Failed to get [{0}] -- Does not exist!", musicName);
-        return nullptr;
-    }
-    return musicItr->second;
-}
-
 void AssetManager::CreateLuaAssetManager(sol::state& lua, Registry& registry)
 {
     auto& asset_manager = registry.GetContext<std::shared_ptr<AssetManager>>();
@@ -118,10 +74,6 @@ void AssetManager::CreateLuaAssetManager(sol::state& lua, Registry& registry)
         "add_texture", [&](const std::string& assetName, const std::string& filepath)
         {
             return asset_manager->AddTexture(assetName, filepath);
-        },
-        "add_music", [&](const std::string& musicName, const std::string& filepath)
-        {
-            return asset_manager->AddMusic(musicName, filepath);
         }
     );
 }

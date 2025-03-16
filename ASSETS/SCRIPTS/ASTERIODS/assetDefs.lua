@@ -13,10 +13,6 @@ AssetDefs =
 		{ name = "numbers", path = "ASSETS/TEXTURES/numeral-sheet.png"},
 		{ name = "ship_explosion", path = "ASSETS/TEXTURES/explosions_sheet.png"}
 
-	},
-	music = 
-	{
-		{ name = "space", path = "ASSETS/SPACESHOOTER/MUSIC/Voicy_Audio_Piano.mp3"}
 	}
 }
 function LoadAssets()
@@ -25,14 +21,6 @@ function LoadAssets()
 			print("Failed to load texture [" ..v.name .."] at path [" ..v.path .."]")
 		else
 			print("Loaded Texture [" ..v.name .."]")
-		end
-	end
-	-- TODO: Load other asset types
-	for k, v in pairs(AssetDefs.music) do 
-		if not AssetManager.add_music(v.name, v.path) then 
-			print("Failed to load music [" ..v.name .."] at path [" ..v.path .."]")
-		else
-			print("Loaded music [" ..v.name .."]")
 		end
 	end
 end
