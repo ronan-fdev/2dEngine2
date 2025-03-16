@@ -129,6 +129,20 @@ bool Application::Initialize()
 		return false;
 	}
 
+	//Creating a music player for sounds
+	auto musicPlayer = std::make_shared<MusicPlayer>();
+	if (!musicPlayer)
+	{
+		LOG_ERROR("Failed to create the Music Player!");
+		return false;
+	}
+
+	if (!pRegistry->AddToContext<std::shared_ptr<MusicPlayer>>(musicPlayer))
+	{
+		LOG_ERROR("Failed to add the Music Player to the Registry Context!");
+		return false;
+	}
+
 	// Create a temp camera
 	auto camera = std::make_shared<Camera2D>();
 

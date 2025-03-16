@@ -26,6 +26,8 @@ local sound = Entity(entity):add_component(
 gCollisionSystem = CollisionSystem:Create()
 gHud = Hud:Create()
 
+Music.play("space")
+
 main = {
 	[1] = {
 		update = function()

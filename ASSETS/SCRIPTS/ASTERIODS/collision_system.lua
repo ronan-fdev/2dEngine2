@@ -63,7 +63,7 @@ function CollisionSystem:UpdateCircleCollision()
 					::continue::
 				end
 			)
-		end
+		end 
 	)
 
 	for k,v in pairs(entitiesToDestroy) do
