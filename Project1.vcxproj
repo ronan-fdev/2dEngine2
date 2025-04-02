@@ -71,6 +71,22 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(SolutionDir)x64\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)GAMEENGINE;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>$(SolutionDir)x64\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)GAMEENGINE;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)GAMEENGINE;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)x64\Release;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)GAMEENGINE;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)x64\Release;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -85,7 +101,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GAMEENGINE.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -106,7 +122,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GAMEENGINE.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -123,7 +139,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GAMEENGINE.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,44 +160,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GAMEENGINE.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="ENGINE\ECS\COMPONENTS\AnimationComponent.cpp" />
-    <ClCompile Include="ENGINE\ECS\COMPONENTS\BoxColliderComponent.cpp" />
-    <ClCompile Include="ENGINE\ECS\COMPONENTS\CircleColliderComponent.cpp" />
-    <ClCompile Include="ENGINE\ECS\COMPONENTS\SoundEmitter.cpp" />
-    <ClCompile Include="ENGINE\ECS\COMPONENTS\SoundListener.cpp" />
-    <ClCompile Include="ENGINE\ECS\COMPONENTS\SpriteComponent.cpp" />
-    <ClCompile Include="ENGINE\ECS\COMPONENTS\TransformComponent.cpp" />
-    <ClCompile Include="ENGINE\RENDERER\CORE\BatchRenderer.cpp" />
-    <ClCompile Include="ENGINE\SCRIPTING\GLMLuaBindings.cpp" />
-    <ClCompile Include="ENGINE\SCRIPTING\InputManager.cpp" />
-    <ClCompile Include="ENGINE\SYSTEMS\SoundSystem.cpp" />
-    <ClCompile Include="ENGINE\SOUND\AudioEvent.cpp" />
-    <ClCompile Include="ENGINE\SOUND\FMODAudioSystem.cpp" />
-    <ClCompile Include="ENGINE\SRC\Application.cpp" />
-    <ClCompile Include="ENGINE\RESOURCES\AssetManager.cpp" />
-    <ClCompile Include="ENGINE\INPUT\KeyListener.cpp" />
-    <ClCompile Include="ENGINE\INPUT\MouseListener.cpp" />
-    <ClCompile Include="ENGINE\RENDERER\CORE\Camera2D.cpp" />
-    <ClCompile Include="ENGINE\RENDERER\SHADER\Shader.cpp" />
-    <ClCompile Include="ENGINE\RENDERER\TEXTURE\Texture.cpp" />
-    <ClCompile Include="ENGINE\SRC\main.cpp" />
-    <ClCompile Include="ENGINE\SYSTEMS\AnimationSystem.cpp" />
-    <ClCompile Include="ENGINE\UTILITIES\Time.cpp" />
-    <ClCompile Include="ENGINE\UTILITIES\Timer.cpp" />
-    <ClCompile Include="ENGINE\WINDOW\INPUT\Keyboard.cpp" />
-    <ClCompile Include="ENGINE\WINDOW\INPUT\Mouse.cpp" />
-    <ClCompile Include="ENGINE\WINDOW\Window.cpp" />
-    <ClCompile Include="ENGINE\LOGGER\log.cpp" />
-    <ClCompile Include="ENGINE\ECS\Registry.cpp" />
-    <ClCompile Include="ENGINE\ECS\Entity.cpp" />
-    <ClCompile Include="ENGINE\SYSTEMS\ScriptingSystem.cpp" />
-    <ClCompile Include="ENGINE\SYSTEMS\RenderSystem.cpp" />
-    <ClCompile Include="ENGINE\ECS\MetaUtilities.cpp" />
-  </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
@@ -197,50 +178,6 @@
     <None Include="ASSETS\SCRIPTS\main.lua" />
     <None Include="ASSETS\SHADER\shader.frag" />
     <None Include="ASSETS\SHADER\shader.vert" />
-    <None Include="ENGINE\ECS\Entity.inl" />
-    <None Include="ENGINE\ECS\Registry.inl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\AnimationComponent.h" />
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\BoxColliderComponent.h" />
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\CircleColliderComponent.h" />
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\SoundEmitter.h" />
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\SoundListener.h" />
-    <ClInclude Include="ENGINE\RENDERER\CORE\BatchRenderer.h" />
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\ScriptComponent.h" />
-    <ClInclude Include="ENGINE\SCRIPTING\GLMLuaBindings.h" />
-    <ClInclude Include="ENGINE\SCRIPTING\InputManager.h" />
-    <ClInclude Include="ENGINE\SYSTEMS\SoundSystem.h" />
-    <ClInclude Include="ENGINE\SOUND\AudioEvent.h" />
-    <ClInclude Include="ENGINE\SOUND\FMODAudioSystem.h" />
-    <ClInclude Include="ENGINE\SRC\Application.h" />
-    <ClInclude Include="ENGINE\RESOURCES\AssetManager.h" />
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\Identification.h" />
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\SpriteComponent.h" />
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\TransformComponent.h" />
-    <ClInclude Include="ENGINE\INPUT\KeyListener.h" />
-    <ClInclude Include="ENGINE\INPUT\MouseListener.h" />
-    <ClInclude Include="ENGINE\RENDERER\CORE\Camera2D.h" />
-    <ClInclude Include="ENGINE\RENDERER\ESSENTIALS\Vertex.h" />
-    <ClInclude Include="ENGINE\RENDERER\SHADER\Shader.h" />
-    <ClInclude Include="ENGINE\RENDERER\SHADER\ShaderLoader.h" />
-    <ClInclude Include="ENGINE\RENDERER\TEXTURE\Texture.h" />
-    <ClInclude Include="ENGINE\RENDERER\TEXTURE\TextureLoader.h" />
-    <ClInclude Include="ENGINE\SYSTEMS\AnimationSystem.h" />
-    <ClInclude Include="ENGINE\UTILITIES\Time.h" />
-    <ClInclude Include="ENGINE\UTILITIES\Timer.h" />
-    <ClInclude Include="ENGINE\WINDOW\INPUT\Button.h" />
-    <ClInclude Include="ENGINE\WINDOW\INPUT\Keyboard.h" />
-    <ClInclude Include="ENGINE\WINDOW\INPUT\Keys.h" />
-    <ClInclude Include="ENGINE\WINDOW\INPUT\Mouse.h" />
-    <ClInclude Include="ENGINE\WINDOW\INPUT\MouseButtons.h" />
-    <ClInclude Include="ENGINE\WINDOW\Window.h" />
-    <ClInclude Include="ENGINE\LOGGER\log.h" />
-    <ClInclude Include="ENGINE\ECS\Registry.h" />
-    <ClInclude Include="ENGINE\ECS\Entity.h" />
-    <ClInclude Include="ENGINE\SYSTEMS\ScriptingSystem.h" />
-    <ClInclude Include="ENGINE\SYSTEMS\RenderSystem.h" />
-    <ClInclude Include="ENGINE\ECS\MetaUtilities.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\TEXTURES\asteroid_1.png" />
@@ -254,6 +191,18 @@
     <Image Include="ASSETS\TEXTURES\score.png" />
     <Image Include="ASSETS\TEXTURES\ship.png" />
     <Image Include="ASSETS\TEXTURES\SpriteLetters.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SRC\Application.cpp" />
+    <ClCompile Include="SRC\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SRC\Application.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="GAMEENGINE\GAMEENGINE.vcxproj">
+      <Project>{53f4b32e-9255-4a35-b466-8ac4ac401447}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

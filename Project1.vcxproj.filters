@@ -15,103 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ENGINE\SRC\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\WINDOW\Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\INPUT\KeyListener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\INPUT\MouseListener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\UTILITIES\Time.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\RENDERER\SHADER\Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\RENDERER\TEXTURE\Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\LOGGER\log.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\RENDERER\CORE\Camera2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\ECS\Registry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\ECS\Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\RESOURCES\AssetManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\SRC\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\SYSTEMS\ScriptingSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\RENDERER\CORE\BatchRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\SYSTEMS\RenderSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\ECS\MetaUtilities.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\ECS\COMPONENTS\TransformComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\ECS\COMPONENTS\SpriteComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\SCRIPTING\GLMLuaBindings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\ECS\COMPONENTS\AnimationComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\SYSTEMS\AnimationSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\WINDOW\INPUT\Keyboard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\SCRIPTING\InputManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\WINDOW\INPUT\Mouse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\UTILITIES\Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\ECS\COMPONENTS\BoxColliderComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\ECS\COMPONENTS\CircleColliderComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
     <None Include="ASSETS\SHADER\shader.vert" />
     <None Include="ASSETS\SHADER\shader.frag" />
-    <None Include="ENGINE\ECS\Entity.inl">
-      <Filter>Header Files</Filter>
-    </None>
     <None Include="ASSETS\SCRIPTS\main.lua" />
-    <None Include="ENGINE\ECS\Registry.inl">
-      <Filter>Header Files</Filter>
-    </None>
     <None Include="ASSETS\SCRIPTS\ASTERIODS\entityDefs.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\assetDefs.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\utilities.lua" />
@@ -121,113 +29,6 @@
     <None Include="ASSETS\SCRIPTS\ASTERIODS\projectile.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\game_data.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\hud.lua" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ENGINE\WINDOW\Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\INPUT\KeyListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\INPUT\MouseListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\UTILITIES\Time.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\RENDERER\SHADER\Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\RENDERER\TEXTURE\Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\LOGGER\log.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\RENDERER\ESSENTIALS\Vertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\RENDERER\TEXTURE\TextureLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\RENDERER\CORE\Camera2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\RENDERER\SHADER\ShaderLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\ECS\Registry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\Identification.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\ECS\Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\TransformComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\SpriteComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\RESOURCES\AssetManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\SRC\Application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\ScriptComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\SYSTEMS\ScriptingSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\RENDERER\CORE\BatchRenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\SYSTEMS\RenderSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\ECS\MetaUtilities.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\SCRIPTING\GLMLuaBindings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\AnimationComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\SYSTEMS\AnimationSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\WINDOW\INPUT\Keys.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\WINDOW\INPUT\Keyboard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\WINDOW\INPUT\Button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\SCRIPTING\InputManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\WINDOW\INPUT\MouseButtons.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\WINDOW\INPUT\Mouse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\UTILITIES\Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\BoxColliderComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\CircleColliderComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\TEXTURES\asteroid_1.png">
@@ -263,5 +64,18 @@
     <Image Include="ASSETS\TEXTURES\explosions_sheet.png">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SRC\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SRC\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
