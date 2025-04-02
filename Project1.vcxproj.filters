@@ -29,6 +29,9 @@
     <None Include="ASSETS\SCRIPTS\ASTERIODS\projectile.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\game_data.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\hud.lua" />
+    <None Include="ASSETS\SCRIPTS\TESTPROJECT1\samplemap.lua" />
+    <None Include="ASSETS\SCRIPTS\utilities.lua" />
+    <None Include="ASSETS\SCRIPTS\TESTPROJECT1\assetdefs.lua" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\TEXTURES\asteroid_1.png">
