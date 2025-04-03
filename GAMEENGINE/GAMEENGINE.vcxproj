@@ -193,6 +193,7 @@
     <ClCompile Include="ENGINE\WINDOW\Window.cpp" />
     <ClCompile Include="ENGINE\RENDERER\CORE\Renderer.cpp" />
     <ClCompile Include="ENGINE\RENDERER\CORE\LineBatchRenderer.cpp" />
+    <ClCompile Include="ENGINE\SCRIPTING\RendererBindings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\ECS\COMPONENTS\AnimationComponent.h" />
@@ -239,6 +240,7 @@
     <ClInclude Include="ENGINE\WINDOW\Window.h" />
     <ClInclude Include="ENGINE\RENDERER\CORE\Renderer.h" />
     <ClInclude Include="ENGINE\RENDERER\CORE\LineBatchRenderer.h" />
+    <ClInclude Include="ENGINE\SCRIPTING\RendererBindings.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ENGINE\ECS\Entity.inl" />

@@ -131,6 +131,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	CircleColliderComponent::CreateLuaCircleColliderBind(lua);
 	SoundEmitter::CreateLuaSoundEmitterBind(lua, registry);
 	SoundListener::CreateLuaSoundListenerBind(lua);
+	RendererBinder::CreateRenderingBind(lua, registry);
 
 	Entity::RegisterMetaComponent<TransformComponent>();
 	Entity::RegisterMetaComponent<SpriteComponent>();
