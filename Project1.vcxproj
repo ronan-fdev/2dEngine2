@@ -179,6 +179,8 @@
     <None Include="ASSETS\SCRIPTS\TESTPROJECT1\assetdefs.lua" />
     <None Include="ASSETS\SCRIPTS\TESTPROJECT1\samplemap.lua" />
     <None Include="ASSETS\SCRIPTS\utilities.lua" />
+    <None Include="ASSETS\SHADER\colorShader.frag" />
+    <None Include="ASSETS\SHADER\colorShader.vert" />
     <None Include="ASSETS\SHADER\shader.frag" />
     <None Include="ASSETS\SHADER\shader.vert" />
   </ItemGroup>

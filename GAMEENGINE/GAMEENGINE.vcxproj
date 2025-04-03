@@ -191,6 +191,8 @@
     <ClCompile Include="ENGINE\WINDOW\INPUT\Keyboard.cpp" />
     <ClCompile Include="ENGINE\WINDOW\INPUT\Mouse.cpp" />
     <ClCompile Include="ENGINE\WINDOW\Window.cpp" />
+    <ClCompile Include="ENGINE\RENDERER\CORE\Renderer.cpp" />
+    <ClCompile Include="ENGINE\RENDERER\CORE\LineBatchRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\ECS\COMPONENTS\AnimationComponent.h" />
@@ -212,6 +214,7 @@
     <ClInclude Include="ENGINE\RENDERER\CORE\BatchRenderer.h" />
     <ClInclude Include="ENGINE\RENDERER\CORE\Camera2D.h" />
     <ClInclude Include="ENGINE\RENDERER\ESSENTIALS\BatchTypes.h" />
+    <ClInclude Include="ENGINE\RENDERER\ESSENTIALS\Primitives.h" />
     <ClInclude Include="ENGINE\RENDERER\ESSENTIALS\Vertex.h" />
     <ClInclude Include="ENGINE\RENDERER\SHADER\Shader.h" />
     <ClInclude Include="ENGINE\RENDERER\SHADER\ShaderLoader.h" />
@@ -234,6 +237,8 @@
     <ClInclude Include="ENGINE\WINDOW\INPUT\Mouse.h" />
     <ClInclude Include="ENGINE\WINDOW\INPUT\MouseButtons.h" />
     <ClInclude Include="ENGINE\WINDOW\Window.h" />
+    <ClInclude Include="ENGINE\RENDERER\CORE\Renderer.h" />
+    <ClInclude Include="ENGINE\RENDERER\CORE\LineBatchRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ENGINE\ECS\Entity.inl" />

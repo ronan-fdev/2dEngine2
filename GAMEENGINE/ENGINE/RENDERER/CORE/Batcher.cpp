@@ -1,6 +1,7 @@
 #include "Batcher.h"
 
 template class Batcher<Batch, SpriteGlyph>;
+template class Batcher<LineBatch, LineGlyph>;
 
 template<typename TBatch, typename TGlyph>
 Batcher<TBatch, TGlyph>::Batcher()

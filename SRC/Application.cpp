@@ -69,6 +69,13 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to create a entt registry!");
 	}
 
+	auto renderer = std::make_shared<Renderer>();
+	if (!pRegistry->AddToContext<std::shared_ptr<Renderer>>(renderer))
+	{
+		LOG_ERROR("Failed to add the renderer to the registry context");
+		return false;
+	}
+
 	//Create the lua state
 	auto lua = std::make_shared<sol::state>();
 	if (!lua)
@@ -175,6 +182,25 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to load the main lua script");
 	}
 
+	// TEMP -- TODO: To Be done in the renderer
+	glLineWidth(4.f);
+
+	// TEMP -- These are for testing, DrawLine calls should be done in lua!
+	renderer->DrawLine(
+		Line{
+			.p1 = glm::vec2{ 50.f },
+			.p2 = glm::vec2{ 200.f },
+			.color = Color{ 255, 0, 0, 255 } }
+	);
+
+	renderer->DrawLine(
+		Line{
+			.p1 = glm::vec2{ 200.f, 50.f },
+			.p2 = glm::vec2{ 50.f, 200.f },
+			.color = Color{ 0, 255, 0, 255 } }
+	);
+
+
 	return true;
 }
 
@@ -193,6 +219,14 @@ bool Application::LoadShaders()
 		LOG_ERROR("Failed to add shader!");
 		return false;
 	}
+
+	if (!assetManager->AddShader("color", "ASSETS/SHADER/colorShader.vert",
+		"ASSETS/SHADER/colorShader.frag"))
+	{
+		LOG_ERROR("Failed to add the color shader to the asset manager");
+		return false;
+	}
+
 	return true;
 }
 
@@ -296,12 +330,19 @@ void Application::Render()
 {
 	auto& renderSystem = pRegistry->GetContext<std::shared_ptr<RenderSystem>>();
 
-	
+	auto& camera = pRegistry->GetContext<std::shared_ptr<Camera2D>>();
+	auto& renderer = pRegistry->GetContext<std::shared_ptr<Renderer>>();
+	auto& assetManager = pRegistry->GetContext<std::shared_ptr<AssetManager>>();
+
+	auto& shader = assetManager->GetShader("color");
 
 	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
 	scriptSystem->Render();
 
 	renderSystem->Update();
+
+	renderer->DrawLines(shader, *camera);
+
 }
 
 void Application::CleanUp()

@@ -7,7 +7,9 @@
 #include "ENGINE/LOGGER/log.h"
 #include "ENGINE/RESOURCES/AssetManager.h"
 #include "ENGINE/RENDERER/CORE/Camera2D.h"
+#include "ENGINE/RENDERER/CORE/Renderer.h"
 #include "ENGINE/RENDERER/ESSENTIALS/Vertex.h"
+
 #include "ENGINE/ECS/Entity.h";
 #include "ENGINE/ECS/COMPONENTS/SpriteComponent.h";
 #include "ENGINE/ECS/COMPONENTS/TransformComponent.h";
