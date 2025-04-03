@@ -172,6 +172,7 @@
     <ClCompile Include="ENGINE\INPUT\KeyListener.cpp" />
     <ClCompile Include="ENGINE\INPUT\MouseListener.cpp" />
     <ClCompile Include="ENGINE\LOGGER\log.cpp" />
+    <ClCompile Include="ENGINE\RENDERER\CORE\Batcher.cpp" />
     <ClCompile Include="ENGINE\RENDERER\CORE\BatchRenderer.cpp" />
     <ClCompile Include="ENGINE\RENDERER\CORE\Camera2D.cpp" />
     <ClCompile Include="ENGINE\RENDERER\SHADER\Shader.cpp" />
@@ -207,8 +208,10 @@
     <ClInclude Include="ENGINE\INPUT\KeyListener.h" />
     <ClInclude Include="ENGINE\INPUT\MouseListener.h" />
     <ClInclude Include="ENGINE\LOGGER\log.h" />
+    <ClInclude Include="ENGINE\RENDERER\CORE\Batcher.h" />
     <ClInclude Include="ENGINE\RENDERER\CORE\BatchRenderer.h" />
     <ClInclude Include="ENGINE\RENDERER\CORE\Camera2D.h" />
+    <ClInclude Include="ENGINE\RENDERER\ESSENTIALS\BatchTypes.h" />
     <ClInclude Include="ENGINE\RENDERER\ESSENTIALS\Vertex.h" />
     <ClInclude Include="ENGINE\RENDERER\SHADER\Shader.h" />
     <ClInclude Include="ENGINE\RENDERER\SHADER\ShaderLoader.h" />

@@ -3,12 +3,35 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "sample.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
         "": {
             "scaleInDock": 1
+        },
+        "collider.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "sample.tmx": {
+            "scale": 1,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 149,
+                "y": 58.5
+            }
+        },
+        "sample.tmx#collider": {
+            "scaleInDock": 1
+        },
+        "sample.tmx#sampleDungenTileset": {
+            "scaleInDock": 1
+        },
+        "sampleDungenTileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         }
     },
     "last.exportedFilePath": "C:/Aswin_Game_DEV/2DEngine2/Project1/ASSETS/SCRIPTS/TESTPROJECT1",
@@ -20,9 +43,15 @@
     "map.tileWidth": 16,
     "map.width": 20,
     "openFiles": [
+        "sample.tmx",
+        "collider.tsx",
+        "sampleDungenTileset.tsx"
     ],
     "project": "sample.tiled-project",
     "recentFiles": [
+        "sampleDungenTileset.tsx",
+        "collider.tsx",
+        "sample.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

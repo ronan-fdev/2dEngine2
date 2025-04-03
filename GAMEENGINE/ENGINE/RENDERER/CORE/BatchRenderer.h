@@ -1,32 +1,26 @@
 #pragma once
 
-#include <vector>
-#include <memory>
 #include <algorithm>
+#include "Batcher.h"
+#include "../ESSENTIALS/BatchTypes.h"
 
-#include "../ESSENTIALS/Vertex.h"
-
-class BatchRenderer
+class SpriteBatchRenderer : public Batcher<Batch,SpriteGlyph>
 {
 public:
-	BatchRenderer();
-	~BatchRenderer();
-	/*
-	* @brief Clears the current batches and sprites making
-	* it ready to start new batches.
-	*/
-	void Begin();
+	SpriteBatchRenderer();
+	~SpriteBatchRenderer() = default;
+	
 	/*
 	* @brief Checks to see if there are sprites to create batches.
 	* Sorts the sprites based on their layer and then generates the
 	* batches to be rendered.
 	*/
-	void End();
+	virtual void End() override;
 	/*
 	* @brief Checks to see if there are any batches to render. If
 	* there are batches to render, it loops through the batches and Renders them.
 	*/
-	void Render();
+	virtual void Render() override;
 
 	/*
 	* @brief Adds a new sprite to the sprites vector.
@@ -39,23 +33,9 @@ public:
 	void AddSprite(const glm::vec4& spriteRect, const glm::vec4 uvRect, GLuint textureID, int layer = 0
 		, glm::mat4 model = glm::mat4{ 1.f }, const Color& color = Color{ .r = 255, .g = 255, .b = 255, .a = 255 });
 private:
-	struct Batch
-	{
-		GLuint numIndices{ 0 }, offset{ 0 }, textureID{ 0 };
-	};
-	struct Sprite
-	{
-		Vertex topLeft, bottomLeft, topRight, bottomRight;
-		int layer;
-		GLuint textureID;
-	};
-
-	GLuint m_VAO, m_VBO, m_IBO;
-	std::vector<std::shared_ptr<Sprite>> m_Sprites;
-	std::vector<std::shared_ptr<Batch>> m_Batches;
 
 	void Initialize();
-	void GenerateBatches();
+	virtual void GenerateBatches() override;
 
 };
 

@@ -23,6 +23,6 @@ public:
 	void Update();
 private:
 	Registry& m_Registry;
-	std::unique_ptr<BatchRenderer> m_pBatchRenderer;
+	std::unique_ptr<SpriteBatchRenderer> m_pBatchRenderer;
 };
 
