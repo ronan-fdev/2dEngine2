@@ -32,6 +32,21 @@ void RendererBinder::CreateRenderingBind(sol::state& lua, Registry& registry)
         "color", &Rect::color
     );
 
+    lua.new_usertype<Circle>(
+        "Circle",
+        sol::call_constructor,
+        sol::factories(
+            [](const glm::vec2& position, float lineThickness, float radius, const Color& color)
+            {
+                return Circle{ .position = position, .lineThickness = lineThickness, .radius = radius, .color = color };
+            }
+        ),
+        "position", &Circle::position,
+        "lineThickness", &Circle::lineThickness,
+        "radius", &Circle::radius,
+        "color", &Circle::color
+    );
+
     // Bind the renderer
     auto& renderer = registry.GetContext<std::shared_ptr<Renderer>>();
     if (!renderer)
@@ -58,6 +73,23 @@ void RendererBinder::CreateRenderingBind(sol::state& lua, Registry& registry)
             },
             [&](const glm::vec2& p1, const glm::vec2& p2, const Color& color) {
                 renderer->DrawLine(p1, p2, color);
+            }
+        )
+    );
+
+    lua.set_function(
+        "DrawFilledRect", [&](const Rect& rect) {
+            renderer->DrawFilledRect(rect);
+        }
+    );
+
+    lua.set_function(
+        "DrawCircle", sol::overload(
+            [&](const Circle& circle) {
+                renderer->DrawCircle(circle);
+            },
+            [&](const glm::vec2& pos, float lineThickness, float radius, const Color& color) {
+                renderer->DrawCircle(pos, radius, color, lineThickness);
             }
         )
     );

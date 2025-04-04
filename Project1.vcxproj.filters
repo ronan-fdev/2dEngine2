@@ -34,6 +34,10 @@
     <None Include="ASSETS\SCRIPTS\TESTPROJECT1\assetdefs.lua" />
     <None Include="ASSETS\SHADER\colorShader.frag" />
     <None Include="ASSETS\SHADER\colorShader.vert" />
+    <None Include="ASSETS\SHADER\circleShader.vert" />
+    <None Include="ASSETS\SHADER\circleShader.frag" />
+    <None Include="ASSETS\SHADER\fontShader.frag" />
+    <None Include="ASSETS\SHADER\fontShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\TEXTURES\asteroid_1.png">
@@ -82,5 +86,8 @@
     <ClInclude Include="SRC\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="ASSETS\FONTS\Aaargh.ttf" />
   </ItemGroup>
 </Project>

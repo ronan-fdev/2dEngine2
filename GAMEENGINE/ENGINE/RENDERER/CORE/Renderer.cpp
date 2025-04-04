@@ -1,12 +1,13 @@
 #include "Renderer.h"
 
 Renderer::Renderer()
-	:
-	m_pLineBatch{ nullptr }, 
-	m_pSpriteBatch{ nullptr }
+    : m_Lines{}, m_Rects{}, m_Circles{}, m_Text{}
+    , m_pLineBatch{ std::make_unique<LineBatchRenderer>() }
+    , m_pRectBatch{ std::make_unique<RectBatchRenderer>() }
+    , m_pCircleBatch{ std::make_unique<CircleBatchRenderer>() }
+    , m_pSpriteBatch{ std::make_unique<SpriteBatchRenderer>() }
+    , m_pTextBatch{ std::make_unique<TextBatchRenderer>() }
 {
-	m_pLineBatch = std::make_unique<LineBatchRenderer>();
-	m_pSpriteBatch = std::make_unique<SpriteBatchRenderer>();
 }
 
 void Renderer::SetClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
@@ -50,6 +51,11 @@ void Renderer::SetViewport(GLint x, GLint y, GLsizei width, GLsizei height)
     glViewport(x, y, width, height);
 }
 
+void Renderer::SetLineWidth(GLfloat lineWidth)
+{
+    glLineWidth(lineWidth);
+}
+
 void Renderer::DrawLine(const Line& line)
 {
 	m_Lines.push_back(line);
@@ -57,7 +63,7 @@ void Renderer::DrawLine(const Line& line)
 
 void Renderer::DrawLine(const glm::vec2& p1, const glm::vec2& p2, const Color& color, float lineWidth)
 {
-	m_Lines.push_back(Line{ .p1 = p1, .p2 = p2, .lineWidth = lineWidth, .color = color });
+    m_Lines.emplace_back(Line{ .p1 = p1, .p2 = p2, .lineWidth = lineWidth, .color = color });
 }
 
 void Renderer::DrawRect(const Rect& rect)
@@ -104,21 +110,29 @@ void Renderer::DrawRect(const glm::vec2& position, float width, float height, co
 
 void Renderer::DrawFilledRect(const Rect& rect)
 {
+    m_Rects.push_back(rect);
 }
 
 void Renderer::DrawCircle(const Circle& circle)
 {
+    m_Circles.push_back(circle);
 }
 
 void Renderer::DrawCircle(const glm::vec2& position, float radius, const Color& color, float thickness)
 {
+    m_Circles.push_back(Circle{ .position = position, .lineThickness = thickness, .radius = radius, .color = color });
+}
+
+void Renderer::DrawText2D(const Text& text)
+{
+    m_Text.push_back(text);
 }
 
 void Renderer::DrawLines(Shader& shader, Camera2D& camera)
 {
     auto cam_mat = camera.GetCameraMatrix();
     shader.use();
-    shader.setMat4("projection", cam_mat);
+    shader.setMat4("uProjection", cam_mat);
 
     m_pLineBatch->Begin();
 
@@ -131,10 +145,73 @@ void Renderer::DrawLines(Shader& shader, Camera2D& camera)
     shader.unuse();
 }
 
+void Renderer::DrawFilledRects(Shader& shader, Camera2D& camera)
+{
+    if (m_Rects.empty())
+        return;
+
+    auto cam_mat = camera.GetCameraMatrix();
+    shader.use();
+    shader.setMat4("uProjection", cam_mat);
+
+    m_pRectBatch->Begin();
+
+    for (const auto& rect : m_Rects)
+    {
+        m_pRectBatch->AddRect(rect);
+    }
+    m_pRectBatch->End();
+    m_pRectBatch->Render();
+    shader.unuse();
+}
+
+void Renderer::DrawCircles(Shader& shader, Camera2D& camera)
+{
+    if (m_Circles.empty())
+        return;
+
+    auto cam_mat = camera.GetCameraMatrix();
+    shader.use();
+    shader.setMat4("uProjection", cam_mat);
+
+    m_pCircleBatch->Begin();
+
+    for (const auto& circle : m_Circles)
+    {
+        m_pCircleBatch->AddCircle(circle);
+    }
+
+    m_pCircleBatch->End();
+    m_pCircleBatch->Render();
+    shader.unuse();
+}
+
+void Renderer::DrawAllText(Shader& shader, Camera2D& camera)
+{
+    if (m_Text.empty())
+        return;
+
+    auto cam_mat = camera.GetCameraMatrix();
+    shader.use();
+    shader.setMat4("uProjection", cam_mat);
+
+    m_pTextBatch->Begin();
+
+    for (const auto& text : m_Text)
+    {
+        m_pTextBatch->AddText(text.textStr, text.pFont, text.position, 4, text.wrap, text.color);
+    }
+
+    m_pTextBatch->End();
+    m_pTextBatch->Render();
+    shader.unuse();
+}
+
 
 void Renderer::ClearPrimitives()
 {
     m_Lines.clear();
     m_Rects.clear();
     m_Circles.clear();
+    //m_Text.clear();
 }

@@ -76,6 +76,8 @@ bool Application::Initialize()
 		return false;
 	}
 
+	renderer->SetLineWidth(4.f);
+
 	//Create the lua state
 	auto lua = std::make_shared<sol::state>();
 	if (!lua)
@@ -182,10 +184,33 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to load the main lua script");
 	}
 
-	// TEMP -- TODO: To Be done in the renderer
-	glLineWidth(4.f);
 
-	
+	// Temp Load pixel font
+	if (!assetManager->AddFont("pixel", "ASSETS/FONTS/Aaargh.ttf"))
+	{
+		LOG_ERROR("Failed to load pixel font!");
+		return false;
+	}
+	// ============================================================================
+	// Test for Drawing Text --> TO BE DELETED!
+	// ============================================================================
+	auto pFont = assetManager->GetFont("pixel");
+	renderer->DrawText2D(
+		Text{
+			.position = glm::vec2{ 225.f, 200.f },
+			.textStr = "SCION2D",
+			.pFont = pFont
+		}
+	);
+
+	renderer->DrawText2D(
+		Text{
+		.position = glm::vec2{ 0.f, 300.f },
+			.textStr = "TEXT BATCH RENDERING!",
+			.pFont = pFont
+		}
+	);
+	// ============================================================================
 
 
 	return true;
@@ -211,6 +236,20 @@ bool Application::LoadShaders()
 		"ASSETS/SHADER/colorShader.frag"))
 	{
 		LOG_ERROR("Failed to add the color shader to the asset manager");
+		return false;
+	}
+
+	if (!assetManager->AddShader("circle", "ASSETS/SHADER/circleShader.vert",
+		"ASSETS/SHADER/circleShader.frag"))
+	{
+		LOG_ERROR("Failed to add the color shader to the asset manager");
+		return false;
+	}
+
+	if (!assetManager->AddShader("font", "ASSETS/SHADER/fontShader.vert",
+		"ASSETS/SHADER/fontShader.frag"))
+	{
+		LOG_ERROR("Failed to add the font shader to the asset manager");
 		return false;
 	}
 
@@ -322,6 +361,8 @@ void Application::Render()
 	auto& assetManager = pRegistry->GetContext<std::shared_ptr<AssetManager>>();
 
 	auto& shader = assetManager->GetShader("color");
+	auto& circleShader = assetManager->GetShader("circle");
+	auto& fontShader = assetManager->GetShader("font");
 
 	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
 	scriptSystem->Render();
@@ -329,7 +370,11 @@ void Application::Render()
 	renderSystem->Update();
 
 	renderer->DrawLines(shader, *camera);
+	renderer->DrawFilledRects(shader, *camera);
+	renderer->DrawCircles(circleShader, *camera);
+	renderer->DrawAllText(fontShader, *camera);
 
+	renderer->ClearPrimitives();
 }
 
 void Application::CleanUp()

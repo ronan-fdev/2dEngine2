@@ -2,6 +2,9 @@
 
 template class Batcher<Batch, SpriteGlyph>;
 template class Batcher<LineBatch, LineGlyph>;
+template class Batcher<RectBatch, RectGlyph>;
+template class Batcher<RectBatch, CircleGlyph>;
+template class Batcher<TextBatch, TextGlyph>;
 
 template<typename TBatch, typename TGlyph>
 Batcher<TBatch, TGlyph>::Batcher()

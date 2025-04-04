@@ -4,7 +4,6 @@
 #include <string>
 #include <fstream>
 #include <vector>
-#include <SOIL/stb_truetype.h>
 
 #include "Font.h"
 #include "../../LOGGER/log.h"
