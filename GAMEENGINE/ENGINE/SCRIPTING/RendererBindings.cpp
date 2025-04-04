@@ -2,6 +2,9 @@
 
 void RendererBinder::CreateRenderingBind(sol::state& lua, Registry& registry)
 {
+    // Get the Asset Manager 
+    auto& assetManager = registry.GetContext<std::shared_ptr<AssetManager>>();
+
     // Primitives Bind
     lua.new_usertype<Line>(
         "Line",
@@ -119,6 +122,43 @@ void RendererBinder::CreateRenderingBind(sol::state& lua, Registry& registry)
         },
         "set_scale", [&](float scale) {
             camera->SetScale(scale);
+        }
+
+    );
+
+    //Text RendererBinding:
+    lua.new_usertype<Text>(
+        "Text",
+        sol::call_constructor,
+        sol::factories(
+            [&](const glm::vec2& position, const std::string& textStr, const std::string& fontName, float wrap,
+                const Color& color)
+            {
+                auto pFont = assetManager->GetFont(fontName);
+                if (!pFont)
+                {
+                    LOG_ERROR("Failed to get font [{}] -- Does not exist in asset manager!", fontName);
+                    return Text{};
+                }
+
+                return Text{
+                    .position = position,
+                    .textStr = textStr,
+                    .wrap = wrap,
+                    .pFont = pFont,
+                    .color = color
+                };
+            }
+        ),
+        "position", &Text::position,
+        "textStr", &Text::textStr,
+        "wrap", &Text::wrap,
+        "color", &Text::color
+    );
+
+    lua.set_function(
+        "DrawText", [&](const Text& text) {
+            renderer->DrawText2D(text);
         }
     );
 }

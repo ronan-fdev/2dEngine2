@@ -7,6 +7,7 @@
 #include "../RENDERER/ESSENTIALS/Primitives.h"
 #include "../RENDERER/CORE/Renderer.h"
 #include "../RENDERER/CORE/Camera2D.h"
+#include "../RESOURCES/AssetManager.h"
 
 struct RendererBinder
 {

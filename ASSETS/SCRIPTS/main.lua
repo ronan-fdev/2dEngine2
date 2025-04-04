@@ -21,6 +21,17 @@ main = {
  			DrawRect(Rect(vec2(300, 300), 100, 100, Color(0, 0, 255, 255)))
  			DrawRect(Rect(vec2(300, 300), 100, 100, Color(0, 0, 255, 255)))
  			DrawCircle(vec2(200, 200), 0.5, 200.0, Color(0, 0, 255, 255))
+
+			local text = "Text Batch Rendering " ..
+ 							 "Part#3 - Wrapping the Text"
+ 
+ 		    DrawText(Text(vec2( 0.0, 300.0), 
+ 		    	text,
+ 		    	"pixel",
+ 		    	640.0,
+ 		    	Color(255, 0, 0, 255)
+ 		    	)
+ 		    )
 		end
 	},
 }

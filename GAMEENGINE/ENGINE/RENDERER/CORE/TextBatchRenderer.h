@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../../LOGGER/log.h"
 #include "Batcher.h"
 #include "../Essentials/BatchTypes.h"
 
