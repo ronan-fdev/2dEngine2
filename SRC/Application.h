@@ -14,11 +14,15 @@
 #include "ENGINE/ECS/COMPONENTS/SpriteComponent.h";
 #include "ENGINE/ECS/COMPONENTS/TransformComponent.h";
 #include "ENGINE/ECS/COMPONENTS/Identification.h"
+#include "ENGINE/ECS/COMPONENTS/PhysicsComponent.h"
+#include "ENGINE/ECS/COMPONENTS/BoxColliderComponent.h"
+#include "ENGINE/ECS/COMPONENTS/CircleColliderComponent.h"
 		  
 #include "ENGINE/SYSTEMS/ScriptingSystem.h"
 #include "ENGINE/SYSTEMS/RenderSystem.h"
 #include "ENGINE/SYSTEMS/AnimationSystem.h"
 #include "ENGINE/SYSTEMS/SoundSystem.h"
+#include "ENGINE/SYSTEMS/PhysicsSystem.h"
 		  
 #include "ENGINE/SCRIPTING/InputManager.h"
 #include "ENGINE/WINDOW/INPUT/Keyboard.h"

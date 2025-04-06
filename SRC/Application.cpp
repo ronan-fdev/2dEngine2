@@ -184,33 +184,121 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to load the main lua script");
 	}
 
+	//Create the physics world
+	auto pPhysicsWorld = std::make_shared<Box2DWrappers>();
 
-	// Temp Load pixel font
-	if (!assetManager->AddFont("pixel", "ASSETS/FONTS/Aaargh.ttf"))
+	if (!pRegistry->AddToContext<std::shared_ptr<Box2DWrappers>>(pPhysicsWorld))
 	{
-		LOG_ERROR("Failed to load pixel font!");
+		LOG_ERROR("Failed to add the Physics world to the registry context!");
 		return false;
 	}
-	// ============================================================================
-	// Test for Drawing Text --> TO BE DELETED!
-	// ============================================================================
-	auto pFont = assetManager->GetFont("pixel");
-	renderer->DrawText2D(
-		Text{
-			.position = glm::vec2{ 225.f, 200.f },
-			.textStr = "SCION2D",
-			.pFont = pFont
+
+	auto pPhysicsSystem = std::make_shared<PhysicsSystem>(*pRegistry);
+
+	if (!pRegistry->AddToContext<std::shared_ptr<PhysicsSystem>>(pPhysicsSystem))
+	{
+		LOG_ERROR("Failed to add the Physics system to the registry context!");
+		return false;
+	}
+	
+	//################################################
+	auto& pTexture = assetManager->GetTexture("soccer_ball");
+
+
+	auto& reg = pRegistry->GetRegistry();
+	auto entity1 = reg.create();
+	auto& transform1 = reg.emplace<TransformComponent>(
+		entity1,
+		TransformComponent{
+			.position = glm::vec2{320.f, 0.f},
+			.scale = glm::vec2{1.f}
+		}
+	);
+	auto& circle1 = reg.emplace<CircleColliderComponent>(
+		entity1,
+		CircleColliderComponent{
+			.radius = 64.f
 		}
 	);
 
-	renderer->DrawText2D(
-		Text{
-		.position = glm::vec2{ 0.f, 300.f },
-			.textStr = "TEXT BATCH RENDERING!",
-			.pFont = pFont
+	auto& physics1 = reg.emplace<PhysicsComponent>(
+		entity1,
+		PhysicsComponent{
+			pPhysicsWorld->GetWorldID(),
+			PhysicsAttributes{
+				.eType = RigidBodyType::DYNAMIC,
+				.density = 100.f,
+				.friction = 0.5f,
+				.restitution = 0.9f,
+				.restitutionThreshold = 100.f,
+				.radius = circle1.radius * PIXELS_TO_METERS,
+				.gravityScale = -5.f,
+				.position = transform1.position,
+				.scale = transform1.scale,
+				.bCircle = true,
+				.bFixedRotation = false
+			}
 		}
 	);
-	// ============================================================================
+	
+	physics1.Init(640, 480);
+
+	//Doubt: The rotation only happens when the body is given a force like this.
+	//b2Body_SetAngularVelocity(physics1.getBodyID(), 10.0f);
+
+	auto& sprite = reg.emplace<SpriteComponent>(
+		entity1,
+		SpriteComponent{
+			.width = 128.f,
+			.height = 128.f,
+			.start_x = 0,
+			.start_y = 0,
+			.layer = 3,
+			.texture_name = "soccer_ball"
+		}
+	);
+
+	sprite.generate_uvs(128, 128);
+
+
+	auto entity2 = reg.create();
+	auto& transform2 = reg.emplace<TransformComponent>(
+		entity2,
+		TransformComponent{
+			.position = glm::vec2{0.f, 400.f},
+			.scale = glm::vec2{1.f},
+			.rotation = 15
+		}
+	);
+
+	auto& boxCollider = reg.emplace<BoxColliderComponent>(
+		entity2,
+		BoxColliderComponent{
+			.width = 480,
+			.height = 48
+		}
+	);
+
+	auto& physics2 = reg.emplace<PhysicsComponent>(
+		entity2,
+		PhysicsComponent{
+			pPhysicsWorld->GetWorldID(),
+			PhysicsAttributes{
+				.eType = RigidBodyType::STATIC,
+				.density = 1000.f,
+				.friction = 0.5f,
+				.restitution = 0.0f,
+				.gravityScale = 0.f,
+				.position = transform2.position,
+				.scale = transform2.scale,
+				.boxSize = glm::vec2{boxCollider.width, boxCollider.height},
+				.bBoxShape = true,
+				.bFixedRotation = false
+			}
+		}
+	);
+
+	physics2.Init(640, 480);
 
 
 	return true;
@@ -349,6 +437,15 @@ void Application::Update()
 	//Update SoundSystem
 	auto& soundSystem = pRegistry->GetContext<std::shared_ptr<SoundSystem>>();
 	soundSystem->Update(Window::getdt(), *pRegistry);
+
+	//Update physics and physics system
+	auto& physics = pRegistry->GetContext<std::shared_ptr<Box2DWrappers>>();
+	float timeStep = 1.0f / 60.0f;
+	int subStepCount = 4;
+	b2World_Step(physics->GetWorldID(), timeStep, subStepCount);
+
+	auto& pPhysicsSystem = pRegistry->GetContext<std::shared_ptr<PhysicsSystem>>();
+	pPhysicsSystem->Update(pRegistry->GetRegistry());
 
 }
 

@@ -1,0 +1,19 @@
+#include "Box2DWrappers.h"
+
+Box2DWrappers::Box2DWrappers()
+    :
+    worldId(b2_nullWorldId)
+{
+    b2WorldDef worldDef = b2DefaultWorldDef();
+    worldDef.gravity = { 0.0f, -10.0f };
+    worldId = b2CreateWorld(&worldDef);
+    if (!b2World_IsValid(worldId))
+    {
+        LOG_ERROR("Failed to create the Box2D world [{0}]", worldId.index1);
+    }
+}
+
+Box2DWrappers::~Box2DWrappers()
+{
+    b2DestroyWorld(worldId);
+}

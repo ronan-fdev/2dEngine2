@@ -73,6 +73,9 @@
     <Image Include="ASSETS\TEXTURES\explosions_sheet.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="ASSETS\TEXTURES\socer_ball.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SRC\Application.cpp">

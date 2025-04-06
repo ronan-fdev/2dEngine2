@@ -266,5 +266,13 @@
  			print("Loaded soundfx [" ..v.name .."]")
  		end
  	end
+
+    for k, v in pairs(assets.font) do
+       if not AssetManager.add_font(v.name, v.path, v.font_size) then
+           print("Failed to load font [" ..v.name .."] at path [" ..v.path .."]")
+       else
+ 	       print("Loaded font [" ..v.name .."]")
+       end 
+    end
  	-- TODO: Add other loading of assets as needed
  end
