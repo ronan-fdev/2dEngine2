@@ -112,7 +112,7 @@ bool Application::Initialize()
 		return false;
 	}
 
-	//Setting up the rendersystem:
+	//Setting up the render system:
 	auto renderSystem = std::make_shared<RenderSystem>(*pRegistry);
 	if (!renderSystem)
 	{
@@ -122,6 +122,20 @@ bool Application::Initialize()
 	if (!pRegistry->AddToContext<std::shared_ptr<RenderSystem>>(renderSystem))
 	{
 		LOG_ERROR("Failed to add the rendersystem to the registry context");
+		return false;
+	}
+
+	//Setting up the render shape system
+	auto renderShapeSystem = std::make_shared<RenderShapeSystem>(*pRegistry);
+	if (!renderShapeSystem)
+	{
+		LOG_ERROR("Failed to create the render Shape system!");
+		return false;
+	}
+
+	if (!pRegistry->AddToContext<std::shared_ptr<RenderShapeSystem>>(renderShapeSystem))
+	{
+		LOG_ERROR("Failed to add the render Shape system to the registry context!");
 		return false;
 	}
 
@@ -175,15 +189,6 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to LoadBanks for SoundSystem");
 	}
 
-	//Lua and ENTT::meta BINDING
-	ScriptingSystem::RegisterLuaBindings(*lua, *pRegistry);
-	ScriptingSystem::RegisterLuaFunctions(*lua);
-
-	if (!scriptSystem->LoadMainScript(*lua))
-	{
-		LOG_ERROR("Failed to load the main lua script");
-	}
-
 	//Create the physics world
 	auto pPhysicsWorld = std::make_shared<Box2DWrappers>();
 
@@ -200,108 +205,115 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to add the Physics system to the registry context!");
 		return false;
 	}
+
+	//Lua and ENTT::meta BINDING
+	ScriptingSystem::RegisterLuaBindings(*lua, *pRegistry);
+	ScriptingSystem::RegisterLuaFunctions(*lua);
+
+	if (!scriptSystem->LoadMainScript(*lua))
+	{
+		LOG_ERROR("Failed to load the main lua script");
+	}
 	
-	//################################################
-	auto& pTexture = assetManager->GetTexture("soccer_ball");
+	////################################################
+	//auto& pTexture = assetManager->GetTexture("soccer_ball");
 
 
-	auto& reg = pRegistry->GetRegistry();
-	auto entity1 = reg.create();
-	auto& transform1 = reg.emplace<TransformComponent>(
-		entity1,
-		TransformComponent{
-			.position = glm::vec2{320.f, 0.f},
-			.scale = glm::vec2{1.f}
-		}
-	);
-	auto& circle1 = reg.emplace<CircleColliderComponent>(
-		entity1,
-		CircleColliderComponent{
-			.radius = 64.f
-		}
-	);
+	//auto& reg = pRegistry->GetRegistry();
+	//auto entity1 = reg.create();
+	//auto& transform1 = reg.emplace<TransformComponent>(
+	//	entity1,
+	//	TransformComponent{
+	//		.position = glm::vec2{320.f, 0.f},
+	//		.scale = glm::vec2{1.f}
+	//	}
+	//);
+	//auto& circle1 = reg.emplace<CircleColliderComponent>(
+	//	entity1,
+	//	CircleColliderComponent{
+	//		.radius = 64.f
+	//	}
+	//);
 
-	auto& physics1 = reg.emplace<PhysicsComponent>(
-		entity1,
-		PhysicsComponent{
-			pPhysicsWorld->GetWorldID(),
-			PhysicsAttributes{
-				.eType = RigidBodyType::DYNAMIC,
-				.density = 100.f,
-				.friction = 0.5f,
-				.restitution = 0.9f,
-				.restitutionThreshold = 100.f,
-				.radius = circle1.radius * PIXELS_TO_METERS,
-				.gravityScale = -5.f,
-				.position = transform1.position,
-				.scale = transform1.scale,
-				.bCircle = true,
-				.bFixedRotation = false
-			}
-		}
-	);
-	
-	physics1.Init(640, 480);
+	//auto& physics1 = reg.emplace<PhysicsComponent>(
+	//	entity1,
+	//	PhysicsComponent{
+	//		pPhysicsWorld->GetWorldID(),
+	//		PhysicsAttributes{
+	//			.eType = RigidBodyType::DYNAMIC,
+	//			.density = 100.f,
+	//			.friction = 0.5f,
+	//			.restitution = 0.9f,
+	//			.restitutionThreshold = 100.f,
+	//			.radius = circle1.radius * PIXELS_TO_METERS,
+	//			.gravityScale = -5.f,
+	//			.position = transform1.position,
+	//			.scale = transform1.scale,
+	//			.bCircle = true,
+	//			.bFixedRotation = false
+	//		}
+	//	}
+	//);
+	//
+	//physics1.Init(640, 480);
 
-	//Doubt: The rotation only happens when the body is given a force like this.
-	//b2Body_SetAngularVelocity(physics1.getBodyID(), 10.0f);
+	////Doubt: The rotation only happens when the body is given a force like this.
+	////b2Body_SetAngularVelocity(physics1.getBodyID(), 10.0f);
 
-	auto& sprite = reg.emplace<SpriteComponent>(
-		entity1,
-		SpriteComponent{
-			.width = 128.f,
-			.height = 128.f,
-			.start_x = 0,
-			.start_y = 0,
-			.layer = 3,
-			.texture_name = "soccer_ball"
-		}
-	);
+	//auto& sprite = reg.emplace<SpriteComponent>(
+	//	entity1,
+	//	SpriteComponent{
+	//		.width = 128.f,
+	//		.height = 128.f,
+	//		.start_x = 0,
+	//		.start_y = 0,
+	//		.layer = 3,
+	//		.texture_name = "soccer_ball"
+	//	}
+	//);
 
-	sprite.generate_uvs(128, 128);
-
-
-	auto entity2 = reg.create();
-	auto& transform2 = reg.emplace<TransformComponent>(
-		entity2,
-		TransformComponent{
-			.position = glm::vec2{0.f, 400.f},
-			.scale = glm::vec2{1.f},
-			.rotation = 15
-		}
-	);
-
-	auto& boxCollider = reg.emplace<BoxColliderComponent>(
-		entity2,
-		BoxColliderComponent{
-			.width = 480,
-			.height = 48
-		}
-	);
-
-	auto& physics2 = reg.emplace<PhysicsComponent>(
-		entity2,
-		PhysicsComponent{
-			pPhysicsWorld->GetWorldID(),
-			PhysicsAttributes{
-				.eType = RigidBodyType::STATIC,
-				.density = 1000.f,
-				.friction = 0.5f,
-				.restitution = 0.0f,
-				.gravityScale = 0.f,
-				.position = transform2.position,
-				.scale = transform2.scale,
-				.boxSize = glm::vec2{boxCollider.width, boxCollider.height},
-				.bBoxShape = true,
-				.bFixedRotation = false
-			}
-		}
-	);
-
-	physics2.Init(640, 480);
+	//sprite.generate_uvs(128, 128);
 
 
-	return true;
+	//auto entity2 = reg.create();
+	//auto& transform2 = reg.emplace<TransformComponent>(
+	//	entity2,
+	//	TransformComponent{
+	//		.position = glm::vec2{0.f, 400.f},
+	//		.scale = glm::vec2{1.f},
+	//		.rotation = 15
+	//	}
+	//);
+
+	//auto& boxCollider = reg.emplace<BoxColliderComponent>(
+	//	entity2,
+	//	BoxColliderComponent{
+	//		.width = 480,
+	//		.height = 48
+	//	}
+	//);
+
+	//auto& physics2 = reg.emplace<PhysicsComponent>(
+	//	entity2,
+	//	PhysicsComponent{
+	//		pPhysicsWorld->GetWorldID(),
+	//		PhysicsAttributes{
+	//			.eType = RigidBodyType::STATIC,
+	//			.density = 1000.f,
+	//			.friction = 0.5f,
+	//			.restitution = 0.0f,
+	//			.gravityScale = 0.f,
+	//			.position = transform2.position,
+	//			.scale = transform2.scale,
+	//			.boxSize = glm::vec2{boxCollider.width, boxCollider.height},
+	//			.bBoxShape = true,
+	//			.bFixedRotation = false
+	//		}
+	//	}
+	//);
+
+	//physics2.Init(640, 480);
+
 }
 
 bool Application::LoadShaders()
@@ -452,7 +464,8 @@ void Application::Update()
 void Application::Render()
 {
 	auto& renderSystem = pRegistry->GetContext<std::shared_ptr<RenderSystem>>();
-
+	auto& renderShapeSystem = pRegistry->GetContext<std::shared_ptr<RenderShapeSystem>>();
+	
 	auto& camera = pRegistry->GetContext<std::shared_ptr<Camera2D>>();
 	auto& renderer = pRegistry->GetContext<std::shared_ptr<Renderer>>();
 	auto& assetManager = pRegistry->GetContext<std::shared_ptr<AssetManager>>();
@@ -465,6 +478,7 @@ void Application::Render()
 	scriptSystem->Render();
 
 	renderSystem->Update();
+	renderShapeSystem->Update();
 
 	renderer->DrawLines(shader, *camera);
 	renderer->DrawFilledRects(shader, *camera);

@@ -23,6 +23,7 @@
 #include "ENGINE/SYSTEMS/AnimationSystem.h"
 #include "ENGINE/SYSTEMS/SoundSystem.h"
 #include "ENGINE/SYSTEMS/PhysicsSystem.h"
+#include "ENGINE/SYSTEMS/RenderShapeSystem.h"
 		  
 #include "ENGINE/SCRIPTING/InputManager.h"
 #include "ENGINE/WINDOW/INPUT/Keyboard.h"

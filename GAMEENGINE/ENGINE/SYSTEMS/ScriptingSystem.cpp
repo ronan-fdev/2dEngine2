@@ -138,12 +138,14 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	SoundEmitter::CreateLuaSoundEmitterBind(lua, registry);
 	SoundListener::CreateLuaSoundListenerBind(lua);
 	RendererBinder::CreateRenderingBind(lua, registry);
+	PhysicsComponent::CreatePhysicsLuaBind(lua, registry);
 
 	Entity::RegisterMetaComponent<TransformComponent>();
 	Entity::RegisterMetaComponent<SpriteComponent>();
 	Entity::RegisterMetaComponent<AnimationComponent>();
 	Entity::RegisterMetaComponent<BoxColliderComponent>();
 	Entity::RegisterMetaComponent<CircleColliderComponent>();
+	Entity::RegisterMetaComponent<PhysicsComponent>();
 	Entity::RegisterMetaComponent<SoundEmitter>();
 	Entity::RegisterMetaComponent<SoundListener>();
 
@@ -152,8 +154,10 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	Registry::RegisterMetaComponent<AnimationComponent>();
 	Registry::RegisterMetaComponent<BoxColliderComponent>();
 	Registry::RegisterMetaComponent<CircleColliderComponent>();
+	Registry::RegisterMetaComponent<PhysicsComponent>();
 	Registry::RegisterMetaComponent<SoundEmitter>();
 	Registry::RegisterMetaComponent<SoundListener>();
+	
 }
 
 void ScriptingSystem::RegisterLuaFunctions(sol::state& lua)

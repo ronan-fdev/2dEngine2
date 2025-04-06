@@ -5,6 +5,7 @@
 #include <entt/entt.hpp>
 
 #include "../../LOGGER/log.h"
+#include "../../ECS/Registry.h"
 #include "../../PHYSICS/Box2DWrappers.h"
 
 constexpr float METERS_TO_PIXELS = 12.f;
@@ -28,13 +29,15 @@ struct PhysicsAttributes
 class PhysicsComponent
 {
 public:
+    PhysicsComponent() = default;
     PhysicsComponent(const b2WorldId worldId, const PhysicsAttributes& physicsAttr);
     ~PhysicsComponent() = default;
 
     void Init(int windowWidth, int windowHeight);
     b2BodyId getBodyID() const { return bodyId; }
+    glm::vec2 BodyPosition();
 
-    static void CreatePhysicsLuaBind(sol::state& lua, entt::registry& registry);
+    static void CreatePhysicsLuaBind(sol::state& lua, Registry& registry);
 
 private:
     b2WorldId worldId;

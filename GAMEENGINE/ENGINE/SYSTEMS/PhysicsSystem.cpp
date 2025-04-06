@@ -33,10 +33,11 @@ void PhysicsSystem::Update(entt::registry& registry)
 
 		transform.position.y = (hScaledHeight + bodyPosition.y) * METERS_TO_PIXELS -
 			(boxCollider.height * transform.scale.y) * 0.5f - boxCollider.offset.y;
-
 		if (!b2Body_IsFixedRotation(pRigitBoxBodyID))
 		{
-			transform.rotation = b2Rot_GetAngle(b2Body_GetRotation(pRigitBoxBodyID));
+			transform.rotation = glm::degrees(
+				b2Rot_GetAngle(b2Body_GetRotation(pRigitBoxBodyID))
+			);
 		}
 	}
 
@@ -65,7 +66,9 @@ void PhysicsSystem::Update(entt::registry& registry)
 
 		if (!b2Body_IsFixedRotation(pRigitCircleBodyID))
 		{
-			transform.rotation = b2Rot_GetAngle(b2Body_GetRotation(pRigitCircleBodyID));
+			transform.rotation = glm::degrees(
+				b2Rot_GetAngle(b2Body_GetRotation(pRigitCircleBodyID))
+			);
 		}
 	}
 }
