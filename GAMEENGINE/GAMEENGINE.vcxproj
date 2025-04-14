@@ -203,6 +203,8 @@
     <ClCompile Include="ENGINE\ECS\COMPONENTS\PhysicsComponent.cpp" />
     <ClCompile Include="ENGINE\SYSTEMS\PhysicsSystem.cpp" />
     <ClCompile Include="ENGINE\SYSTEMS\RenderShapeSystem.cpp" />
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\TextComponent.cpp" />
+    <ClCompile Include="ENGINE\SYSTEMS\RenderUISystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\PHYSICS\Box2DWrappers.h" />
@@ -259,6 +261,8 @@
     <ClInclude Include="ENGINE\ECS\COMPONENTS\PhysicsComponent.h" />
     <ClInclude Include="ENGINE\SYSTEMS\PhysicsSystem.h" />
     <ClInclude Include="ENGINE\SYSTEMS\RenderShapeSystem.h" />
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\TextComponent.h" />
+    <ClInclude Include="ENGINE\SYSTEMS\RenderUISystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ENGINE\ECS\Entity.inl" />

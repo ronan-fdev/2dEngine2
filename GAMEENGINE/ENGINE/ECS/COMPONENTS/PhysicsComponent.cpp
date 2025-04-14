@@ -149,17 +149,12 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 			auto body = pc.getBodyID();
 			if (!b2Body_IsValid(body))
 			{
-				// TODO: Add Error
 				LOG_ERROR("Failed to bind the Box2D linear_impulse with lua [{0}]", body.index1);
 				return;
 			}
-
-			b2Body_ApplyLinearImpulse(
-				body,
-				b2Vec2{ impulse.x, impulse.y },
-				b2Vec2{ pc.BodyPosition().x, pc.BodyPosition().y },
-				true
-			);
+			// Get the position in meters directly from Box2D
+			b2Vec2 center = b2Body_GetPosition(body);
+			b2Body_ApplyLinearImpulse(body, b2Vec2{ impulse.x, impulse.y }, center, true);
 		},
 		"angular_impulse", [](PhysicsComponent& pc, float impulse) {
 			auto body = pc.getBodyID();

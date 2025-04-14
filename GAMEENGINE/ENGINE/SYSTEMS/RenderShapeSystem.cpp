@@ -59,7 +59,7 @@ void RenderShapeSystem::Update()
     m_pRectRenderer->Render();
     colorShader.unuse();
 
-
+    //Don't forget to use the & symbol here. Its creates a lot error!. The object will be not be proper.
     auto& circleShader = assetManager->GetShader("circle");
 
     circleShader.use();

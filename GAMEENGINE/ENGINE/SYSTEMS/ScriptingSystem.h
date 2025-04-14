@@ -10,6 +10,7 @@
 #include "../ECS/Components/PhysicsComponent.h"
 #include "../ECS/Components/SoundEmitter.h"
 #include "../ECS/Components/SoundListener.h"
+#include "../ECS/COMPONENTS/TextComponent.h"
 #include "../ECS/Entity.h"
 #include "../LOGGER/log.h"
 #include "../SCRIPTING/GLMLuaBindings.h"

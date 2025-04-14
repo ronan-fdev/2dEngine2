@@ -101,6 +101,15 @@ LoadAssets(AssetDefs)
  
  topEnt:add_component(PhysicsComp(topPhys))
  -----------------------------------------------------------------------------------------
+
+ local ballCount = 0
+ local countEnt = Entity("", "")
+ countEnt:add_component(Transform(vec2(10, 32), vec2(1, 1), 0))
+ countEnt:add_component(TextComponent("pixel", "Ball Count: ", Color(255, 255, 255, 255), 4, -1.0))
+ 
+ local valEnt = Entity("", "")
+ valEnt:add_component(Transform(vec2(352, 32), vec2(1, 1), 0))
+ local valText = valEnt:add_component(TextComponent("pixel", "0", Color(255, 255, 255, 255), 4, -1.0))
  
  function createBall()
  	if (Mouse.just_released(LEFT_BTN)) then 
@@ -125,6 +134,8 @@ LoadAssets(AssetDefs)
  
  		local sprite = ball:add_component(Sprite("soccer_ball", 128, 128, 0, 0, 0))
  		sprite:generate_uvs()
+
+        ballCount = ballCount + 1
  	end
  end
  
@@ -148,7 +159,7 @@ LoadAssets(AssetDefs)
  
  	if Keyboard.just_pressed(KEY_W) then 
  		physics:set_linear_velocity(vec2(velocity.x, 0))
- 		physics:linear_impulse(vec2(0, -1500))
+        physics:linear_impulse(vec2(0, -400000))
  	end
  end
 
@@ -157,6 +168,8 @@ main = {
 		update = function()
 			createBall()
             updateEntity(ball)
+
+            valText.textStr = tostring(ballCount)
 		end
 	},
 	[2] = {
