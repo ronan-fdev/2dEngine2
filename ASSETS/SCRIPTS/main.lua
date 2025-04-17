@@ -1,9 +1,21 @@
 run_script("ASSETS/SCRIPTS/TESTPROJECT1/assetdefs.lua")
 run_script("ASSETS/SCRIPTS/TESTPROJECT1/samplemap.lua")
 run_script("ASSETS/SCRIPTS/utilities.lua")
+run_script("ASSETS/SCRIPTS/follow_cam.lua")
 
 LoadAssets(AssetDefs)
 
+-- Create follow cam
+ gCam = Camera.get() 
+ gFollowCam = FollowCam:Create(gCam,
+ 	{
+ 		scale = 0.5, 
+ 		max_x = 20000,
+ 		max_y = 2000,
+ 		springback = 1
+ 	}
+ )
+  
 -- Create the main ball
  local ball = Entity("", "")
  local circle = ball:add_component(CircleCollider(64.0))
@@ -30,7 +42,7 @@ LoadAssets(AssetDefs)
  -- Create a box to contain 
  -----------------------------------------------------------------------------------------
  local bottomEnt = Entity("", "")
- local bottomBox = bottomEnt:add_component(BoxCollider(624, 16, vec2(0, 0)))
+ local bottomBox = bottomEnt:add_component(BoxCollider(10000, 16, vec2(0, 0)))
  local bottomTrans = bottomEnt:add_component(Transform(vec2(0, 464), vec2(1, 1), 0))
  local bottomPhys = PhysicsAttributes()
  
@@ -47,6 +59,8 @@ LoadAssets(AssetDefs)
  
  bottomEnt:add_component(PhysicsComp(bottomPhys))
  
+ --[[
+
  local leftEnt = Entity("", "")
  local leftBox = leftEnt:add_component(BoxCollider(16, 464, vec2(0, 0)))
  local leftTrans = leftEnt:add_component(Transform(vec2(0, 0), vec2(1, 1), 0))
@@ -94,29 +108,56 @@ LoadAssets(AssetDefs)
  topPhys.restitution = 0.0 
  topPhys.gravityScale = -1.0 
  topPhys.position = topTrans.position
- topPhys.scale = topTrans.scale 
+ topPhys.scale = topTrans.scale  
  topPhys.boxSize = vec2(topBox.width, topBox.height)
  topPhys.bBoxShape = true 
  topPhys.bFixedRotation = true
  
  topEnt:add_component(PhysicsComp(topPhys))
+
+ --]]
  -----------------------------------------------------------------------------------------
+
+ --############Testing##########################
+ function createBox()
+ 	if (Mouse.just_released(RIGHT_BTN)) then 
+ 		local pos = vec2(0,0) 
+ 		local box = Entity("", "")
+ 		local boxC = ball:add_component(BoxCollider(32, 32, vec2(0, 0)))
+ 		local transform = ball:add_component(Transform( vec2(pos.x, pos.y), vec2(1, 1), 0))
+ 		local physAttr = PhysicsAttributes()
+ 
+ 		physAttr.eType = BodyType.Dynamic
+ 		physAttr.density = 100.0
+ 		physAttr.friction = 0.2 
+ 		physAttr.restitution = 0.1 
+ 		bottomPhys.boxSize = vec2(boxC.width, boxC.height)
+ 		physAttr.gravityScale = -2.0 
+ 		physAttr.position = transform.position
+ 		physAttr.scale = transform.scale 
+ 		physAttr.bCircle = true 
+ 		physAttr.bFixedRotation = false 
+ 
+ 		ball:add_component(PhysicsComp(physAttr))
+ 	end
+ end
+
 
  local ballCount = 0
  local countEnt = Entity("", "")
- countEnt:add_component(Transform(vec2(10, 32), vec2(1, 1), 0))
+ countEnt:add_component(Transform(vec2(10, 32), vec2(2, 2), 0))
  countEnt:add_component(TextComponent("pixel", "Ball Count: ", Color(255, 255, 255, 255), 4, -1.0))
  
  local valEnt = Entity("", "")
- valEnt:add_component(Transform(vec2(352, 32), vec2(1, 1), 0))
+ valEnt:add_component(Transform(vec2(352, 32), vec2(2, 2), 0))
  local valText = valEnt:add_component(TextComponent("pixel", "0", Color(255, 255, 255, 255), 4, -1.0))
  
  function createBall()
  	if (Mouse.just_released(LEFT_BTN)) then 
- 		local pos_x, pos_y = Mouse.screen_position() 
+ 		local pos = Mouse.world_position() 
  		local ball = Entity("", "")
  		local circle = ball:add_component(CircleCollider(64.0))
- 		local transform = ball:add_component(Transform( vec2(pos_x, pos_y), vec2(0.5, 0.5), 0))
+ 		local transform = ball:add_component(Transform( vec2(pos.x, pos.y), vec2(0.5, 0.5), 0))
  		local physAttr = PhysicsAttributes()
  
  		physAttr.eType = BodyType.Dynamic
@@ -167,8 +208,10 @@ main = {
 	[1] = {
 		update = function()
 			createBall()
+            createBox()
             updateEntity(ball)
 
+            gFollowCam:Update(ball:id())
             valText.textStr = tostring(ballCount)
 		end
 	},

@@ -124,7 +124,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	Entity::CreateLuaEntityBind(lua, registry);
 	Registry::CreateLuaRegistryBind(lua, registry);
 	GLMBindings::CreateGLMBindings(lua);
-	InputManager::CreateLuaInputBindings(lua);
+	InputManager::CreateLuaInputBindings(lua, registry);
 	AssetManager::CreateLuaAssetManager(lua, registry);
 	SoundSystem::CreateLuaSoundSystemBind(lua, registry);
 

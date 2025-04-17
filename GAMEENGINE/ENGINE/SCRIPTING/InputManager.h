@@ -5,6 +5,9 @@
 #include <memory>
 #include <sol/sol.hpp>
 
+#include "../ECS/Registry.h"
+#include "../RENDERER/CORE/Camera2D.h"
+
 class InputManager
 {
 private:
@@ -20,7 +23,7 @@ private:
 	static void RegisterMouseBtnNames(sol::state& lua);
 public:
 	static InputManager& GetInstance();
-	static void CreateLuaInputBindings(sol::state& lua);
+	static void CreateLuaInputBindings(sol::state& lua, Registry& registry);
 	inline Keyboard& GetKeyboard() { return *m_pKeyboard; }
 	inline Mouse& GetMouse() { return *m_pMouse; }
 };
