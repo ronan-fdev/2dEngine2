@@ -153,6 +153,12 @@
     <ClCompile Include="ENGINE\SYSTEMS\RenderUISystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ENGINE\RENDERER\CORE\CoreEngineData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ENGINE\RENDERER\CORE\FollowCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\ECS\COMPONENTS\AnimationComponent.h">
@@ -321,6 +327,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ENGINE\SYSTEMS\RenderUISystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\RENDERER\CORE\CoreEngineData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\RENDERER\CORE\FollowCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

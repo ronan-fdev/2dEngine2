@@ -7,9 +7,7 @@
 #include "../../LOGGER/log.h"
 #include "../../ECS/Registry.h"
 #include "../../PHYSICS/Box2DWrappers.h"
-
-constexpr float METERS_TO_PIXELS = 12.f;
-constexpr float PIXELS_TO_METERS = 1.f / METERS_TO_PIXELS;
+#include "../../RENDERER/CORE/CoreEngineData.h"
 
 enum class RigidBodyType { STATIC = 0, KINEMATIC, DYNAMIC };
 

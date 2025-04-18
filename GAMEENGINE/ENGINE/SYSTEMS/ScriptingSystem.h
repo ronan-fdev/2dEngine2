@@ -18,6 +18,8 @@
 #include "../SCRIPTING/RendererBindings.h"
 #include "../RESOURCES/AssetManager.h"
 #include "../UTILITIES/Timer.h"
+#include "../RENDERER/CORE/CoreEngineData.h"
+#include "../RENDERER/CORE/FollowCamera.h"
 
 #include <sol/sol.hpp>
 

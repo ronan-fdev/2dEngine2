@@ -23,6 +23,7 @@ void PhysicsComponent::Init(int windowWidth, int windowHeight)
 	//Create the body def
 	b2BodyDef bodyDef = b2DefaultBodyDef();
 	bodyDef.type = static_cast<b2BodyType>(m_InitialAttribs.eType);
+	auto PIXELS_TO_METERS = CoreEngineData::GetInstance().PixelsToMeters();
 	bodyDef.position = {
 		(m_InitialAttribs.position.x + m_InitialAttribs.offset.x - (windowWidth * 0.5f) +
 			((bCircle ? m_InitialAttribs.radius : m_InitialAttribs.boxSize.x) *
@@ -89,6 +90,7 @@ glm::vec2 PhysicsComponent::BodyPosition()
 {
 	if (!b2Body_IsValid(bodyId)) return { 0,0 };
 	const b2Vec2 pos = b2Body_GetPosition(bodyId);
+	auto METERS_TO_PIXELS = CoreEngineData::GetInstance().MetersToPixels();
 	return { pos.x * METERS_TO_PIXELS, pos.y * METERS_TO_PIXELS };
 }
 

@@ -7,6 +7,7 @@
 #include "../ECS/Components/CircleColliderComponent.h"
 #include "../ECS/Components/TransformComponent.h"
 #include "../ECS/Components/PhysicsComponent.h"
+#include "../RENDERER/CORE/CoreEngineData.h"
 
 class PhysicsSystem
 {

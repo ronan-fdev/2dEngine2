@@ -10,8 +10,10 @@ void PhysicsSystem::Update(entt::registry& registry)
 {
 	//Setup for PhysicsComponent with BoxColliderComponent
 	auto boxView = registry.view<PhysicsComponent, TransformComponent, BoxColliderComponent>();
-	auto hScaledWidth = 640.f * PIXELS_TO_METERS * 0.5f;
-	auto hScaledHeight = 480.f * PIXELS_TO_METERS * 0.5f;
+	auto& coreEngine = CoreEngineData::GetInstance();
+
+	float hScaledWidth = coreEngine.ScaledWidth() * 0.5f;
+	float hScaledHeight = coreEngine.ScaledHeight() * 0.5f;
 
 	for (auto entity : boxView)
 	{
@@ -28,10 +30,10 @@ void PhysicsSystem::Update(entt::registry& registry)
 		auto& boxCollider = boxView.get<BoxColliderComponent>(entity);
 
 		const auto& bodyPosition = b2Body_GetPosition(pRigitBoxBodyID);
-		transform.position.x = (hScaledWidth + bodyPosition.x) * METERS_TO_PIXELS -
+		transform.position.x = (hScaledWidth + bodyPosition.x) * coreEngine.MetersToPixels() -
 			(boxCollider.width * transform.scale.x) * 0.5f - boxCollider.offset.x;
 
-		transform.position.y = (hScaledHeight + bodyPosition.y) * METERS_TO_PIXELS -
+		transform.position.y = (hScaledHeight + bodyPosition.y) * coreEngine.MetersToPixels() -
 			(boxCollider.height * transform.scale.y) * 0.5f - boxCollider.offset.y;
 		if (!b2Body_IsFixedRotation(pRigitBoxBodyID))
 		{
@@ -58,10 +60,10 @@ void PhysicsSystem::Update(entt::registry& registry)
 		auto& circleCollider = circleView.get<CircleColliderComponent>(entity);
 
 		const auto& bodyPosition = b2Body_GetPosition(pRigitCircleBodyID);
-		transform.position.x = (hScaledWidth + bodyPosition.x) * METERS_TO_PIXELS -
+		transform.position.x = (hScaledWidth + bodyPosition.x) * coreEngine.MetersToPixels() -
 			(circleCollider.radius * transform.scale.x) - circleCollider.offset.x;
 
-		transform.position.y = (hScaledHeight + bodyPosition.y) * METERS_TO_PIXELS -
+		transform.position.y = (hScaledHeight + bodyPosition.y) * coreEngine.MetersToPixels() -
 			(circleCollider.radius * transform.scale.y) - circleCollider.offset.y;
 
 		if (!b2Body_IsFixedRotation(pRigitCircleBodyID))

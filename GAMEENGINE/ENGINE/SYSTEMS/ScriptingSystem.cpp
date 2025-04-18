@@ -140,6 +140,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	RendererBinder::CreateRenderingBind(lua, registry);
 	PhysicsComponent::CreatePhysicsLuaBind(lua, registry);
 	TextComponent::CreateLuaTextBindings(lua);
+	FollowCamera::CreateLuaFollowCamera(lua, registry);
 
 	Entity::RegisterMetaComponent<TransformComponent>();
 	Entity::RegisterMetaComponent<SpriteComponent>();

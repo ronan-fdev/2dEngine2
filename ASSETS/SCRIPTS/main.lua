@@ -1,23 +1,10 @@
 run_script("ASSETS/SCRIPTS/TESTPROJECT1/assetdefs.lua")
 run_script("ASSETS/SCRIPTS/TESTPROJECT1/samplemap.lua")
 run_script("ASSETS/SCRIPTS/utilities.lua")
-run_script("ASSETS/SCRIPTS/follow_cam.lua")
+--run_script("ASSETS/SCRIPTS/follow_cam.lua")
 
 LoadAssets(AssetDefs)
-
-
--- Create follow cam
- gCam = Camera.get() 
- gFollowCam = FollowCam:Create(gCam,
- 	{
- 		scale = 0.5, 
-        min_x = -320,
-        min_y = -240,
- 		max_x = 20000,
- 		max_y = 2000,
- 		springback = 1
- 	}
- )
+ 
 
 
 
@@ -43,6 +30,16 @@ LoadAssets(AssetDefs)
  local sprite = ball:add_component(Sprite("soccer_ball", 128, 128, 0, 0, 0))
  sprite:generate_uvs()
 
+ -- Create follow cam
+ gFollowCam = FollowCamera(
+ 	FollowCamParams({
+ 		scale = 0.5, 
+ 		max_x = 20000,
+ 		max_y = 2000,
+ 		springback = 1
+ 	}),
+ 	ball
+ )
  -----------------------------------------------------------------------------------------
  -- Create a box to contain 
  -----------------------------------------------------------------------------------------
@@ -63,6 +60,8 @@ LoadAssets(AssetDefs)
  bottomPhys.bFixedRotation = true
  
  bottomEnt:add_component(PhysicsComp(bottomPhys))
+
+ 
  
  --[[
 
@@ -216,7 +215,7 @@ main = {
             --createBox()
             updateEntity(ball)
 
-            gFollowCam:Update(ball:id())
+            gFollowCam:update()
             valText.textStr = tostring(ballCount)
 		end
 	},
