@@ -5,17 +5,22 @@ run_script("ASSETS/SCRIPTS/follow_cam.lua")
 
 LoadAssets(AssetDefs)
 
+
 -- Create follow cam
  gCam = Camera.get() 
  gFollowCam = FollowCam:Create(gCam,
  	{
  		scale = 0.5, 
+        min_x = -320,
+        min_y = -240,
  		max_x = 20000,
  		max_y = 2000,
  		springback = 1
  	}
  )
-  
+
+
+
 -- Create the main ball
  local ball = Entity("", "")
  local circle = ball:add_component(CircleCollider(64.0))
@@ -208,7 +213,7 @@ main = {
 	[1] = {
 		update = function()
 			createBall()
-            createBox()
+            --createBox()
             updateEntity(ball)
 
             gFollowCam:Update(ball:id())

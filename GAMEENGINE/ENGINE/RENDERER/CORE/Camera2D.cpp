@@ -43,17 +43,12 @@ glm::vec2 Camera2D::ScreenCoordsToWorld(const glm::vec2& screenCoords)
 
 	// Set the coords to the center of the screen
 	worldCoords -= m_ScreenOffset;
-	std::cout << m_Scale << std::endl;
 
 	// Scale the coordinates
 	worldCoords /= m_Scale;
 
 	// Translate the camera
-	worldCoords += m_Position;
-
-	std::cout << "camera position: " << m_Position.x << " " << m_Position.y << std::endl;
-
-	std::cout<<"cordinate world positon: " << worldCoords.x << " " << worldCoords.y << std::endl;
+	worldCoords += (m_Position / m_Scale);
 
 	return worldCoords;
 }
@@ -69,7 +64,7 @@ glm::vec2 Camera2D::WorldCoordsToScreen(const glm::vec2& worldCoords)
 	screenCoords *= m_Scale;
 
 	// Translate the camera
-	screenCoords -= m_Position;
+	screenCoords -= (m_Position * m_Scale);
 
 	return screenCoords;
 }

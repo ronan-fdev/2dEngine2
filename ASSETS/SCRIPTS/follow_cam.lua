@@ -20,32 +20,29 @@ FollowCam = {}
  end
  
  function FollowCam:Update(entity_id)
- 	local entity = Entity(entity_id)
- 	local transform = entity:get_component(Transform)
+     local entity = Entity(entity_id)
+     local transform = entity:get_component(Transform)
  
- 	local cam_pos = self.m_Cam.position()
- 	local cam_width = self.m_Cam.width()
- 	local cam_height = self.m_Cam.height()
+     local cam_pos = self.m_Cam.position()
+     local cam_width = self.m_Cam.width()
+     local cam_height = self.m_Cam.height()
  
- 	local new_cam_pos = vec2(0, 0)
+     local new_cam_pos = vec2(0, 0)
+ 
+     new_cam_pos.x = (transform.position.x - cam_width / (2 * self.m_Scale)) * self.m_Scale
+     new_cam_pos.y = (transform.position.y - cam_height / (2 * self.m_Scale)) * self.m_Scale
 
-    --print(transform.position.x," ",transform.position.y)
  
- 	new_cam_pos.x = (transform.position.x - cam_width / (2 * self.m_Scale))
- 	new_cam_pos.y = (transform.position.y - cam_height / (2 * self.m_Scale))
-
-    print("camera :", new_cam_pos.x, " ", new_cam_pos.y)
-    print("ball :", transform.position.x, " ", transform.position.y)
+     -- Clamp camera position to min/max
+     new_cam_pos.x = clamp(new_cam_pos.x, self.m_MinX, self.m_MaxX)
+     new_cam_pos.y = clamp(new_cam_pos.y, self.m_MinY, self.m_MaxY)
  
- 	-- Clamp camera position to min/max
- 	new_cam_pos.x = clamp(new_cam_pos.x, self.m_MinX, self.m_MaxX)
- 	new_cam_pos.y = clamp(new_cam_pos.y, self.m_MinY, self.m_MaxY)
- 
- 	self.m_Cam.set_position(
- 		vec2(
- 			lerp(cam_pos.x, new_cam_pos.x, self.m_Springback),
- 			lerp(cam_pos.y, new_cam_pos.y, self.m_Springback)
- 		)
- 	)
+    
+     self.m_Cam.set_position(
+         vec2(
+             lerp(cam_pos.x, new_cam_pos.x, self.m_Springback),
+             lerp(cam_pos.y, new_cam_pos.y, self.m_Springback)
+         )
+     )
  
  end
