@@ -47,8 +47,8 @@ void RenderShapeSystem::Update()
                 transform.position.x + boxCollider.offset.x,
                 transform.position.y + boxCollider.offset.y
             },
-            .width = boxCollider.width * transform.scale.x,
-            .height = boxCollider.height * transform.scale.y,
+            .width = static_cast<float>(boxCollider.width),
+            .height = static_cast<float>(boxCollider.height),
             .color = Color{255, 0, 0, 135}
         };
 

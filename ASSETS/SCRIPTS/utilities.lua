@@ -173,7 +173,7 @@
  
  		table.insert(tilesets, newTileset)
  	end
- 
+
  	-- Loop through the layers and create the tiles 
  	for k, v in pairs(mapDef.layers) do 
  		local rows = v.height - 1 
@@ -220,7 +220,6 @@
  							vec2(0, 0)
  						)
  					)
- 
  					-- Do we want to show/hide the collider sprite?
  					sprite.bHidden = true
  				end

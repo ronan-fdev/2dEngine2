@@ -5,7 +5,7 @@ run_script("ASSETS/SCRIPTS/utilities.lua")
 
 LoadAssets(AssetDefs)
  
-
+LoadMap(CreateTestMap())
 
 
 -- Create the main ball
@@ -30,6 +30,7 @@ LoadAssets(AssetDefs)
  local sprite = ball:add_component(Sprite("soccer_ball", 128, 128, 0, 0, 0))
  sprite:generate_uvs()
 
+ 
  -- Create follow cam
  gFollowCam = FollowCamera(
  	FollowCamParams({
@@ -40,6 +41,8 @@ LoadAssets(AssetDefs)
  	}),
  	ball
  )
+
+ --Camera.set_scale(2)
  -----------------------------------------------------------------------------------------
  -- Create a box to contain 
  -----------------------------------------------------------------------------------------
