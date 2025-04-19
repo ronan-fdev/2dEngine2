@@ -11,6 +11,7 @@
 #include "../ECS/Components/SoundEmitter.h"
 #include "../ECS/Components/SoundListener.h"
 #include "../ECS/COMPONENTS/TextComponent.h"
+#include "../ECS/COMPONENTS/RigidBodyComponent.h"
 #include "../ECS/Entity.h"
 #include "../LOGGER/log.h"
 #include "../SCRIPTING/GLMLuaBindings.h"
@@ -20,6 +21,7 @@
 #include "../UTILITIES/Timer.h"
 #include "../RENDERER/CORE/CoreEngineData.h"
 #include "../RENDERER/CORE/FollowCamera.h"
+#include "../UTILITIES/RandomGenerator.h"
 
 #include <sol/sol.hpp>
 
@@ -34,7 +36,7 @@ public:
 
 	static void RegisterLuaBindings(sol::state& lua, Registry& registry);
 
-	static void RegisterLuaFunctions(sol::state& lua);
+	static void RegisterLuaFunctions(sol::state& lua, Registry& registry);
 
 
 private:

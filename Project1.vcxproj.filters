@@ -38,6 +38,7 @@
     <None Include="ASSETS\SHADER\circleShader.frag" />
     <None Include="ASSETS\SHADER\fontShader.frag" />
     <None Include="ASSETS\SHADER\fontShader.vert" />
+    <None Include="ASSETS\SCRIPTS\rain_generator.lua" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\TEXTURES\asteroid_1.png">

@@ -112,7 +112,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -150,7 +150,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -176,6 +176,7 @@
     <None Include="ASSETS\SCRIPTS\ASTERIODS\ship.lua" />
     <None Include="ASSETS\SCRIPTS\ASTERIODS\utilities.lua" />
     <None Include="ASSETS\SCRIPTS\main.lua" />
+    <None Include="ASSETS\SCRIPTS\rain_generator.lua" />
     <None Include="ASSETS\SCRIPTS\TESTPROJECT1\assetdefs.lua" />
     <None Include="ASSETS\SCRIPTS\TESTPROJECT1\samplemap.lua" />
     <None Include="ASSETS\SCRIPTS\utilities.lua" />

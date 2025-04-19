@@ -222,7 +222,7 @@ bool Application::Initialize()
 
 	//Lua and ENTT::meta BINDING
 	ScriptingSystem::RegisterLuaBindings(*lua, *pRegistry);
-	ScriptingSystem::RegisterLuaFunctions(*lua);
+	ScriptingSystem::RegisterLuaFunctions(*lua, *pRegistry);
 
 	if (!scriptSystem->LoadMainScript(*lua))
 	{

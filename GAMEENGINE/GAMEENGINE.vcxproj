@@ -207,6 +207,8 @@
     <ClCompile Include="ENGINE\ECS\COMPONENTS\TextComponent.cpp" />
     <ClCompile Include="ENGINE\SYSTEMS\RenderUISystem.cpp" />
     <ClCompile Include="ENGINE\RENDERER\CORE\FollowCamera.cpp" />
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\RigidBodyComponent.cpp" />
+    <ClCompile Include="ENGINE\UTILITIES\RandomGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\RENDERER\CORE\CoreEngineData.h" />
@@ -267,6 +269,8 @@
     <ClInclude Include="ENGINE\ECS\COMPONENTS\TextComponent.h" />
     <ClInclude Include="ENGINE\SYSTEMS\RenderUISystem.h" />
     <ClInclude Include="ENGINE\RENDERER\CORE\FollowCamera.h" />
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\RigidBodyComponent.h" />
+    <ClInclude Include="ENGINE\UTILITIES\RandomGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ENGINE\ECS\Entity.inl" />

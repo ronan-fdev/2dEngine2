@@ -9,6 +9,7 @@
 #include "../ECS/Components/CircleColliderComponent.h"
 #include "../ECS/Components/TransformComponent.h"
 #include "../Resources/AssetManager.h"
+#include "../RENDERER/CORE/CoreEngineData.h"
 
 class RenderShapeSystem
 {

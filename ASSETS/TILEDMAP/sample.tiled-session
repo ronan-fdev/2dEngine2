@@ -16,11 +16,11 @@
             "scaleInEditor": 1
         },
         "sample.tmx": {
-            "scale": 1,
+            "scale": 1.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 149,
-                "y": 58.5
+                "x": 82.66666666666667,
+                "y": 88.66666666666664
             }
         },
         "sample.tmx#collider": {

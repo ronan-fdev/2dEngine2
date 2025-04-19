@@ -9,6 +9,9 @@ RenderShapeSystem::RenderShapeSystem(Registry& registry)
 
 void RenderShapeSystem::Update()
 {
+    if (!CoreEngineData::GetInstance().RenderCollidersEnabled())
+        return;
+
     auto& camera = m_Registry.GetContext<std::shared_ptr<Camera2D>>();
     auto& assetManager = m_Registry.GetContext<std::shared_ptr<AssetManager>>();
 

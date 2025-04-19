@@ -1,6 +1,7 @@
 run_script("ASSETS/SCRIPTS/TESTPROJECT1/assetdefs.lua")
 run_script("ASSETS/SCRIPTS/TESTPROJECT1/samplemap.lua")
 run_script("ASSETS/SCRIPTS/utilities.lua")
+run_script("ASSETS/SCRIPTS/rain_generator.lua")
 --run_script("ASSETS/SCRIPTS/follow_cam.lua")
 
 LoadAssets(AssetDefs)
@@ -34,13 +35,16 @@ LoadMap(CreateTestMap())
  -- Create follow cam
  gFollowCam = FollowCamera(
  	FollowCamParams({
- 		scale = 0.5, 
+ 		scale = 1, 
  		max_x = 20000,
- 		max_y = 2000,
+ 		max_y = 480,
  		springback = 1
  	}),
  	ball
  )
+
+ --Rain setup:
+ local rainGen = RainGenerator:Create()
 
  --Camera.set_scale(2)
  -----------------------------------------------------------------------------------------
@@ -127,27 +131,33 @@ LoadMap(CreateTestMap())
 
  --############Testing##########################
  function createBox()
- 	if (Mouse.just_released(RIGHT_BTN)) then 
- 		local pos = vec2(0,0) 
- 		local box = Entity("", "")
- 		local boxC = ball:add_component(BoxCollider(32, 32, vec2(0, 0)))
- 		local transform = ball:add_component(Transform( vec2(pos.x, pos.y), vec2(1, 1), 0))
- 		local physAttr = PhysicsAttributes()
- 
- 		physAttr.eType = BodyType.Dynamic
- 		physAttr.density = 100.0
- 		physAttr.friction = 0.2 
- 		physAttr.restitution = 0.1 
- 		bottomPhys.boxSize = vec2(boxC.width, boxC.height)
- 		physAttr.gravityScale = -2.0 
- 		physAttr.position = transform.position
- 		physAttr.scale = transform.scale 
- 		physAttr.bCircle = true 
- 		physAttr.bFixedRotation = false 
- 
- 		ball:add_component(PhysicsComp(physAttr))
- 	end
- end
+    if (Mouse.just_released(RIGHT_BTN)) then 
+        local pos = Mouse.world_position() 
+        local box = Entity("", "")
+        -- Add components to 'box' instead of 'ball'
+        local boxC = box:add_component(BoxCollider(128, 128, vec2(0, 0)))
+        local transform = box:add_component(Transform(vec2(pos.x, pos.y), vec2(1, 1), 0))
+        local physAttr = PhysicsAttributes()
+    
+        physAttr.eType = BodyType.Dynamic
+        physAttr.density = 100.0
+        physAttr.friction = 0.2 
+        physAttr.restitution = 0.1 
+        physAttr.boxSize = vec2(boxC.width, boxC.height)  -- Use physAttr instead of bottomPhys
+        physAttr.gravityScale = -2.0 
+        physAttr.position = transform.position
+        physAttr.scale = transform.scale 
+        physAttr.bCircle = false 
+        physAttr.bBoxShape = true  -- Required for box collision
+        physAttr.bFixedRotation = false 
+    
+        box:add_component(PhysicsComp(physAttr))
+    
+        -- Add sprite to the new box entity
+        local sprite = box:add_component(Sprite("soccer_ball", 128, 128, 0, 0, 0))
+        sprite:generate_uvs()
+    end
+end
 
 
  local ballCount = 0
@@ -215,8 +225,10 @@ main = {
 	[1] = {
 		update = function()
 			createBall()
-            --createBox()
+            createBox()
             updateEntity(ball)
+
+            rainGen:Update(0.016) 
 
             gFollowCam:update()
             valText.textStr = tostring(ballCount)

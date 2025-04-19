@@ -3,6 +3,8 @@
 FollowCamera::FollowCamera(Camera2D& camera, const Entity& entity, const FollowCamParams& params)
 	: m_Camera{ camera }, m_Params{ params }, m_Entity{ entity }
 {
+    assert(m_Params.scale > 0.f && "The scale must be greater than zero!");
+
     m_Params.minX *= m_Params.scale;
     m_Params.minY *= m_Params.scale;
     m_Params.maxX *= m_Params.scale;
@@ -34,6 +36,27 @@ void FollowCamera::Update()
             std::lerp(camPos.y, newCamPosition.y, m_Params.springback)
         }
     );
+}
+
+void FollowCamera::SetSpringback(float springback)
+{
+    m_Params.springback = std::clamp(springback, 0.f, 1.f);
+}
+
+void FollowCamera::SetCameraParameters(const FollowCamParams& params)
+{
+    m_Params = params;
+
+    if (m_Params.scale <= 0.f)
+        m_Params.scale = 0.1f;
+
+    if (m_Params.springback < 0.f)
+        m_Params.springback = 0.f;
+
+    m_Params.minX *= m_Params.scale;
+    m_Params.minY *= m_Params.scale;
+    m_Params.maxX *= m_Params.scale;
+    m_Params.maxY *= m_Params.scale;
 }
 
 void FollowCamera::CreateLuaFollowCamera(sol::state& lua, Registry& registry)

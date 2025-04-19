@@ -140,6 +140,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	RendererBinder::CreateRenderingBind(lua, registry);
 	PhysicsComponent::CreatePhysicsLuaBind(lua, registry);
 	TextComponent::CreateLuaTextBindings(lua);
+	RigidBodyComponent::CreateRigidBodyBind(lua);
 	FollowCamera::CreateLuaFollowCamera(lua, registry);
 
 	Entity::RegisterMetaComponent<TransformComponent>();
@@ -151,6 +152,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	Entity::RegisterMetaComponent<SoundEmitter>();
 	Entity::RegisterMetaComponent<SoundListener>();
 	Entity::RegisterMetaComponent<TextComponent>();
+	Entity::RegisterMetaComponent<RigidBodyComponent>();
 
 	Registry::RegisterMetaComponent<TransformComponent>();
 	Registry::RegisterMetaComponent<SpriteComponent>();
@@ -161,10 +163,11 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	Registry::RegisterMetaComponent<SoundEmitter>();
 	Registry::RegisterMetaComponent<SoundListener>();
 	Registry::RegisterMetaComponent<TextComponent>();
+	Registry::RegisterMetaComponent<RigidBodyComponent>();
 	
 }
 
-void ScriptingSystem::RegisterLuaFunctions(sol::state& lua)
+void ScriptingSystem::RegisterLuaFunctions(sol::state& lua, Registry& registry)
 {
 	lua.set_function(
 		"run_script", [&](const std::string& path)
@@ -180,5 +183,43 @@ void ScriptingSystem::RegisterLuaFunctions(sol::state& lua)
 			}
 			return true;
 		}
+	);
+
+	lua.set_function("get_ticks", [] {
+		return glfwGetTime();
+		}
+	);
+
+	auto& assetManager = registry.GetContext<std::shared_ptr<AssetManager>>();
+	lua.set_function("measure_text", [&](const std::string& text, const std::string& fontName) {
+		const auto& pFont = assetManager->GetFont(fontName);
+		if (!pFont)
+		{
+			LOG_ERROR("Failed to get font [{}] - Does not exist in asset manager!", fontName);
+			return -1.f;
+		}
+
+		glm::vec2 position{ 0.f }, temp_pos{ position };
+		for (const auto& character : text)
+			pFont->GetNextCharPos(character, temp_pos);
+
+		return std::abs((position - temp_pos).x);
+		}
+	);
+
+	auto& engine = CoreEngineData::GetInstance();
+	lua.set_function("GetDeltaTime", [&] { return engine.GetDeltaTime(); });
+	lua.set_function("WindowWidth", [&] { return engine.WindowWidth(); });
+	lua.set_function("WindowHeight", [&] { return engine.WindowHeight(); });
+	lua.set_function("DisablePhysics", [&] { engine.DisablePhysics(); });
+	lua.set_function("EnablePhysics", [&] { engine.EnablePhysics(); });
+	lua.set_function("IsPhysicsEnabled", [&] { return engine.IsPhysicsEnabled(); });
+
+	lua.new_usertype<RandomGenerator>(
+		"Random",
+		sol::call_constructor,
+		sol::constructors<RandomGenerator(uint32_t, uint32_t), RandomGenerator()>(),
+		"get_float", &RandomGenerator::GetFloat,
+		"get_int", &RandomGenerator::GetInt
 	);
 }
