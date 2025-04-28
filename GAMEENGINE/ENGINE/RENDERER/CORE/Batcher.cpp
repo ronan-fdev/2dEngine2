@@ -32,6 +32,7 @@ Batcher<TBatch, TGlyph>::~Batcher()
 template<typename TBatch, typename TGlyph>
 void Batcher<TBatch, TGlyph>::Begin()
 {
+	checkMaxNumSprites = 0;
 	m_Glyphs.clear();
 	m_Batches.clear();
 }

@@ -45,6 +45,15 @@ void RenderShapeSystem::Update()
             model = glm::translate(model, glm::vec3{ -transform.position, 0.f });
         }
 
+        auto color = Color{ 255, 0, 0, 135 };
+
+        if (m_Registry.GetRegistry().all_of<PhysicsComponent>(entity))
+        {
+            auto& physics = m_Registry.GetRegistry().get<PhysicsComponent>(entity);
+            if (physics.IsSensor())
+                color = Color{ 0, 255, 0, 135 };
+        }
+
         Rect rect{
             .position = glm::vec2{
                 transform.position.x + boxCollider.offset.x,
@@ -52,7 +61,7 @@ void RenderShapeSystem::Update()
             },
             .width = static_cast<float>(boxCollider.width),
             .height = static_cast<float>(boxCollider.height),
-            .color = Color{255, 0, 0, 135}
+            .color = color
         };
 
         m_pRectRenderer->AddRect(rect, model);
@@ -81,6 +90,7 @@ void RenderShapeSystem::Update()
             circleCollider.radius * transform.scale.x * 2,
             circleCollider.radius * transform.scale.y * 2
         };
+
         m_pCircleRenderer->AddCircle(circle, Color{ 0, 255, 0, 135 }, 1.f);
     }
 

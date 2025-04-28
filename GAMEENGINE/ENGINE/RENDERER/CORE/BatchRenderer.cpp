@@ -38,6 +38,11 @@ void SpriteBatchRenderer::Render()
 
 void SpriteBatchRenderer::AddSprite(const glm::vec4& spriteRect, const glm::vec4 uvRect, GLuint textureID, int layer, glm::mat4 model, const Color& color)
 {
+	if (checkMaxNumSprites++ > MAX_SPRITES)
+	{
+		LOG_WARN("ENGINE:BatchRenderer: The number of sprites is exeeding the volume of what the engine is capable of!!");
+	}
+
 	auto newSprite = std::make_shared<SpriteGlyph>(
 		SpriteGlyph{
 			.topLeft = Vertex {

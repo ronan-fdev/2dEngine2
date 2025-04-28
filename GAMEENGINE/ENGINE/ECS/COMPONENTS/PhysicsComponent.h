@@ -18,7 +18,7 @@ struct PhysicsAttributes
     float restitutionThreshold{ 1.f }, radius{ 0.f }, gravityScale{ 1.f };
 
     glm::vec2 position{ 0.f }, scale{ 1.f }, boxSize{ 0.f }, offset{ 0.f };
-    bool bCircle{ false }, bBoxShape{ true }, bFixedRotation{ true };
+    bool bCircle{ false }, bBoxShape{ true }, bFixedRotation{ true }, bIsSensor{ false };
 
     uint16_t filterCategory{ 0 }, filterMask{ 0 };
     int16_t groupIndex{ 0 };
@@ -35,6 +35,7 @@ public:
     b2BodyId getBodyID() const { return bodyId; }
     glm::vec2 BodyPosition();
 
+    const bool IsSensor() const;
     static void CreatePhysicsLuaBind(sol::state& lua, Registry& registry);
 
 private:

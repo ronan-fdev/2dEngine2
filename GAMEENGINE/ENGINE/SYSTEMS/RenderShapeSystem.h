@@ -7,6 +7,7 @@
 #include "../RENDERER/ESSENTIALS/Primitives.h"
 #include "../ECS/Components/BoxColliderComponent.h"
 #include "../ECS/Components/CircleColliderComponent.h"
+#include "../ECS/Components/PhysicsComponent.h"
 #include "../ECS/Components/TransformComponent.h"
 #include "../Resources/AssetManager.h"
 #include "../RENDERER/CORE/CoreEngineData.h"

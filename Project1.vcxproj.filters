@@ -39,6 +39,7 @@
     <None Include="ASSETS\SHADER\fontShader.frag" />
     <None Include="ASSETS\SHADER\fontShader.vert" />
     <None Include="ASSETS\SCRIPTS\rain_generator.lua" />
+    <None Include="ASSETS\TILEDMAP\FireBoyWaterGirl\fireboywatergirltiledmap.lua" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\TEXTURES\asteroid_1.png">
@@ -75,6 +76,15 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="ASSETS\TEXTURES\socer_ball.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ASSETS\TEXTURES\player_walking.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ASSETS\TILEDMAP\FireBoyWaterGirl\collisions.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ASSETS\TILEDMAP\FireBoyWaterGirl\FBWGTileset.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

@@ -39,8 +39,7 @@ void AnimationSystem::Update()
         else
         {
             // For horizontal spritesheet, update u coordinate
-            sprite.uvs.u = (animation.currentFrame * sprite.uvs.uv_width) +
-                (animation.frameOffset * sprite.uvs.uv_width * animation.numFrames);
+            sprite.uvs.u = (animation.frameOffset + animation.currentFrame) * sprite.uvs.uv_width;
         }
     }
 }

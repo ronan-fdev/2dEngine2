@@ -1,6 +1,4 @@
 #include "PhysicsComponent.h"
-#include "PhysicsComponent.h"
-#include "PhysicsComponent.h"
 
 PhysicsComponent::PhysicsComponent(const b2WorldId worldID, const PhysicsAttributes& physicsAttr)
 	:
@@ -49,7 +47,7 @@ void PhysicsComponent::Init(int windowWidth, int windowHeight)
 
 	if (m_InitialAttribs.bCircle)
 	{
-		circleShape.radius = m_InitialAttribs.radius * m_InitialAttribs.scale.x;
+		circleShape.radius = PIXELS_TO_METERS * m_InitialAttribs.radius * m_InitialAttribs.scale.x;
 		circleShape.center = { 0.0f, 0.0f };
 	}
 	else if (m_InitialAttribs.bBoxShape)
@@ -69,6 +67,7 @@ void PhysicsComponent::Init(int windowWidth, int windowHeight)
 	fixtureDef.density = m_InitialAttribs.density;
 	fixtureDef.friction = m_InitialAttribs.friction;
 	fixtureDef.restitution = m_InitialAttribs.restitution;
+	fixtureDef.isSensor = m_InitialAttribs.bIsSensor;
 
 	if (m_InitialAttribs.bCircle)
 	{
@@ -92,6 +91,11 @@ glm::vec2 PhysicsComponent::BodyPosition()
 	const b2Vec2 pos = b2Body_GetPosition(bodyId);
 	auto METERS_TO_PIXELS = CoreEngineData::GetInstance().MetersToPixels();
 	return { pos.x * METERS_TO_PIXELS, pos.y * METERS_TO_PIXELS };
+}
+
+const bool PhysicsComponent::IsSensor() const
+{
+	return b2Shape_IsSensor(shapeId);
 }
 
 void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
@@ -126,7 +130,8 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 		"offset", &PhysicsAttributes::offset,
 		"bCircle", &PhysicsAttributes::bCircle,
 		"bBoxShape", &PhysicsAttributes::bBoxShape,
-		"bFixedRotation", &PhysicsAttributes::bFixedRotation
+		"bFixedRotation", &PhysicsAttributes::bFixedRotation,
+		"bIsSensor", &PhysicsAttributes::bIsSensor
 		// TODO: Add in filters and other properties as needed
 	);
 
@@ -225,6 +230,17 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 			}
 
 			b2Body_SetGravityScale(body, gravityScale);
+		},
+		"apply_force_center", [](PhysicsComponent& pc, const glm::vec2& force) {
+			auto body = pc.getBodyID();
+			if (!b2Body_IsValid(body))
+			{
+				// TODO: Add Error
+				LOG_ERROR("Failed to bind the Box2D set_gravity_scale with lua [{0}]", body.index1);
+				return;
+			}
+
+			b2Body_ApplyForceToCenter(body, { force.x,force.y }, true);
 		}
 	);
 }

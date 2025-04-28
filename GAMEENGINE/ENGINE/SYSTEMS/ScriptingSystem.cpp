@@ -215,6 +215,12 @@ void ScriptingSystem::RegisterLuaFunctions(sol::state& lua, Registry& registry)
 	lua.set_function("EnablePhysics", [&] { engine.EnablePhysics(); });
 	lua.set_function("IsPhysicsEnabled", [&] { return engine.IsPhysicsEnabled(); });
 
+	// Render Colliders Enable functions
+	lua.set_function("DisableRenderColliders", [&] { engine.DisableColliderRender(); });
+	lua.set_function("EnableRenderColliders", [&] { engine.EnableColliderRender(); });
+	lua.set_function("IsRenderCollidersEnabled", [&] { return engine.RenderCollidersEnabled(); });
+
+
 	lua.new_usertype<RandomGenerator>(
 		"Random",
 		sol::call_constructor,

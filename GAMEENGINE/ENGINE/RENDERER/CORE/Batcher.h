@@ -8,7 +8,7 @@
 
 constexpr size_t NUM_SPRITE_VERTICES = 4;
 constexpr size_t NUM_SPRITE_INDICES = 6;
-constexpr size_t MAX_SPRITES = 1000;
+constexpr size_t MAX_SPRITES = 5000;
 constexpr size_t MAX_INDICES = MAX_SPRITES * NUM_SPRITE_INDICES;
 constexpr size_t MAX_VERTICES = MAX_SPRITES * NUM_SPRITE_VERTICES;
 
@@ -21,6 +21,7 @@ private:
 private:
 	void Initialize();
 protected:
+	int checkMaxNumSprites = 0;
 	std::vector<std::shared_ptr<TGlyph>> m_Glyphs;
 	std::vector<std::shared_ptr<TBatch>> m_Batches;
 protected:

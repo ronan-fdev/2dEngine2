@@ -188,6 +188,7 @@
     <None Include="ASSETS\SHADER\fontShader.vert" />
     <None Include="ASSETS\SHADER\shader.frag" />
     <None Include="ASSETS\SHADER\shader.vert" />
+    <None Include="ASSETS\TILEDMAP\FireBoyWaterGirl\fireboywatergirltiledmap.lua" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\TEXTURES\asteroid_1.png" />
@@ -197,11 +198,14 @@
     <Image Include="ASSETS\TEXTURES\laserBlue04.png" />
     <Image Include="ASSETS\TEXTURES\numeral-sheet.png" />
     <Image Include="ASSETS\TEXTURES\playerLife1_blue.png" />
+    <Image Include="ASSETS\TEXTURES\player_walking.png" />
     <Image Include="ASSETS\TEXTURES\purple.png" />
     <Image Include="ASSETS\TEXTURES\score.png" />
     <Image Include="ASSETS\TEXTURES\ship.png" />
     <Image Include="ASSETS\TEXTURES\socer_ball.png" />
     <Image Include="ASSETS\TEXTURES\SpriteLetters.png" />
+    <Image Include="ASSETS\TILEDMAP\FireBoyWaterGirl\collisions.png" />
+    <Image Include="ASSETS\TILEDMAP\FireBoyWaterGirl\FBWGTileset.png" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SRC\Application.cpp" />
