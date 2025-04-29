@@ -7,6 +7,7 @@
 #include "../../LOGGER/log.h"
 #include "../../ECS/Registry.h"
 #include "../../PHYSICS/Box2DWrappers.h"
+#include "../../PHYSICS/UserData.h"
 #include "../../RENDERER/CORE/CoreEngineData.h"
 
 enum class RigidBodyType { STATIC = 0, KINEMATIC, DYNAMIC };
@@ -22,6 +23,7 @@ struct PhysicsAttributes
 
     uint16_t filterCategory{ 0 }, filterMask{ 0 };
     int16_t groupIndex{ 0 };
+    ObjectData objectData{};
 };
 
 class PhysicsComponent
@@ -36,6 +38,7 @@ public:
     glm::vec2 BodyPosition();
 
     const bool IsSensor() const;
+    UserData* GetUserData() { return m_pUserData.get(); }
     static void CreatePhysicsLuaBind(sol::state& lua, Registry& registry);
 
 private:
@@ -43,6 +46,7 @@ private:
     b2BodyId bodyId;
     b2ShapeId shapeId;
 
+    std::shared_ptr<UserData> m_pUserData;
     PhysicsAttributes m_InitialAttribs;
 
 };

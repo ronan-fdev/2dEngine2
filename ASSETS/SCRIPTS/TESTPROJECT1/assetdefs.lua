@@ -3,6 +3,7 @@ AssetDefs =
  	textures = 
  	{
  		{ name = "collider", path = "ASSETS/TILEDMAP/collisions.png"},
+ 		{ name = "trigger", path = "ASSETS/TILEDMAP/triggers.png"},
  		{ name = "sampleDungenTileset", path = "ASSETS/TILEDMAP/Overworld.png"},
  		{ name = "FBWGTileset", path = "ASSETS/TILEDMAP/FireBoyWaterGirl/FBWGTileset.png"},
         { name = "soccer_ball", path = "ASSETS/TEXTURES/socer_ball.png"},

@@ -10,6 +10,18 @@ LoadAssets(AssetDefs)
 LoadMap(createFBWGWorld())
 
 
+-- Test Data
+ local objectData = ObjectData("test_tag", "test_group", true, true, 9919)
+ local userData = UserData.create_user_data(objectData);
+ 
+ local objData1 = userData:get_user_data()
+ print(objData1:to_string() .."\n")
+ 
+ userData:set_user_data(ObjectData("New Tag", "Newer group", false, true, 12112))
+ 
+ local objData2 = userData:get_user_data()
+ print(objData2:to_string())
+
 --[[
  -- Create follow cam
  gFollowCam = FollowCamera(
@@ -71,7 +83,7 @@ function UpdatePlayer(player, dt)
     local isGrounded = math.abs(velocity.y) < 0.1
     
     -- Improved movement control
-    local moveSpeed = 1800  -- Slightly reduced force for better control
+    local moveSpeed = 11800  -- Slightly reduced force for better control
     local horizontalInput = 0
     if Keyboard.pressed(KEY_A) then
         horizontalInput = -1
@@ -86,7 +98,6 @@ function UpdatePlayer(player, dt)
             playerAnimationState = ANIMATION_STATE.RUN_RIGHT
             animation.num_frames = 4
             animation.frame_offset = 6
-            print(2)
         end
     end
     
@@ -99,7 +110,6 @@ function UpdatePlayer(player, dt)
             playerAnimationState = ANIMATION_STATE.IDLE
             animation.num_frames = 2
             animation.frame_offset = 0
-            print(1)
         end
      
     elseif (horizontalInput < 0 and velocity.x > 0) or (horizontalInput > 0 and velocity.x < 0) then

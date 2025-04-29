@@ -159,6 +159,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ENGINE\PHYSICS\ContactListener.cpp" />
     <ClCompile Include="ENGINE\RENDERER\CORE\CoreEngineData.cpp" />
     <ClCompile Include="ENGINE\PHYSICS\Box2DWrappers.cpp" />
     <ClCompile Include="ENGINE\RENDERER\CORE\CircleBatchRenderer.cpp" />
@@ -209,8 +210,11 @@
     <ClCompile Include="ENGINE\RENDERER\CORE\FollowCamera.cpp" />
     <ClCompile Include="ENGINE\ECS\COMPONENTS\RigidBodyComponent.cpp" />
     <ClCompile Include="ENGINE\UTILITIES\RandomGenerator.cpp" />
+    <ClCompile Include="ENGINE\SCRIPTING\UserDataBinding.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ENGINE\PHYSICS\ContactListener.h" />
+    <ClInclude Include="ENGINE\PHYSICS\UserData.h" />
     <ClInclude Include="ENGINE\RENDERER\CORE\CoreEngineData.h" />
     <ClInclude Include="ENGINE\PHYSICS\Box2DWrappers.h" />
     <ClInclude Include="ENGINE\RENDERER\CORE\CircleBatchRenderer.h" />
@@ -271,10 +275,12 @@
     <ClInclude Include="ENGINE\RENDERER\CORE\FollowCamera.h" />
     <ClInclude Include="ENGINE\ECS\COMPONENTS\RigidBodyComponent.h" />
     <ClInclude Include="ENGINE\UTILITIES\RandomGenerator.h" />
+    <ClInclude Include="ENGINE\SCRIPTING\UserDataBinding.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ENGINE\ECS\Entity.inl" />
     <None Include="ENGINE\ECS\Registry.inl" />
+    <None Include="ENGINE\SCRIPTING\UserDataBinding.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

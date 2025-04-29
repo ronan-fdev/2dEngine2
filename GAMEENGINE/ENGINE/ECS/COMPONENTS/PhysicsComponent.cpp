@@ -4,6 +4,7 @@ PhysicsComponent::PhysicsComponent(const b2WorldId worldID, const PhysicsAttribu
 	:
 	worldId(worldID),
 	m_InitialAttribs(physicsAttr),
+	m_pUserData{ nullptr },
 	bodyId(b2_nullBodyId),
 	shapeId(b2_nullShapeId)
 {
@@ -62,12 +63,18 @@ void PhysicsComponent::Init(int windowWidth, int windowHeight)
 		// TODO: Create your polygon shape
 	}
 
+	// Create the user data
+	m_pUserData = std::make_shared<UserData>();
+	m_pUserData->userData = m_InitialAttribs.objectData;
+	m_pUserData->type_id = entt::type_hash<ObjectData>::value();
+
 	//Create the fixture def
 	b2ShapeDef fixtureDef = b2DefaultShapeDef();
 	fixtureDef.density = m_InitialAttribs.density;
 	fixtureDef.friction = m_InitialAttribs.friction;
 	fixtureDef.restitution = m_InitialAttribs.restitution;
 	fixtureDef.isSensor = m_InitialAttribs.bIsSensor;
+	fixtureDef.userData = reinterpret_cast<void*>(m_pUserData.get());//TODO:: Some problem could be present.
 
 	if (m_InitialAttribs.bCircle)
 	{
@@ -100,6 +107,36 @@ const bool PhysicsComponent::IsSensor() const
 
 void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 {
+	lua.new_usertype<ObjectData>(
+		"ObjectData",
+		"type_id", entt::type_hash<ObjectData>::value,
+		sol::call_constructor,
+		sol::factories(
+			[](const std::string& tag, const std::string& group,
+				bool bCollider, bool bTrigger, std::uint32_t entityID)
+			{
+				return ObjectData{
+					.tag = tag,
+					.group = group,
+					.bCollider = bCollider,
+					.bTrigger = bTrigger,
+					.entityID = entityID
+				};
+			},
+			[](const sol::table& objectData)
+			{
+				return ObjectData{
+					.tag = objectData["tag"].get_or(std::string{""}),
+					.group = objectData["group"].get_or(std::string{""}),
+					.bCollider = objectData["bCollider"].get_or(false),
+					.bTrigger = objectData["bTrigger"].get_or(false),
+					.entityID = objectData["entityID"].get_or((std::uint32_t)entt::null)
+				};
+			}
+		),
+		"to_string", &ObjectData::to_string
+	);
+
 	lua.new_enum<RigidBodyType>(
 		"BodyType", {
 			{"Static", RigidBodyType::STATIC },
@@ -114,6 +151,46 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 		sol::factories(
 			[] {
 				return PhysicsAttributes{};
+			},
+			[](const sol::table& physAttr) {
+				return PhysicsAttributes{
+					.eType = physAttr["eType"].get_or(RigidBodyType::STATIC),
+					.density = physAttr["density"].get_or(100.f),
+					.friction = physAttr["friction"].get_or(0.2f),
+					.restitution = physAttr["restitution"].get_or(0.2f),
+					.restitutionThreshold = physAttr["restitutionThreshold"].get_or(0.2f),
+					.radius = physAttr["radius"].get_or(0.f),
+					.gravityScale = physAttr["gravityScale"].get_or(1.f),
+					.position = glm::vec2{
+						physAttr["position"]["x"].get_or(0.f),
+						physAttr["position"]["y"].get_or(0.f)
+					},
+					.scale = glm::vec2{
+						physAttr["scale"]["x"].get_or(0.f),
+						physAttr["scale"]["y"].get_or(0.f)
+					},
+					.boxSize = glm::vec2{
+						physAttr["boxSize"]["x"].get_or(0.f),
+						physAttr["boxSize"]["y"].get_or(0.f)
+					},
+					.offset = glm::vec2{
+						physAttr["offset"]["x"].get_or(0.f),
+						physAttr["offset"]["y"].get_or(0.f)
+					},
+					.bCircle = physAttr["bCircle"].get_or(false),
+					.bBoxShape = physAttr["bBoxShape"].get_or(true),
+					.bFixedRotation = physAttr["bFixedRotation"].get_or(true),
+					.bIsSensor = physAttr["bIsSensor"].get_or(false),
+					.filterCategory = physAttr["filterCategory"].get_or((uint16_t)0),
+					.filterMask = physAttr["filterMask"].get_or((uint16_t)0),
+					.objectData = ObjectData{
+						.tag = physAttr["objectData"]["tag"].get_or(std::string{""}),
+						.group = physAttr["objectData"]["group"].get_or(std::string{""}),
+						.bCollider = physAttr["objectData"]["bCollider"].get_or(false),
+						.bTrigger = physAttr["objectData"]["bTrigger"].get_or(false),
+						.entityID = physAttr["objectData"]["entityID"].get_or((std::uint32_t)0)
+					}
+				};
 			}
 			// TODO: Add more specific ctor
 				),
@@ -131,7 +208,8 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 		"bCircle", &PhysicsAttributes::bCircle,
 		"bBoxShape", &PhysicsAttributes::bBoxShape,
 		"bFixedRotation", &PhysicsAttributes::bFixedRotation,
-		"bIsSensor", &PhysicsAttributes::bIsSensor
+		"bIsSensor", &PhysicsAttributes::bIsSensor,
+		"objectData", &PhysicsAttributes::objectData
 		// TODO: Add in filters and other properties as needed
 	);
 

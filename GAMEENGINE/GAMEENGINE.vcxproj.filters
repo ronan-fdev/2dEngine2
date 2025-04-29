@@ -165,6 +165,12 @@
     <ClCompile Include="ENGINE\UTILITIES\RandomGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ENGINE\PHYSICS\ContactListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ENGINE\SCRIPTING\UserDataBinding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\ECS\COMPONENTS\AnimationComponent.h">
@@ -347,12 +353,24 @@
     <ClInclude Include="ENGINE\UTILITIES\RandomGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ENGINE\PHYSICS\UserData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\PHYSICS\ContactListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\SCRIPTING\UserDataBinding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ENGINE\ECS\Entity.inl">
       <Filter>Header Files</Filter>
     </None>
     <None Include="ENGINE\ECS\Registry.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="ENGINE\SCRIPTING\UserDataBinding.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

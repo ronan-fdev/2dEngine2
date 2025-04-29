@@ -164,6 +164,9 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	Registry::RegisterMetaComponent<SoundListener>();
 	Registry::RegisterMetaComponent<TextComponent>();
 	Registry::RegisterMetaComponent<RigidBodyComponent>();
+
+	UserDataBinder::CreateLuaUserData(lua);
+	UserDataBinder::register_meta_user_data<ObjectData>();
 	
 }
 
