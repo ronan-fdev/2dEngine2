@@ -189,7 +189,16 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to LoadBanks for SoundSystem");
 	}
 
-	//Create the physics world
+	//Create the physics 
+		//Create the contact binder for the physics world.
+	auto pContactListener = std::make_shared<ContactListener>();
+
+	if (!pRegistry->AddToContext<std::shared_ptr<ContactListener>>(pContactListener))
+	{
+		LOG_ERROR("Failed to add the contact listener to the registry context!");
+		return false;
+	}
+		//Create the physics world
 	auto pPhysicsWorld = std::make_shared<Box2DWrappers>();
 
 	if (!pRegistry->AddToContext<std::shared_ptr<Box2DWrappers>>(pPhysicsWorld))
@@ -197,7 +206,7 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to add the Physics world to the registry context!");
 		return false;
 	}
-
+		//Create the physics system
 	auto pPhysicsSystem = std::make_shared<PhysicsSystem>(*pRegistry);
 
 	if (!pRegistry->AddToContext<std::shared_ptr<PhysicsSystem>>(pPhysicsSystem))
@@ -372,6 +381,10 @@ void Application::Update()
 	float timeStep = 1.0f / 60.0f;
 	int subStepCount = 4;
 	b2World_Step(physics->GetWorldID(), timeStep, subStepCount);
+
+	auto& pContactListener = pRegistry->GetContext<std::shared_ptr<ContactListener>>();
+	pContactListener->BeginContact(physics->GetWorldID());
+	pContactListener->EndContact(physics->GetWorldID());
 
 	auto& pPhysicsSystem = pRegistry->GetContext<std::shared_ptr<PhysicsSystem>>();
 	pPhysicsSystem->Update(pRegistry->GetRegistry());

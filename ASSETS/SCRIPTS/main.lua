@@ -2,12 +2,19 @@ run_script("ASSETS/SCRIPTS/TESTPROJECT1/assetdefs.lua")
 run_script("ASSETS/SCRIPTS/TESTPROJECT1/samplemap.lua")
 run_script("ASSETS/SCRIPTS/utilities.lua")
 run_script("ASSETS/SCRIPTS/rain_generator.lua")
+run_script("ASSETS/SCRIPTS/events/event_manager.lua")
+ run_script("ASSETS/SCRIPTS/events/collision_event.lua")
+ run_script("ASSETS/SCRIPTS/systems/trigger_system.lua")
 run_script("ASSETS/TILEDMAP/FireBoyWaterGirl/fireboywatergirltiledmap.lua")
 --run_script("ASSETS/SCRIPTS/follow_cam.lua")
 
 LoadAssets(AssetDefs)
  
 LoadMap(createFBWGWorld())
+
+gCollisionEvent = CollisionEvent:Create() 
+gTriggerSystem = TriggerSystem:Create() 
+gCollisionEvent:SubscribeToEvent(gTriggerSystem)
 
 
 -- Test Data
@@ -57,6 +64,8 @@ playerPhysAttr.gravityScale = -2
 playerPhysAttr.scale = playerTransform.scale
 playerPhysAttr.bCircle = true 
 playerPhysAttr.bFixedRotation = true 
+playerPhysAttr.objectData = (ObjectData("player", "", true, false, gPlayer:id()))
+--playerPhysAttr.bIsContactEventsEnabled = true
 
 -- Add Physics component to the player 
 gPlayer:add_component(PhysicsComp(playerPhysAttr))
@@ -151,6 +160,15 @@ main = {
             rainGen:Update(0.016) 
             UpdatePlayer(gPlayer)
             --gFollowCam:update()
+
+            --Checking some collision and trigger stuff.
+            local uda, udb = ContactListener.get_user_data()
+ 			if uda and udb then 
+ 				--print("USER A: " ..uda:to_string())
+ 				--print("USER B: " ..udb:to_string())
+ 				gCollisionEvent:EmitEvent(uda, udb)
+ 			end 
+
 
             Debug()
 		end

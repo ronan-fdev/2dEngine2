@@ -171,6 +171,9 @@
     <ClCompile Include="ENGINE\SCRIPTING\UserDataBinding.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ENGINE\SCRIPTING\ContactListenerBind.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\ECS\COMPONENTS\AnimationComponent.h">
@@ -360,6 +363,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ENGINE\SCRIPTING\UserDataBinding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\SCRIPTING\ContactListenerBind.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

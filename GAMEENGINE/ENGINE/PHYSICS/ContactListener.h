@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "Box2DWrappers.h"
 #include "UserData.h"
 

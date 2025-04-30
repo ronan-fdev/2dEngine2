@@ -159,6 +159,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ENGINE\SCRIPTING\ContactListenerBind.cpp" />
     <ClCompile Include="ENGINE\PHYSICS\ContactListener.cpp" />
     <ClCompile Include="ENGINE\RENDERER\CORE\CoreEngineData.cpp" />
     <ClCompile Include="ENGINE\PHYSICS\Box2DWrappers.cpp" />
@@ -213,6 +214,7 @@
     <ClCompile Include="ENGINE\SCRIPTING\UserDataBinding.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ENGINE\SCRIPTING\ContactListenerBind.h" />
     <ClInclude Include="ENGINE\PHYSICS\ContactListener.h" />
     <ClInclude Include="ENGINE\PHYSICS\UserData.h" />
     <ClInclude Include="ENGINE\RENDERER\CORE\CoreEngineData.h" />

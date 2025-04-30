@@ -18,6 +18,8 @@
 #include "ENGINE/ECS/COMPONENTS/BoxColliderComponent.h"
 #include "ENGINE/ECS/COMPONENTS/CircleColliderComponent.h"
 #include "ENGINE/ECS/COMPONENTS/TextComponent.h"
+
+#include "ENGINE/PHYSICS/ContactListener.h"
 		  
 #include "ENGINE/SYSTEMS/ScriptingSystem.h"
 #include "ENGINE/SYSTEMS/RenderSystem.h"

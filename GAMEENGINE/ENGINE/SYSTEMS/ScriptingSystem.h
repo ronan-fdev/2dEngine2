@@ -18,6 +18,7 @@
 #include "../SCRIPTING/InputManager.h"
 #include "../SCRIPTING/RendererBindings.h"
 #include "../SCRIPTING/UserDataBinding.h"
+#include "../SCRIPTING/ContactListenerBind.h"
 #include "../RESOURCES/AssetManager.h"
 #include "../UTILITIES/Timer.h"
 #include "../RENDERER/CORE/CoreEngineData.h"

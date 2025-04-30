@@ -12,8 +12,14 @@ void ContactListener::BeginContact(b2WorldId myWorldId)
 	for (int i = 0; i < contactEvents.beginCount; ++i)
 	{
 		b2ContactBeginTouchEvent* beginEvent = contactEvents.beginEvents + i;
-		UserData* a_data = reinterpret_cast<UserData*>(b2Body_GetUserData(b2Shape_GetBody(beginEvent->shapeIdA)));
-		UserData* b_data = reinterpret_cast<UserData*>(b2Body_GetUserData(b2Shape_GetBody(beginEvent->shapeIdB)));
+		UserData* a_data =
+			reinterpret_cast<UserData*>(
+				b2Shape_GetUserData(beginEvent->shapeIdA)
+				);
+		UserData* b_data =
+			reinterpret_cast<UserData*>(
+				b2Shape_GetUserData(beginEvent->shapeIdB)
+				);
 
 		SetUserContacts(a_data, b_data);
 	}

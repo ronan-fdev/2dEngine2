@@ -19,7 +19,7 @@ struct PhysicsAttributes
     float restitutionThreshold{ 1.f }, radius{ 0.f }, gravityScale{ 1.f };
 
     glm::vec2 position{ 0.f }, scale{ 1.f }, boxSize{ 0.f }, offset{ 0.f };
-    bool bCircle{ false }, bBoxShape{ true }, bFixedRotation{ true }, bIsSensor{ false };
+    bool bCircle{ false }, bBoxShape{ true }, bFixedRotation{ true }, bIsSensor{ false }, bIsContactEventsEnabled{ false };
 
     uint16_t filterCategory{ 0 }, filterMask{ 0 };
     int16_t groupIndex{ 0 };

@@ -74,6 +74,7 @@ void PhysicsComponent::Init(int windowWidth, int windowHeight)
 	fixtureDef.friction = m_InitialAttribs.friction;
 	fixtureDef.restitution = m_InitialAttribs.restitution;
 	fixtureDef.isSensor = m_InitialAttribs.bIsSensor;
+	fixtureDef.enableContactEvents = m_InitialAttribs.bIsContactEventsEnabled;
 	fixtureDef.userData = reinterpret_cast<void*>(m_pUserData.get());//TODO:: Some problem could be present.
 
 	if (m_InitialAttribs.bCircle)
@@ -134,6 +135,11 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 				};
 			}
 		),
+		"tag", &ObjectData::tag,
+		"group", &ObjectData::group,
+		"bCollider", &ObjectData::bCollider,
+		"bTrigger", &ObjectData::bTrigger,
+		"entityID", &ObjectData::entityID,
 		"to_string", &ObjectData::to_string
 	);
 
@@ -181,6 +187,7 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 					.bBoxShape = physAttr["bBoxShape"].get_or(true),
 					.bFixedRotation = physAttr["bFixedRotation"].get_or(true),
 					.bIsSensor = physAttr["bIsSensor"].get_or(false),
+					.bIsContactEventsEnabled = physAttr["bIsContactEventsEnabled"].get_or(false),
 					.filterCategory = physAttr["filterCategory"].get_or((uint16_t)0),
 					.filterMask = physAttr["filterMask"].get_or((uint16_t)0),
 					.objectData = ObjectData{
@@ -209,6 +216,7 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 		"bBoxShape", &PhysicsAttributes::bBoxShape,
 		"bFixedRotation", &PhysicsAttributes::bFixedRotation,
 		"bIsSensor", &PhysicsAttributes::bIsSensor,
+		"bIsContactEventsEnabled", &PhysicsAttributes::bIsContactEventsEnabled,
 		"objectData", &PhysicsAttributes::objectData
 		// TODO: Add in filters and other properties as needed
 	);

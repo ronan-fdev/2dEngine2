@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <sol/sol.hpp>
 #include <entt/entt.hpp>
 

@@ -234,7 +234,12 @@
  						physicsAttribs.bBoxShape = true
  
  						if tileset.name == "trigger" then 
- 							physicsAttribs.bIsSensor = true 
+ 							--physicsAttribs.bIsSensor = true 
+                            physicsAttribs.bIsContactEventsEnabled = true
+                            physicsAttribs.objectData = ObjectData("", "hole_triggers", false, true, tile:id())
+                        else 
+                            physicsAttribs.bIsContactEventsEnabled = true
+                            physicsAttribs.objectData = ObjectData("", "colliders", true, false, tile:id())
  						end
                         tile:add_component(PhysicsComp(physicsAttribs))
  					end
