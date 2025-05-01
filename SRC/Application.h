@@ -33,6 +33,10 @@
 #include "ENGINE/WINDOW/INPUT/Keyboard.h"
 #include "ENGINE/WINDOW/INPUT/Mouse.h"
 
+#include "Imgui/imgui.h"
+#include "Imgui/backends/imgui_impl_glfw.h"
+#include "Imgui/backends/imgui_impl_opengl3.h"
+
 class Application
 {
 public:
@@ -50,5 +54,11 @@ private:
 	void Update();
 	void Render();
 	void CleanUp();
+
+	//TEMP IMGUI TESTING --> TODO: REMOVE TO OWN CLASS
+	bool InitImGui();
+	void Begin();
+	void End();
+	void RenderImGui();
 };
 

@@ -229,6 +229,13 @@ bool Application::Initialize()
 		return false;
 	}
 
+	//Setup for the Editor using ImGui
+	if (!InitImGui())
+	{
+		LOG_ERROR("Failed to initialize ImGui!");
+		return false;
+	}
+
 	//Lua and ENTT::meta BINDING
 	ScriptingSystem::RegisterLuaBindings(*lua, *pRegistry);
 	ScriptingSystem::RegisterLuaFunctions(*lua, *pRegistry);
@@ -412,6 +419,10 @@ void Application::Render()
 	renderShapeSystem->Update();
 	renderUISystem->Update(pRegistry->GetRegistry());
 
+	Begin();
+	RenderImGui();
+	End();
+
 	renderer->DrawLines(shader, *camera);
 	renderer->DrawFilledRects(shader, *camera);
 	renderer->DrawCircles(circleShader, *camera);
@@ -423,4 +434,71 @@ void Application::Render()
 void Application::CleanUp()
 {
 	Window::cleanup();
+}
+
+bool Application::InitImGui()
+{
+	const char* glslVersion = "#version 330";
+	IMGUI_CHECKVERSION();
+
+	if (!ImGui::CreateContext())
+	{
+		LOG_ERROR("Failed to create ImGui Context");
+		return false;
+	}
+
+	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+	io.ConfigWindowsMoveFromTitleBarOnly = true;
+
+	if (!ImGui_ImplGlfw_InitForOpenGL(
+		Window::getGLFWWindow(), true
+	))
+	{
+		LOG_ERROR("Failed to intialize ImGui GLFW for OpenGL!");
+		return false;
+	}
+
+	if (!ImGui_ImplOpenGL3_Init(glslVersion))
+	{
+		LOG_ERROR("Failed to intialize ImGui OpenGL3!");
+		return false;
+	}
+
+	return true;
+}
+
+void Application::Begin()
+{
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
+}
+
+void Application::End()
+{
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+	ImGuiIO& io = ImGui::GetIO();
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		// Backup current context
+		GLFWwindow* backupContext = glfwGetCurrentContext();
+
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+
+		// Restore original context
+		glfwMakeContextCurrent(backupContext);
+	}
+}
+
+
+void Application::RenderImGui()
+{
+	ImGui::ShowDemoWindow();
 }

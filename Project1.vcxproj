@@ -93,7 +93,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\IMGUI;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -131,7 +131,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\IMGUI;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -209,10 +209,26 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SRC\Application.cpp" />
+    <ClCompile Include="SRC\ImGui\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="SRC\ImGui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="SRC\ImGui\imgui.cpp" />
+    <ClCompile Include="SRC\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="SRC\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="SRC\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="SRC\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="SRC\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\Application.h" />
+    <ClInclude Include="SRC\ImGui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="SRC\ImGui\backends\imgui_impl_opengl3.h" />
+    <ClInclude Include="SRC\ImGui\backends\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="SRC\ImGui\imconfig.h" />
+    <ClInclude Include="SRC\ImGui\imgui.h" />
+    <ClInclude Include="SRC\ImGui\imgui_internal.h" />
+    <ClInclude Include="SRC\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="SRC\ImGui\imstb_textedit.h" />
+    <ClInclude Include="SRC\ImGui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="GAMEENGINE\GAMEENGINE.vcxproj">
@@ -221,6 +237,9 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="ASSETS\FONTS\Aaargh.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="SRC\ImGui\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
