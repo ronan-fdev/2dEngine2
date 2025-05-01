@@ -159,6 +159,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ENGINE\PHYSICS\UserData.cpp" />
     <ClCompile Include="ENGINE\SCRIPTING\ContactListenerBind.cpp" />
     <ClCompile Include="ENGINE\PHYSICS\ContactListener.cpp" />
     <ClCompile Include="ENGINE\RENDERER\CORE\CoreEngineData.cpp" />

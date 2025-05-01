@@ -140,6 +140,7 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 		"bCollider", &ObjectData::bCollider,
 		"bTrigger", &ObjectData::bTrigger,
 		"entityID", &ObjectData::entityID,
+		"contactEntities", &ObjectData::contactEntities,
 		"to_string", &ObjectData::to_string
 	);
 
@@ -327,6 +328,25 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 			}
 
 			b2Body_ApplyForceToCenter(body, { force.x,force.y }, true);
+		},
+		"set_transform", [](PhysicsComponent& pc, const glm::vec2& position) {
+			auto body = pc.getBodyID();
+			if (!b2Body_IsValid(body))
+			{
+				// TODO: Add Error
+				LOG_ERROR("Invalid bodyID passed in set_transform function in PhysicsComponent");
+				return;
+			}
+
+			auto& engineData = CoreEngineData::GetInstance();
+			const auto p2m = engineData.PixelsToMeters();
+
+			const auto scaleHalfHeight = engineData.ScaledHeight() * 0.5f;
+			const auto scaleHalfWidth = engineData.ScaledWidth() * 0.5f;
+
+			auto bx = (position.x * p2m) - scaleHalfWidth;
+			auto by = (position.y * p2m) - scaleHalfHeight;
+			b2Body_SetTransform(body, b2Vec2{ bx, by }, b2Rot(0.f));
 		}
 	);
 }
