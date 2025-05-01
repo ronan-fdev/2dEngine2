@@ -13,7 +13,7 @@
 class Window {
 public:
     // Initialize the window and OpenGL context
-    static bool init(unsigned int width, unsigned int height, const char* title);
+    static bool init(const char* title);
 
     // Process input
     static void processInput();

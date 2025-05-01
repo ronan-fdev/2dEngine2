@@ -47,7 +47,7 @@ bool Application::Initialize()
 	//Logger
 	log::Init();
 
-	Window::init(640, 480, "2DENGINE");
+	Window::init("2DENGINE");
 
 	auto assetManager = std::make_shared<AssetManager>();
 	if (!assetManager)
@@ -311,46 +311,62 @@ void Application::ProcessEvents()
 	// Instead of directly handling keyboard events here, you'll want to set up GLFW callbacks
 	// Add this during window/input initialization:
 	glfwSetKeyCallback(Window::getGLFWWindow(), [](GLFWwindow* window, int key, int scancode, int action, int mods) {
-		auto& inputManager = InputManager::GetInstance();
-		auto& keyboard = inputManager.GetKeyboard();
+		ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
 
-		if (action == GLFW_PRESS) {
-			keyboard.OnKeyPressed(key);
+		if (!ImGui::GetIO().WantCaptureKeyboard) {
+			auto& inputManager = InputManager::GetInstance();
+			auto& keyboard = inputManager.GetKeyboard();
+
+			if (action == GLFW_PRESS) {
+				keyboard.OnKeyPressed(key);
+			}
+			else if (action == GLFW_RELEASE) {
+				keyboard.OnKeyReleased(key);
+			}
 		}
-		else if (action == GLFW_RELEASE) {
-			keyboard.OnKeyReleased(key);
-		}
-		});
+	});
 
 	// Set up mouse button callback
 	glfwSetMouseButtonCallback(Window::getGLFWWindow(), [](GLFWwindow* window, int button, int action, int mods) {
-		auto& inputManager = InputManager::GetInstance();
-		auto& mouse = inputManager.GetMouse();
+		// 1. Forward to ImGui first
+		ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
 
-		if (action == GLFW_PRESS) {
-			mouse.OnBtnPressed(button);
+		// 2. Only forward to engine if ImGui doesn't want the input
+		if (!ImGui::GetIO().WantCaptureMouse) {
+			auto& inputManager = InputManager::GetInstance();
+			auto& mouse = inputManager.GetMouse();
+
+			if (action == GLFW_PRESS) {
+				mouse.OnBtnPressed(button);
+			}
+			else if (action == GLFW_RELEASE) {
+				mouse.OnBtnReleased(button);
+			}
 		}
-		else if (action == GLFW_RELEASE) {
-			mouse.OnBtnReleased(button);
-		}
-		});
+	});
 
 	// Set up mouse scroll callback
 	glfwSetScrollCallback(Window::getGLFWWindow(), [](GLFWwindow* window, double xoffset, double yoffset) {
-		auto& inputManager = InputManager::GetInstance();
-		auto& mouse = inputManager.GetMouse();
+		ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
 
-		mouse.SetMouseWheelX(static_cast<int>(xoffset));
-		mouse.SetMouseWheelY(static_cast<int>(yoffset));
-		});
+		if (!ImGui::GetIO().WantCaptureMouse) {
+			auto& inputManager = InputManager::GetInstance();
+			auto& mouse = inputManager.GetMouse();
+			mouse.SetMouseWheelX(static_cast<int>(xoffset));
+			mouse.SetMouseWheelY(static_cast<int>(yoffset));
+		}
+	});
 
 	// Set up mouse movement callback
 	glfwSetCursorPosCallback(Window::getGLFWWindow(), [](GLFWwindow* window, double xpos, double ypos) {
-		auto& inputManager = InputManager::GetInstance();
-		auto& mouse = inputManager.GetMouse();
+		ImGui_ImplGlfw_CursorPosCallback(window, xpos, ypos);
 
-		mouse.SetMouseMoving(true);
-		});
+		if (!ImGui::GetIO().WantCaptureMouse) {
+			auto& inputManager = InputManager::GetInstance();
+			auto& mouse = inputManager.GetMouse();
+			mouse.SetMouseMoving(true);
+		}
+	});
 }
 
 void Application::Update()
@@ -455,7 +471,7 @@ bool Application::InitImGui()
 	io.ConfigWindowsMoveFromTitleBarOnly = true;
 
 	if (!ImGui_ImplGlfw_InitForOpenGL(
-		Window::getGLFWWindow(), true
+		Window::getGLFWWindow(), false
 	))
 	{
 		LOG_ERROR("Failed to intialize ImGui GLFW for OpenGL!");
@@ -500,5 +516,10 @@ void Application::End()
 
 void Application::RenderImGui()
 {
+	ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
+
+	// TODO: Add new Scene Display!
+
+
 	ImGui::ShowDemoWindow();
 }

@@ -13,11 +13,7 @@ float Window::g = 0.0f;
 float Window::b = 0.0f;
 float Window::a = 1.0f;
 
-bool Window::init(unsigned int width, unsigned int height, const char* title) {
-    //Initialize variables:
-    m_width = width;
-    m_height = height;
-    m_title = title;
+bool Window::init(const char* title) {
     // Initialize GLFW
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW" << std::endl;
@@ -29,16 +25,33 @@ bool Window::init(unsigned int width, unsigned int height, const char* title) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);           // allow resizing
+    glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);          // start maximized :contentReference[oaicite:0]{index=0}
+
+    GLFWmonitor* primary = glfwGetPrimaryMonitor();
+    const GLFWvidmode* mode = glfwGetVideoMode(primary); // get width, height :contentReference[oaicite:1]{index=1}
+
+    //Initialize variables:
+    m_width = mode->width;
+    m_height = mode->height;
+    m_title = title;
+
 
     // Create the GLFW window
-    m_window = glfwCreateWindow(m_width, m_height, m_title, nullptr, nullptr);
+    m_window = glfwCreateWindow(m_width, m_height, m_title, primary, nullptr);
     if (!m_window) {
         std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return false;
     }
 
+    glfwSetWindowPos(m_window,
+        (mode->width - mode->width) / 2,
+        (mode->height - mode->height) / 2
+    );
+
     glfwMakeContextCurrent(m_window);
+    //glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     //Enable v-sync { Locks the FPS to the monitor refreshing rate! }
     glfwSwapInterval(1);
 
@@ -59,15 +72,15 @@ bool Window::init(unsigned int width, unsigned int height, const char* title) {
 
     // Set viewport and resize callback
     glfwSetFramebufferSizeCallback(m_window, framebufferSizeCallback);
-    //Setup of MouseListener:
-    glfwSetCursorPosCallback(m_window, MouseListener::mousePosCallback);
-    glfwSetMouseButtonCallback(m_window, MouseListener::mouseButtonCallback);
-    glfwSetScrollCallback(m_window, MouseListener::mouseScrollCallback);
-    //Setup of KeyListener:
-    glfwSetKeyCallback(m_window, KeyListener::keyCallback);
+    ////Setup of MouseListener:
+    //glfwSetCursorPosCallback(m_window, MouseListener::mousePosCallback);
+    //glfwSetMouseButtonCallback(m_window, MouseListener::mouseButtonCallback);
+    //glfwSetScrollCallback(m_window, MouseListener::mouseScrollCallback);
+    ////Setup of KeyListener:
+    //glfwSetKeyCallback(m_window, KeyListener::keyCallback);
 
     // Set initial viewport
-    glViewport(0, 0, width, height);
+    glViewport(0, 0, m_width, m_height);
 
     //Delta Time Initialization:
     beginTime = Time::getTime();
