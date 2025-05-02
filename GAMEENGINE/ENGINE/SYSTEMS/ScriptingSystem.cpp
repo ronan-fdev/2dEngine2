@@ -168,6 +168,9 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 
 	UserDataBinder::CreateLuaUserData(lua);
 	UserDataBinder::register_meta_user_data<ObjectData>();
+
+	State::CreateLuaStateBind(lua);
+	StateStack::CreateLuaStateStackBind(lua);
 	
 }
 

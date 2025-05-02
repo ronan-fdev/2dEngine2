@@ -214,6 +214,8 @@
     <ClCompile Include="ENGINE\UTILITIES\RandomGenerator.cpp" />
     <ClCompile Include="ENGINE\SCRIPTING\UserDataBinding.cpp" />
     <ClCompile Include="ENGINE\RENDERER\BUFFERS\FrameBuffer.cpp" />
+    <ClCompile Include="ENGINE\STATES\State.cpp" />
+    <ClCompile Include="ENGINE\STATES\StateStack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\SCRIPTING\ContactListenerBind.h" />
@@ -281,6 +283,8 @@
     <ClInclude Include="ENGINE\UTILITIES\RandomGenerator.h" />
     <ClInclude Include="ENGINE\SCRIPTING\UserDataBinding.h" />
     <ClInclude Include="ENGINE\RENDERER\BUFFERS\FrameBuffer.h" />
+    <ClInclude Include="ENGINE\STATES\State.h" />
+    <ClInclude Include="ENGINE\STATES\StateStack.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ENGINE\ECS\Entity.inl" />

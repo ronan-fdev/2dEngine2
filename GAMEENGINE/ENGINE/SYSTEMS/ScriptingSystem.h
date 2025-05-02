@@ -25,6 +25,9 @@
 #include "../RENDERER/CORE/FollowCamera.h"
 #include "../UTILITIES/RandomGenerator.h"
 
+#include "../STATES/State.h"
+#include "../STATES/StateStack.h"
+
 #include <sol/sol.hpp>
 
 class ScriptingSystem
