@@ -4,7 +4,7 @@ bool FrameBuffer::Initialize()
 {
     glGenFramebuffers(1, &m_FboID);
     glBindFramebuffer(GL_FRAMEBUFFER, m_FboID);
-    if (m_FboID == 0 || glGetError() != GL_NO_ERROR) {
+    if (m_FboID == 0) {
         // Handle the error, perhaps log it
         LOG_ERROR("Failed to generate framebuffer object");
     }
@@ -15,7 +15,7 @@ bool FrameBuffer::Initialize()
     {
         glGenRenderbuffers(1, &m_RboID);
         glBindRenderbuffer(GL_RENDERBUFFER, m_RboID);
-        if (m_RboID == 0 || glGetError() != GL_NO_ERROR) {
+        if (m_RboID == 0) {
             // Handle the error, perhaps log it
             LOG_ERROR("Failed to generate framebuffer object");
         }
