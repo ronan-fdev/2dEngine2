@@ -208,6 +208,7 @@
     <Image Include="ASSETS\TILEDMAP\FireBoyWaterGirl\FBWGTileset.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SRC\EDITOR\DISPLAYS\SceneDisplay.cpp" />
     <ClCompile Include="SRC\Application.cpp" />
     <ClCompile Include="SRC\ImGui\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="SRC\ImGui\backends\imgui_impl_opengl3.cpp" />
@@ -219,6 +220,7 @@
     <ClCompile Include="SRC\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SRC\EDITOR\DISPLAYS\SceneDisplay.h" />
     <ClInclude Include="SRC\Application.h" />
     <ClInclude Include="SRC\ImGui\backends\imgui_impl_glfw.h" />
     <ClInclude Include="SRC\ImGui\backends\imgui_impl_opengl3.h" />

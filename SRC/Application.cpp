@@ -245,8 +245,35 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to load the main lua script");
 	}
 	
-	
+	// CREATE TEMP FRAMEBUFFER
+	auto pFramebuffer = std::make_shared<FrameBuffer>(640, 480, true);
 
+	if (!pFramebuffer)
+	{
+		LOG_ERROR("Failed to Create test framebuffer!");
+		return false;
+	}
+
+	if (!pRegistry->AddToContext<std::shared_ptr<FrameBuffer>>(pFramebuffer))
+	{
+		LOG_ERROR("Failed add test framebuffer to registry context!");
+		return false;
+	}
+
+	auto pSceneDisplay = std::make_shared<SceneDisplay>(*pRegistry);
+	if (!pSceneDisplay)
+	{
+		LOG_ERROR("Failed to Create test SceneDisplay!");
+		return false;
+	}
+
+	if (!pRegistry->AddToContext<std::shared_ptr<SceneDisplay>>(pSceneDisplay))
+	{
+		LOG_ERROR("Failed add test pSceneDisplay to registry context!");
+		return false;
+	}
+	
+	return true;
 }
 
 bool Application::LoadShaders()
@@ -313,16 +340,14 @@ void Application::ProcessEvents()
 	glfwSetKeyCallback(Window::getGLFWWindow(), [](GLFWwindow* window, int key, int scancode, int action, int mods) {
 		ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
 
-		if (!ImGui::GetIO().WantCaptureKeyboard) {
-			auto& inputManager = InputManager::GetInstance();
-			auto& keyboard = inputManager.GetKeyboard();
+		auto& inputManager = InputManager::GetInstance();
+		auto& keyboard = inputManager.GetKeyboard();
 
-			if (action == GLFW_PRESS) {
-				keyboard.OnKeyPressed(key);
-			}
-			else if (action == GLFW_RELEASE) {
-				keyboard.OnKeyReleased(key);
-			}
+		if (action == GLFW_PRESS) {
+			keyboard.OnKeyPressed(key);
+		}
+		else if (action == GLFW_RELEASE) {
+			keyboard.OnKeyReleased(key);
 		}
 	});
 
@@ -331,17 +356,14 @@ void Application::ProcessEvents()
 		// 1. Forward to ImGui first
 		ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
 
-		// 2. Only forward to engine if ImGui doesn't want the input
-		if (!ImGui::GetIO().WantCaptureMouse) {
-			auto& inputManager = InputManager::GetInstance();
-			auto& mouse = inputManager.GetMouse();
+		auto& inputManager = InputManager::GetInstance();
+		auto& mouse = inputManager.GetMouse();
 
-			if (action == GLFW_PRESS) {
-				mouse.OnBtnPressed(button);
-			}
-			else if (action == GLFW_RELEASE) {
-				mouse.OnBtnReleased(button);
-			}
+		if (action == GLFW_PRESS) {
+			mouse.OnBtnPressed(button);
+		}
+		else if (action == GLFW_RELEASE) {
+			mouse.OnBtnReleased(button);
 		}
 	});
 
@@ -349,23 +371,19 @@ void Application::ProcessEvents()
 	glfwSetScrollCallback(Window::getGLFWWindow(), [](GLFWwindow* window, double xoffset, double yoffset) {
 		ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
 
-		if (!ImGui::GetIO().WantCaptureMouse) {
-			auto& inputManager = InputManager::GetInstance();
-			auto& mouse = inputManager.GetMouse();
-			mouse.SetMouseWheelX(static_cast<int>(xoffset));
-			mouse.SetMouseWheelY(static_cast<int>(yoffset));
-		}
+		auto& inputManager = InputManager::GetInstance();
+		auto& mouse = inputManager.GetMouse();
+		mouse.SetMouseWheelX(static_cast<int>(xoffset));
+		mouse.SetMouseWheelY(static_cast<int>(yoffset));
 	});
 
 	// Set up mouse movement callback
 	glfwSetCursorPosCallback(Window::getGLFWWindow(), [](GLFWwindow* window, double xpos, double ypos) {
 		ImGui_ImplGlfw_CursorPosCallback(window, xpos, ypos);
 
-		if (!ImGui::GetIO().WantCaptureMouse) {
-			auto& inputManager = InputManager::GetInstance();
-			auto& mouse = inputManager.GetMouse();
-			mouse.SetMouseMoving(true);
-		}
+		auto& inputManager = InputManager::GetInstance();
+		auto& mouse = inputManager.GetMouse();
+		mouse.SetMouseMoving(true);
 	});
 }
 
@@ -429,11 +447,21 @@ void Application::Render()
 	auto& fontShader = assetManager->GetShader("font");
 
 	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
-	scriptSystem->Render();
 
+	const auto& fb = pRegistry->GetContext<std::shared_ptr<FrameBuffer>>();
+
+	fb->Bind();
+
+	glViewport(0, 0, fb->Width(), fb->Height());
+	glClearColor(0.f, 0.f, 0.f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	scriptSystem->Render();
 	renderSystem->Update();
 	renderShapeSystem->Update();
 	renderUISystem->Update(pRegistry->GetRegistry());
+
+	fb->Unbind();
 
 	Begin();
 	RenderImGui();
@@ -445,6 +473,8 @@ void Application::Render()
 	renderer->DrawAllText(fontShader, *camera);
 
 	renderer->ClearPrimitives();
+
+	fb->CheckResize();
 }
 
 void Application::CleanUp()
@@ -519,6 +549,8 @@ void Application::RenderImGui()
 	ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
 
 	// TODO: Add new Scene Display!
+	auto& pSceneDisplay = pRegistry->GetContext<std::shared_ptr<SceneDisplay>>();
+	pSceneDisplay->Draw();
 
 
 	ImGui::ShowDemoWindow();

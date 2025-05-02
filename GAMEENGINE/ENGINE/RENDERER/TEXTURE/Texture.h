@@ -10,8 +10,17 @@
 class Texture
 {
 public:
+	enum class TextureType
+	{
+		PIXEL = 0,
+		BLENDED,
+		FRAMEBUFFER,
+		NONE
+	};
 	Texture();
 	Texture(const char* filePath);
+	Texture(const int& width, const int& height);//For the Frame Buffer.
+	//~Texture();
 	void bind();
 	void unbind();
 	unsigned int getID() const { return texture1; }

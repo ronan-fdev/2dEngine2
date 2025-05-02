@@ -116,6 +116,9 @@
     <ClCompile Include="SRC\ImGui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SRC\EDITOR\DISPLAYS\SceneDisplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\Application.h">
@@ -146,6 +149,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SRC\ImGui\imstb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\EDITOR\DISPLAYS\SceneDisplay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

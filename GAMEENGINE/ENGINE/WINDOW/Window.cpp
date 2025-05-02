@@ -38,17 +38,17 @@ bool Window::init(const char* title) {
 
 
     // Create the GLFW window
-    m_window = glfwCreateWindow(m_width, m_height, m_title, primary, nullptr);
+    m_window = glfwCreateWindow(m_width, m_height, m_title, nullptr, nullptr);
     if (!m_window) {
         std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return false;
     }
 
-    glfwSetWindowPos(m_window,
+    /*glfwSetWindowPos(m_window,
         (mode->width - mode->width) / 2,
         (mode->height - mode->height) / 2
-    );
+    );*/
 
     glfwMakeContextCurrent(m_window);
     //glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);

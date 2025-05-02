@@ -9,6 +9,7 @@
 #include "ENGINE/RENDERER/CORE/Camera2D.h"
 #include "ENGINE/RENDERER/CORE/Renderer.h"
 #include "ENGINE/RENDERER/ESSENTIALS/Vertex.h"
+#include "ENGINE/RENDERER/BUFFERS/FrameBuffer.h"
 
 #include "ENGINE/ECS/Entity.h";
 #include "ENGINE/ECS/COMPONENTS/SpriteComponent.h";
@@ -36,6 +37,8 @@
 #include "Imgui/imgui.h"
 #include "Imgui/backends/imgui_impl_glfw.h"
 #include "Imgui/backends/imgui_impl_opengl3.h"
+
+#include "EDITOR/DISPLAYS/SceneDisplay.h"
 
 class Application
 {
