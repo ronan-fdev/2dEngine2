@@ -1,11 +1,11 @@
 #include "UserData.h"
 
-bool ObjectData::AddContact(const ObjectData& objectData)
+bool ObjectData::AddContact(const ObjectData* objectData)
 {
     auto contactItr = std::find_if(
         contactEntities.begin(), contactEntities.end(),
-        [&](ObjectData& contactInfo) {
-            return contactInfo == objectData;
+        [&](const ObjectData* contactInfo) {
+            return *contactInfo == *objectData;
         }
     );
 
@@ -18,12 +18,12 @@ bool ObjectData::AddContact(const ObjectData& objectData)
     return true;
 }
 
-bool ObjectData::RemoveContact(const ObjectData& objectData)
+bool ObjectData::RemoveContact(const ObjectData* objectData)
 {
     auto contactItr = std::remove_if(
         contactEntities.begin(), contactEntities.end(),
-        [&](const ObjectData& contactInfo) {
-            return contactInfo == objectData;
+        [&](const ObjectData* contactInfo) {
+            return *contactInfo == *objectData;
         }
     );
 

@@ -346,7 +346,7 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 
 			auto bx = (position.x * p2m) - scaleHalfWidth;
 			auto by = (position.y * p2m) - scaleHalfHeight;
-			b2Body_SetTransform(body, b2Vec2{ bx, by }, b2Rot(0.f));
+			b2Body_SetTransform(body, b2Vec2{ bx, by }, b2Rot{.c = 1.f, .s = 0.f } );
 		}
 	);
 }
