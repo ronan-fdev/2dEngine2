@@ -20,7 +20,13 @@ struct ObjectData
     std::vector<const ObjectData*> contactEntities;
 
     friend bool operator==(const ObjectData& a, const ObjectData& b);
+    [[nodiscard]] std::string to_string() const;
+
+private:
     bool AddContact(const ObjectData* objectData);
     bool RemoveContact(const ObjectData* objectData);
-    [[nodiscard]] std::string to_string() const;
+    
+    // The add/remove contact functions should never be called
+    // outside of the contact listener.
+    friend class ContactListener;
 };
