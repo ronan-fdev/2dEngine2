@@ -20,7 +20,7 @@ public:
 	Texture();
 	Texture(const char* filePath);
 	Texture(const int& width, const int& height);//For the Frame Buffer.
-	//~Texture();
+	~Texture();
 	void bind();
 	void unbind();
 	unsigned int getID() const { return texture1; }

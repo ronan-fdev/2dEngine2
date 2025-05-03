@@ -13,6 +13,8 @@ bool ObjectData::AddContact(const ObjectData& objectData)
         return false;
 
     contactEntities.push_back(objectData);
+    //std::cout << contactEntities.size() << std::endl;
+    
     return true;
 }
 
@@ -20,7 +22,7 @@ bool ObjectData::RemoveContact(const ObjectData& objectData)
 {
     auto contactItr = std::remove_if(
         contactEntities.begin(), contactEntities.end(),
-        [&](ObjectData& contactInfo) {
+        [&](const ObjectData& contactInfo) {
             return contactInfo == objectData;
         }
     );
@@ -28,7 +30,8 @@ bool ObjectData::RemoveContact(const ObjectData& objectData)
     if (contactItr == contactEntities.end())
         return false;
 
-    contactEntities.erase(contactItr);
+    contactEntities.erase(contactItr, contactEntities.end()); 
+    //std::cout << contactEntities.size() << std::endl;
     return true;
 }
 

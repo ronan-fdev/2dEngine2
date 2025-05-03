@@ -23,17 +23,17 @@ void ContactListener::BeginContact(b2WorldId myWorldId)
 
 		try
 		{
-			auto a_any = std::any_cast<ObjectData>(a_data->userData);
-			auto b_any = std::any_cast<ObjectData>(b_data->userData);
+			auto a_any = std::any_cast<ObjectData&>(a_data->userData);//Some error happens here
+			auto b_any = std::any_cast<ObjectData&>(b_data->userData);//Some error happens here
 
 			a_any.AddContact(b_any);
 			b_any.AddContact(a_any);
 
-			a_data->userData.reset();
+			/*a_data->userData.reset();
 			a_data->userData = a_any;
 
 			b_data->userData.reset();
-			b_data->userData = b_any;
+			b_data->userData = b_any;*/
 
 			SetUserContacts(a_data, b_data);
 		}
@@ -62,24 +62,26 @@ void ContactListener::EndContact(b2WorldId myWorldId)
 
 		try
 		{
-			auto a_any = std::any_cast<ObjectData>(a_data->userData);
-			auto b_any = std::any_cast<ObjectData>(b_data->userData);
+			auto a_any = std::any_cast<ObjectData&>(a_data->userData);//Some error happens here
+			auto b_any = std::any_cast<ObjectData&>(b_data->userData);//Some error happens here
 
 			if (!a_any.RemoveContact(b_any))
 			{
 				// TODO: LOG ERROR
+				//LOG_ERROR("Failed to remove data.")
 			}
 
 			if (!b_any.RemoveContact(a_any))
 			{
 				// TODO: LOG ERROR
+				//LOG_ERROR("Failed to remove data.")
 			}
 
-			a_data->userData.reset();
+			/*a_data->userData.reset();
 			a_data->userData = a_any;
 
 			b_data->userData.reset();
-			b_data->userData = b_any;
+			b_data->userData = b_any;*/
 
 		}
 		catch (const std::bad_any_cast& ex)

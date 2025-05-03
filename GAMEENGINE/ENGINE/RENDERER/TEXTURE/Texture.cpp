@@ -69,12 +69,12 @@ Texture::Texture(const int& frameBufferWidth, const int& frameBufferHeight)
 
 }
 
-//Texture::~Texture()
-//{
-//    if (texture1 != 0) {
-//        glDeleteTextures(1, &texture1);
-//    }
-//}
+Texture::~Texture()
+{
+    if (texture1 != 0) {
+        glDeleteTextures(1, &texture1);
+    }
+}
 
 void Texture::bind()
 {
