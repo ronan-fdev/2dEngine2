@@ -171,6 +171,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 
 	State::CreateLuaStateBind(lua);
 	StateStack::CreateLuaStateStackBind(lua);
+	StateMachine::CreateLuaStateMachine(lua);
 	
 }
 
@@ -191,6 +192,32 @@ void ScriptingSystem::RegisterLuaFunctions(sol::state& lua, Registry& registry)
 			return true;
 		}
 	);
+
+	lua.set_function("load_script_table", [&](const sol::table& scriptList) {
+		if (!scriptList.valid())
+		{
+			LOG_ERROR("Failed to load script list: Table is invalid.");
+			return;
+		}
+
+		for (const auto& [index, script] : scriptList)
+		{
+			try
+			{
+				auto result = lua.safe_script_file(script.as<std::string>());
+				if (!result.valid())
+				{
+					sol::error error = result;
+					throw error;
+				}
+			}
+			catch (const sol::error& error)
+			{
+				LOG_ERROR("Failed to load script: {}, Error: {}", script.as<std::string>(), error.what());
+				return;
+			}
+		}
+		});
 
 	lua.set_function("get_ticks", [] {
 		return glfwGetTime();

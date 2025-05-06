@@ -1,5 +1,7 @@
 #include "Application.h"
 
+#include "ENGINE/RESOURCES/FONTS/default_font.h"
+
 Application& Application::GetInstance()
 {
 	static Application app{};
@@ -59,6 +61,12 @@ bool Application::Initialize()
 	if (!assetManager->AddTexture("texture1", "ASSETS/IMAGES/spritesheet.png"))
 	{
 		LOG_ERROR("Failed to add texture!");
+		return -1;
+	}
+
+	if (!assetManager->AddFontFromMemory("pixel2", pixel_font))
+	{
+		LOG_ERROR("Failed to add default font to the engine!");
 		return -1;
 	}
 

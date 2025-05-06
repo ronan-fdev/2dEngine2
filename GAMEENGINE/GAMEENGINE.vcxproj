@@ -218,8 +218,10 @@
     <ClCompile Include="ENGINE\RENDERER\BUFFERS\FrameBuffer.cpp" />
     <ClCompile Include="ENGINE\STATES\State.cpp" />
     <ClCompile Include="ENGINE\STATES\StateStack.cpp" />
+    <ClCompile Include="ENGINE\STATES\StateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ENGINE\RESOURCES\FONTS\default_font.h" />
     <ClInclude Include="ENGINE\SCRIPTING\ContactListenerBind.h" />
     <ClInclude Include="ENGINE\PHYSICS\ContactListener.h" />
     <ClInclude Include="ENGINE\PHYSICS\UserData.h" />
@@ -287,6 +289,7 @@
     <ClInclude Include="ENGINE\RENDERER\BUFFERS\FrameBuffer.h" />
     <ClInclude Include="ENGINE\STATES\State.h" />
     <ClInclude Include="ENGINE\STATES\StateStack.h" />
+    <ClInclude Include="ENGINE\STATES\StateMachine.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ENGINE\ECS\Entity.inl" />

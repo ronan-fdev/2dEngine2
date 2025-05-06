@@ -1,14 +1,6 @@
-run_script("ASSETS/SCRIPTS/TESTPROJECT1/assetdefs.lua")
-run_script("ASSETS/SCRIPTS/TESTPROJECT1/samplemap.lua")
-run_script("ASSETS/SCRIPTS/utilities.lua")
-run_script("ASSETS/SCRIPTS/rain_generator.lua")
-run_script("ASSETS/SCRIPTS/events/event_manager.lua")
- run_script("ASSETS/SCRIPTS/events/collision_event.lua")
- run_script("ASSETS/SCRIPTS/systems/trigger_system.lua")
- run_script("ASSETS/SCRIPTS/GAME_STATES/game_state.lua")
- run_script("ASSETS/SCRIPTS/GAME_STATES/title_state.lua")
-run_script("ASSETS/TILEDMAP/FireBoyWaterGirl/fireboywatergirltiledmap.lua")
---run_script("ASSETS/SCRIPTS/follow_cam.lua")
+run_script("ASSETS/SCRIPTS/TESTPROJECT1/script_list.lua")
+
+load_script_table(ScriptList)
 
 LoadAssets(AssetDefs)
 

@@ -56,8 +56,10 @@ void ContactListener::EndContact(b2WorldId myWorldId)
 
 		try
 		{
-			auto* a_any = std::any_cast<ObjectData>(&a_data->userData);
-			auto* b_any = std::any_cast<ObjectData>(&b_data->userData);
+			//a_data->userData is the std::any itself
+			//To call the overload any_cast<T>(std::any*), you must pass the address of that std::any object.
+			auto* a_any = std::any_cast<ObjectData>(&(a_data->userData));
+			auto* b_any = std::any_cast<ObjectData>(&(b_data->userData));
 
 			a_any->RemoveContact(b_any);
 			b_any->RemoveContact(a_any);

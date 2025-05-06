@@ -13,20 +13,26 @@
 #include "../ECS/COMPONENTS/TextComponent.h"
 #include "../ECS/COMPONENTS/RigidBodyComponent.h"
 #include "../ECS/Entity.h"
+
 #include "../LOGGER/log.h"
+
 #include "../SCRIPTING/GLMLuaBindings.h"
 #include "../SCRIPTING/InputManager.h"
 #include "../SCRIPTING/RendererBindings.h"
 #include "../SCRIPTING/UserDataBinding.h"
 #include "../SCRIPTING/ContactListenerBind.h"
+
 #include "../RESOURCES/AssetManager.h"
+
 #include "../UTILITIES/Timer.h"
+#include "../UTILITIES/RandomGenerator.h"
+
 #include "../RENDERER/CORE/CoreEngineData.h"
 #include "../RENDERER/CORE/FollowCamera.h"
-#include "../UTILITIES/RandomGenerator.h"
 
 #include "../STATES/State.h"
 #include "../STATES/StateStack.h"
+#include "../STATES/StateMachine.h"
 
 #include <sol/sol.hpp>
 
