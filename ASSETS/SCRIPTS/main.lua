@@ -16,6 +16,12 @@ gStateStack = StateStack()
 local title = TitleState:Create(gStateStack)
 gStateStack:change_state(title)
 
+LUA_TRACE("Hello Lua Logging into LUA_TRACE!")  
+LUA_INFO("Hello Lua Logging into LUA_INFO!")   
+LUA_WARN("Hello Lua Logging into LUA_WARN!")   
+LUA_ERROR("Hello Lua Logging! into LUA_ERROR")  
+LUA_FATAL("Hello Lua Logging! into LUA_FATAL")  
+
 main = {
 	[1] = {
 		update = function()

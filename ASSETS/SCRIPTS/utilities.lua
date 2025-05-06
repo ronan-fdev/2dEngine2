@@ -125,221 +125,222 @@
  end
  
  
- --[[
- 	Tileset Lua class used for parsing necessary tileset info
- 	when loading maps created using the Tiled Map Editor.
- --]]
- Tileset = {}
- Tileset.__index = Tileset
- function Tileset:Create(params)
- 	local this = 
- 	{
- 		name = params.name, 
- 		columns = params.columns,
- 		width = params.width,
- 		height = params.height,
- 		tilewidth = params.tilewidth,
- 		tileheight = params.tileheight,
- 		firstgid = params.firstgid
- 	}
- 
- 	this.rows = params.height / params.tileheight
- 	this.lastgid = math.floor(((this.rows * this.columns) + this.firstgid) - 1)
- 
- 	setmetatable(this, self)
- 	return this
- end
- 
- -- Checks to see if the given ID exists as a tile in the tileset.
- -- returns true if the id is between the first and last gid
- function Tileset:TileIdExists(id)
- 	return id >= self.firstgid and id <= self.lastgid
- end
- 
- -- Gets the needed start_x and start_y values for the sprite component
- -- When generating the uvs, the start x and start y are used to tell the 
- -- engine where on the tilesheet the tile sprite is.
- function Tileset:GetTileStartXY(id)
- 	assert(self:TileIdExists(id), "Tile ID[" ..id .."] does not exist in tileset[" ..self.name .."]")
- 	local actualTileID = id - self.firstgid
- 	local start_y = math.floor(actualTileID / self.columns)
- 	local start_x = math.floor(actualTileID % self.columns)
- 	return start_x, start_y
- end
- 
- -- Loop through a tilesets table and check to see if that particular ID 
- -- exists in a tileset. 
- -- Returns the correct tileset if it exists, nil otherwise.
- function GetTileset(tilesets, id)
- 	assert(tilesets)
- 	for k, v in pairs(tilesets) do 
- 		if v:TileIdExists(id) then 
- 			return v
- 		end 
- 	end 
- 	return nil
- end
- 
- -- Takes in the Tilemap table returned from tilemaps created using Tiled Map Editor.
- -- Creates a new tileset object for each tileset and then loads new tile entities based 
- -- on their layer, tile id, and position.
- function LoadMap(mapDef)
- 	assert(mapDef)
- 	local tilesets = {}
- 	for k, v in pairs(mapDef.tilesets) do 
- 		local newTileset = Tileset:Create(
- 			{
- 				name = v.name,
- 				columns = v.columns,
- 				width = v.imagewidth,
- 				height = v.imageheight,
- 				tilewidth = v.tilewidth,
- 				tileheight = v.tileheight,
- 				firstgid = v.firstgid
- 			}
- 		)
- 
- 		table.insert(tilesets, newTileset)
- 	end
+--[[
+	Tileset Lua class used for parsing necessary tileset info
+	when loading maps created using the Tiled Map Editor.
+--]]
+Tileset = {}
+Tileset.__index = Tileset
+function Tileset:Create(params)
+	local this = 
+	{
+		name = params.name, 
+		columns = params.columns,
+		width = params.width,
+		height = params.height,
+		tilewidth = params.tilewidth,
+		tileheight = params.tileheight,
+		firstgid = params.firstgid
+	}
 
- 	-- Loop through the layers and create the tiles 
- 	for k, v in ipairs(mapDef.layers) do 
- 		local rows = v.height - 1 
- 		local cols = v.width 
- 		local layer = k - 1 
+	this.rows = params.height / params.tileheight
+	this.lastgid = math.floor(((this.rows * this.columns) + this.firstgid) - 1)
 
- 		for row = 0, rows do
- 			for col = 1, cols do
- 				local id = v.data[row * cols + col]
- 
- 				if id == 0 then 
- 					goto continue 
- 				end 
+	setmetatable(this, self)
+	return this
+end
 
-                 
- 				
- 				local tileset = GetTileset(tilesets, id)
- 				assert(tileset, "Tileset does not exist with id: " ..id)
- 				local start_x, start_y = tileset:GetTileStartXY(id)
+-- Checks to see if the given ID exists as a tile in the tileset.
+-- returns true if the id is between the first and last gid
+function Tileset:TileIdExists(id)
+	return id >= self.firstgid and id <= self.lastgid
+end
 
-                 
- 
- 				-- Scale is used for testing, will change this once zoom in camera is working.
- 				local scale = 1
- 				local position = vec2(((col - 1) * tileset.tilewidth * scale), (row * tileset.tileheight * scale))
+-- Gets the needed start_x and start_y values for the sprite component
+-- When generating the uvs, the start x and start y are used to tell the 
+-- engine where on the tilesheet the tile sprite is.
+function Tileset:GetTileStartXY(id)
+	assert(self:TileIdExists(id), "Tile ID[" ..id .."] does not exist in tileset[" ..self.name .."]")
+	local actualTileID = id - self.firstgid
+	local start_y = math.floor(actualTileID / self.columns)
+	local start_x = math.floor(actualTileID % self.columns)
+	return start_x, start_y
+end
+
+-- Loop through a tilesets table and check to see if that particular ID 
+-- exists in a tileset. 
+-- Returns the correct tileset if it exists, nil otherwise.
+function GetTileset(tilesets, id)
+	assert(tilesets)
+	for k, v in pairs(tilesets) do 
+		if v:TileIdExists(id) then 
+			return v
+		end 
+	end 
+	return nil
+end
+
+-- Takes in the Tilemap table returned from tilemaps created using Tiled Map Editor.
+-- Creates a new tileset object for each tileset and then loads new tile entities based 
+-- on their layer, tile id, and position.
+function LoadMap(mapDef)
+	assert(mapDef)
+	local tilesets = {}
+	for k, v in pairs(mapDef.tilesets) do 
+		local newTileset = Tileset:Create(
+			{
+				name = v.name,
+				columns = v.columns,
+				width = v.imagewidth,
+				height = v.imageheight,
+				tilewidth = v.tilewidth,
+				tileheight = v.tileheight,
+				firstgid = v.firstgid
+			}
+		)
+
+		table.insert(tilesets, newTileset)
+	end
+
+	-- Loop through the layers and create the tiles 
+	for k, v in ipairs(mapDef.layers) do 
+		local rows = v.height - 1 
+		local cols = v.width 
+		local layer = k - 1 
+
+		for row = 0, rows do
+			for col = 1, cols do
+				local id = v.data[row * cols + col]
+
+				if id == 0 then 
+					goto continue 
+				end 
+
                 
-                 --print(id," ",row," ",col, " ", start_x, " ", start_y, " ",position.x," ",position.y)
+				
+				local tileset = GetTileset(tilesets, id)
+				assert(tileset, "Tileset does not exist with id: " ..id)
+				local start_x, start_y = tileset:GetTileStartXY(id)
 
- 				local tile = Entity("", "tiles")
- 				local transform = tile:add_component(Transform(position, vec2(scale, scale), 0))
- 
- 				local bIsCollider = false
- 
- 				-- Currently the box collider has a sprite, this will be changed once we can draw
- 				-- Simple Primitives in the engine.
- 				if tileset.name == "collider" or tileset.name == "trigger" then 
- 					tile:add_component(
- 						BoxCollider(
- 							tileset.tilewidth,
- 							tileset.tileheight,
- 							vec2(0, 0)
- 						)
- 					)
+                
 
-                     -- If Box2d is enable, create a physics component
- 					if IsPhysicsEnabled() then 
- 						local physicsAttribs = PhysicsAttributes()
- 
- 						-- Adjust properties to desired values, properties that are unchanged use default
- 						physicsAttribs.eType = BodyType.Static
- 						physicsAttribs.density = 1000.0			
- 						physicsAttribs.friction = 0.0			
- 						physicsAttribs.restitution = 0.0		
- 						physicsAttribs.gravityScale = 0.0
- 						physicsAttribs.position = transform.position
- 						physicsAttribs.bFixedRotation = true
- 						physicsAttribs.boxSize = vec2(tileset.tilewidth, tileset.tileheight)
- 						physicsAttribs.bBoxShape = true
- 
- 						if tileset.name == "trigger" then 
- 							--physicsAttribs.bIsSensor = true 
-                            physicsAttribs.bIsContactEventsEnabled = true
-                            physicsAttribs.objectData = ObjectData("", "hole_triggers", false, true, tile:id())
+				-- Scale is used for testing, will change this once zoom in camera is working.
+				local scale = 1
+				local position = vec2(((col - 1) * tileset.tilewidth * scale), (row * tileset.tileheight * scale))
+               
+                --print(id," ",row," ",col, " ", start_x, " ", start_y, " ",position.x," ",position.y)
+
+				local tile = Entity("", "tiles")
+				local transform = tile:add_component(Transform(position, vec2(scale, scale), 0))
+
+				local bIsCollider = false
+
+				-- Currently the box collider has a sprite, this will be changed once we can draw
+				-- Simple Primitives in the engine.
+				if tileset.name == "collider" or tileset.name == "trigger" then 
+					tile:add_component(
+						BoxCollider(
+							tileset.tilewidth,
+							tileset.tileheight,
+							vec2(0, 0)
+						)
+					)
+
+                    -- If Box2d is enable, create a physics component
+					if IsPhysicsEnabled() then 
+						local physicsAttribs = PhysicsAttributes()
+
+						-- Adjust properties to desired values, properties that are unchanged use default
+						physicsAttribs.eType = BodyType.Static
+						physicsAttribs.density = 1000.0			
+						physicsAttribs.friction = 0.0			
+						physicsAttribs.restitution = 0.0		
+						physicsAttribs.gravityScale = 0.0
+						physicsAttribs.position = transform.position
+						physicsAttribs.bFixedRotation = true
+						physicsAttribs.boxSize = vec2(tileset.tilewidth, tileset.tileheight)
+						physicsAttribs.bBoxShape = true
+
+						if tileset.name == "trigger" then 
+							--physicsAttribs.bIsSensor = true 
+                           physicsAttribs.bIsContactEventsEnabled = true
+                           physicsAttribs.objectData = ObjectData("", "hole_triggers", false, true, tile:id())
                         else 
                             physicsAttribs.bIsContactEventsEnabled = true
                             physicsAttribs.objectData = ObjectData("", "colliders", true, false, tile:id())
- 						end
+						end
                         tile:add_component(PhysicsComp(physicsAttribs))
- 					end
-                    bIsCollider = true
- 				end
+					end
+                   bIsCollider = true
+				end
 
-                -- If not a collider, create the tile sprite
- 				if not bIsCollider then 
- 					local sprite = tile:add_component(
- 						Sprite(
- 							tileset.name,
- 							tileset.tilewidth,
- 							tileset.tileheight,
- 							start_x, start_y,
- 							layer
- 						)
- 					)
- 
- 					sprite:generate_uvs()
- 				end
- 
- 				::continue::
- 			end
- 		end
- 	end
- end
- 
- --[[
- 	Loads all the assets into the AssetManager that are defined in the 
- 	given assets table. 
- 	Expects a table in the form of 
- 		Assets = {
- 			textures { ... },
- 			music { ... },
- 			sound_fx { ... },
- 			-- ...Other asset types as needed
- 		}
- --]]
- function LoadAssets(assets)
- 	for k, v in pairs(assets.textures) do
- 		if not AssetManager.add_texture(v.name, v.path, v.pixel_art) then
- 			print("Failed to load texture [" ..v.name .."] at path [" ..v.path .."]")
- 		else
- 			print("Loaded Texture [" ..v.name .."]")
- 		end
- 	end
- 
- 	for k, v in pairs(assets.music) do 
- 		if not AssetManager.add_music(v.name, v.path) then 
- 			print("Failed to load music [" ..v.name .."] at path [" ..v.path .."]")
- 		else
- 			print("Loaded music [" ..v.name .."]")
- 		end
- 	end
- 
- 	for k, v in pairs(assets.sound_fx) do
- 		if not AssetManager.add_soundfx(v.name, v.path) then
- 			print("Failed to load soundfx [" ..v.name .."] at path [" ..v.path .."]")
- 		else
- 			print("Loaded soundfx [" ..v.name .."]")
- 		end
- 	end
+               -- If not a collider, create the tile sprite
+				if not bIsCollider then 
+					local sprite = tile:add_component(
+						Sprite(
+							tileset.name,
+							tileset.tilewidth,
+							tileset.tileheight,
+							start_x, start_y,
+							layer
+						)
+					)
 
-    for k, v in pairs(assets.font) do
-       if not AssetManager.add_font(v.name, v.path, v.font_size) then
-           print("Failed to load font [" ..v.name .."] at path [" ..v.path .."]")
-       else
- 	       print("Loaded font [" ..v.name .."]")
-       end 
-    end
- 	-- TODO: Add other loading of assets as needed
- end
+					sprite:generate_uvs()
+				end
+
+				::continue::
+			end
+		end
+	end
+end
+
+--[[
+	Loads all the assets into the AssetManager that are defined in the 
+	given assets table. 
+	Expects a table in the form of 
+		Assets = {
+			textures { ... },
+			music { ... },
+			sound_fx { ... },
+			-- ...Other asset types as needed
+		}
+--]]
+function LoadAssets(assets)
+	for k, v in pairs(assets.textures) do
+		if not AssetManager.add_texture(v.name, v.path, v.pixel_art) then
+			LUA_ERROR("Failed to load texture ",v.name," at path ",v.path)
+			print()
+		else
+			LUA_INFO("Loaded Texture :",v.name)
+		end
+	end
+
+	for k, v in pairs(assets.music) do 
+		if not AssetManager.add_music(v.name, v.path) then 
+			LUA_ERROR("Failed to load music ",v.name," at path ",v.path)
+		else
+			LUA_INFO("Loaded Music :",v.name)
+		end
+	end
+
+	for k, v in pairs(assets.sound_fx) do
+		if not AssetManager.add_soundfx(v.name, v.path) then
+			LUA_ERROR("Failed to load sound_fx ",v.name," at path ",v.path)
+		else
+			LUA_INFO("Loaded SoundFX :",v.name)
+		end
+	end
+
+   for k, v in pairs(assets.font) do
+      if not AssetManager.add_font(v.name, v.path, v.font_size) then
+			LUA_ERROR("Failed to load font ",v.name," at path ",v.path)
+      else
+	        LUA_INFO("Loaded Font :",v.name)
+      end 
+   end
+	-- TODO: Add other loading of assets as needed
+end
 
 -----------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------

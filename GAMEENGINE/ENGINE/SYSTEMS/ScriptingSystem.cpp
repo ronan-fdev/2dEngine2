@@ -121,6 +121,8 @@ auto create_timer = [](sol::state& lua) {
 
 void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 {
+	LuaLogBinding::RegisterLuaLogBinding(lua);
+
 	Entity::CreateLuaEntityBind(lua, registry);
 	Registry::CreateLuaRegistryBind(lua, registry);
 	GLMBindings::CreateGLMBindings(lua);

@@ -15,6 +15,7 @@
 #include "../ECS/Entity.h"
 
 #include "../LOGGER/log.h"
+#include "../LOGGER/LuaLogBinding.h"
 
 #include "../SCRIPTING/GLMLuaBindings.h"
 #include "../SCRIPTING/InputManager.h"

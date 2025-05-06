@@ -12,7 +12,7 @@ bool FMODAudioSystem::Initialize(int maxChannels, int studioFlags, int coreFlags
 {
     if (m_Initialized)
     {
-        std::cerr << "FMOD: Already initialized!" << std::endl;
+        LOG_ERROR("FMOD: Already initialized!");
         return false;
     }
 
@@ -20,7 +20,7 @@ bool FMODAudioSystem::Initialize(int maxChannels, int studioFlags, int coreFlags
     FMOD_RESULT result = FMOD::Studio::System::create(&m_StudioSystem);
     if (ErrorCheck(result) != FMOD_OK)
     {
-        std::cerr << "FMOD: Failed to create studio system!" << std::endl;
+        LOG_ERROR("FMOD: Failed to create studio system!");
         return false;
     }
 
@@ -28,7 +28,7 @@ bool FMODAudioSystem::Initialize(int maxChannels, int studioFlags, int coreFlags
     result = m_StudioSystem->getCoreSystem(&m_CoreSystem);
     if (ErrorCheck(result) != FMOD_OK)
     {
-        std::cerr << "FMOD: Failed to get core system!" << std::endl;
+        LOG_ERROR("FMOD: Failed to get core system!");
         return false;
     }
 
@@ -36,28 +36,28 @@ bool FMODAudioSystem::Initialize(int maxChannels, int studioFlags, int coreFlags
     result = m_CoreSystem->setSoftwareFormat(0, FMOD_SPEAKERMODE_STEREO, 0);
     if (ErrorCheck(result) != FMOD_OK)
     {
-        std::cerr << "FMOD: Failed to set software format!" << std::endl;
+        LOG_ERROR("FMOD: Failed to set software format!");
         return false;
     }
 
     result = m_CoreSystem->setDSPBufferSize(1024, 10);
     if (ErrorCheck(result) != FMOD_OK)
     {
-        std::cerr << "FMOD: Failed to set DSP buffer size!" << std::endl;
+        LOG_ERROR("FMOD: Failed to set DSP buffer size!");
         return false;
     }
 
     result = m_CoreSystem->setSoftwareChannels(maxChannels);
     if (ErrorCheck(result) != FMOD_OK)
     {
-        std::cerr << "FMOD: Failed to set max channels!" << std::endl;
+        LOG_ERROR("FMOD: Failed to set max channels!");
         return false;
     }
 
     result = m_StudioSystem->initialize(maxChannels, studioFlags, coreFlags, nullptr);
     if (ErrorCheck(result) != FMOD_OK)
     {
-        std::cerr << "FMOD: Failed to initialize studio system!" << std::endl;
+        LOG_ERROR("FMOD: Failed to initialize studio system!");
         return false;
     }
 
@@ -65,14 +65,13 @@ bool FMODAudioSystem::Initialize(int maxChannels, int studioFlags, int coreFlags
     result = m_CoreSystem->set3DSettings(1.0f, 1.0f, 1.0f); // doppler scale, distance factor, rolloff scale
     if (ErrorCheck(result) != FMOD_OK)
     {
-        std::cerr << "FMOD: Failed to set 3D settings!" << std::endl;
+        LOG_ERROR("FMOD: Failed to set 3D settings!");
         return false;
     }
 
     m_Initialized = true;
 
-
-    std::cout << "FMOD: Successfully initialized." << std::endl;
+    LOG_INFO("FMOD: Successfully initialized.");
     return true;
 }
 
@@ -115,21 +114,21 @@ void FMODAudioSystem::Shutdown()
     }
 
     m_Initialized = false;
-    std::cout << "FMOD: Successfully shutdown." << std::endl;
+    LOG_INFO("FMOD: Successfully shutdown.");
 }
 
 bool FMODAudioSystem::LoadBank(const std::string& bankName, const std::string& bankPath)
 {
     if (!m_Initialized)
     {
-        std::cerr << "FMOD: System not initialized!" << std::endl;
+        LOG_ERROR("FMOD: System not initialized!");
         return false;
     }
 
     // Check if bank is already loaded
     if (m_Banks.find(bankName) != m_Banks.end())
     {
-        std::cout << "FMOD: Bank '" << bankName << "' already loaded." << std::endl;
+        LOG_ERROR("FMOD: Bank '{}' already loaded.", bankName);
         return true;
     }
 
@@ -137,7 +136,7 @@ bool FMODAudioSystem::LoadBank(const std::string& bankName, const std::string& b
     FMOD_RESULT result = m_StudioSystem->loadBankFile(bankPath.c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &bank);
     if (ErrorCheck(result) != FMOD_OK)
     {
-        std::cerr << "FMOD: Failed to load bank '" << bankName << "' from path: " << bankPath << std::endl;
+        LOG_ERROR("FMOD: Failed to load bank '{}' from path: {}", bankName, bankPath);
         return false;
     }
 
@@ -145,13 +144,13 @@ bool FMODAudioSystem::LoadBank(const std::string& bankName, const std::string& b
     result = bank->loadSampleData();
     if (ErrorCheck(result) != FMOD_OK)
     {
-        std::cerr << "FMOD: Failed to load sample data for bank '" << bankName << "'" << std::endl;
+        LOG_ERROR("FMOD: Failed to load sample data for bank '{}'", bankName);
         bank->unload();
         return false;
     }
 
     m_Banks[bankName] = bank;
-    std::cout << "FMOD: Successfully loaded bank '" << bankName << "'" << std::endl;
+    LOG_INFO("FMOD: Successfully loaded bank '{}'",bankName);
     return true;
 }
 
@@ -159,26 +158,26 @@ bool FMODAudioSystem::UnloadBank(const std::string& bankName)
 {
     if (!m_Initialized)
     {
-        std::cerr << "FMOD: System not initialized!" << std::endl;
+        LOG_ERROR("FMOD: System not initialized!");
         return false;
     }
 
     auto it = m_Banks.find(bankName);
     if (it == m_Banks.end())
     {
-        std::cerr << "FMOD: Bank '" << bankName << "' not found!" << std::endl;
+        LOG_ERROR("FMOD: Bank '{}' not found!", bankName);
         return false;
     }
 
     FMOD_RESULT result = it->second->unload();
     if (ErrorCheck(result) != FMOD_OK)
     {
-        std::cerr << "FMOD: Failed to unload bank '" << bankName << "'" << std::endl;
+        LOG_ERROR("FMOD: Failed to unload bank '{}'", bankName);
         return false;
     }
 
     m_Banks.erase(it);
-    std::cout << "FMOD: Successfully unloaded bank '" << bankName << "'" << std::endl;
+    LOG_INFO("FMOD: Successfully unloaded bank '{}'", bankName);
     return true;
 }
 
@@ -186,7 +185,7 @@ FMOD::Studio::EventInstance* FMODAudioSystem::CreateEventInstance(const std::str
 {
     if (!m_Initialized)
     {
-        std::cerr << "FMOD: System not initialized!" << std::endl;
+        LOG_ERROR("FMOD: System not initialized!");
         return nullptr;
     }
 
@@ -204,7 +203,7 @@ FMOD::Studio::EventInstance* FMODAudioSystem::CreateEventInstance(const std::str
         FMOD_RESULT result = m_StudioSystem->getEvent(eventPath.c_str(), &eventDescription);
         if (ErrorCheck(result) != FMOD_OK || eventDescription == nullptr)
         {
-            std::cerr << "FMOD: Failed to get event description for '" << eventPath << "'" << std::endl;
+            LOG_ERROR("FMOD: Failed to get event description for '{}'", eventPath);
             return nullptr;
         }
 
@@ -217,7 +216,7 @@ FMOD::Studio::EventInstance* FMODAudioSystem::CreateEventInstance(const std::str
     FMOD_RESULT result = eventDescription->createInstance(&eventInstance);
     if (ErrorCheck(result) != FMOD_OK || eventInstance == nullptr)
     {
-        std::cerr << "FMOD: Failed to create event instance for '" << eventPath << "'" << std::endl;
+        LOG_ERROR("FMOD: Failed to create event instance for '{}'", eventPath);
         return nullptr;
     }
 
@@ -239,7 +238,7 @@ FMOD::Sound* FMODAudioSystem::LoadSound(const std::string& soundPath, bool loop)
 {
     if (!m_Initialized)
     {
-        std::cerr << "FMOD: System not initialized!" << std::endl;
+        LOG_ERROR("FMOD: System not initialized!");
         return nullptr;
     }
 
@@ -260,7 +259,7 @@ FMOD::Sound* FMODAudioSystem::LoadSound(const std::string& soundPath, bool loop)
     FMOD_RESULT result = m_CoreSystem->createSound(soundPath.c_str(), mode, nullptr, &sound);
     if (ErrorCheck(result) != FMOD_OK || sound == nullptr)
     {
-        std::cerr << "FMOD: Failed to load sound '" << soundPath << "'" << std::endl;
+        LOG_ERROR("FMOD: Failed to load sound '{}'", soundPath);
         return nullptr;
     }
 
@@ -624,7 +623,7 @@ FMOD_RESULT FMODAudioSystem::ErrorCheck(FMOD_RESULT result) const
 {
     if (result != FMOD_OK)
     {
-        std::cerr << "FMOD Error: " << result << " - " << FMOD_ErrorString(result) << std::endl;
+        LOG_ERROR("FMOD Error: {} - {}", static_cast<int>(result), FMOD_ErrorString(result));
     }
 
     return result;

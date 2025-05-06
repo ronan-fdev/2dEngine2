@@ -10,6 +10,8 @@
 #include <functional>
 #include <fmod_errors.h>
 
+#include "../LOGGER/log.h"
+
 class FMODAudioSystem
 {
 public:
