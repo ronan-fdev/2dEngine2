@@ -1,4 +1,3 @@
-function createFBWGWorld()
 return {
   version = "1.10",
   luaversion = "5.1",
@@ -15,7 +14,7 @@ return {
   properties = {},
   tilesets = {
     {
-      name = "FBWGTileset",
+      name = "tempTileset",
       firstgid = 1,
       class = "",
       tilewidth = 16,
@@ -44,7 +43,7 @@ return {
       tiles = {}
     },
     {
-      name = "collider",
+      name = "collisions",
       firstgid = 65,
       class = "",
       tilewidth = 16,
@@ -384,4 +383,3 @@ return {
     }
   }
 }
-end

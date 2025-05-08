@@ -22,6 +22,7 @@
 #include "../SCRIPTING/RendererBindings.h"
 #include "../SCRIPTING/UserDataBinding.h"
 #include "../SCRIPTING/ContactListenerBind.h"
+#include "../SCRIPTING/SensorListenerBind.h"
 
 #include "../RESOURCES/AssetManager.h"
 

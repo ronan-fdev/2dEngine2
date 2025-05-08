@@ -41,6 +41,7 @@ PlayerDefs =
 			},
 			physics_attributes = {
 				type = BodyType.Dynamic,
+				bInteractionType = BodyInteractionType.NORMAL,
 				density = 75.0,
 				friction = 1.0,
 				restitution = 0.0,
@@ -54,7 +55,8 @@ PlayerDefs =
 					tag = "player",
 					group = "",
 					bCollider = true,
-					bTrigger = false
+					bTrigger = false,
+					bSensor = false
 				}
 			}
 		},

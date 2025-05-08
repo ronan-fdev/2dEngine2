@@ -12,9 +12,18 @@
 
 enum class RigidBodyType { STATIC = 0, KINEMATIC, DYNAMIC };
 
+enum class BodyInteractionType
+{
+    NORMAL = 0,
+    COLLIDER = 1,
+    SENSOR = 2,
+    TRIGGER = 3
+};
+
 struct PhysicsAttributes
 {
     RigidBodyType eType{ RigidBodyType::STATIC };
+    BodyInteractionType bInteractionType{ BodyInteractionType::NORMAL };
     float density{ 1.f }, friction{ 0.2f }, restitution{ 0.2f };
     float restitutionThreshold{ 1.f }, radius{ 0.f }, gravityScale{ 1.f };
 

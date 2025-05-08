@@ -44,6 +44,7 @@ std::string ObjectData::to_string() const
         "Group: " << group << "\n" <<
         "bCollider: " << bCollider << "\n" <<
         "bTrigger: " << bTrigger << "\n" <<
+        "bSensor: " << bSensor << "\n" <<
         "EntityID: " << entityID << "\n";
 
     return ss.str();
@@ -54,6 +55,7 @@ bool operator==(const ObjectData& a, const ObjectData& b)
     return
         a.bCollider == b.bCollider &&
         a.bTrigger == b.bTrigger &&
+        a.bSensor == b.bSensor &&
         a.tag == b.tag &&
         a.group == b.group &&
         a.entityID == b.entityID;

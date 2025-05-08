@@ -32,16 +32,26 @@ function GameState:Create(stack)
 end
 
 function GameState:Initialize()
-    -- Create events
+    -- Create events and systems for triggers
  	if not gCollisionEvent then 
- 		gCollisionEvent = CollisionEvent:Create()
+ 		gCollisionEvent = CollisionEvent:new()
  	end 
  
  	if not gTriggerSystem then 
- 		gTriggerSystem = TriggerSystem:Create()
+ 		gTriggerSystem = TriggerSystem:new()
  	end 
  
  	gCollisionEvent:SubscribeToEvent(gTriggerSystem)
+
+    if not gSensorEvent then 
+ 		gSensorEvent = SensorEvent:new()
+ 	end 
+ 
+ 	if not gSensorTriggerSystem then 
+ 		gSensorTriggerSystem = SensorTriggerSystem:new()
+ 	end 
+ 
+ 	gSensorEvent:SubscribeToEvent(gSensorTriggerSystem)
 
      -- Create the player
     if not gPlayer then
@@ -66,13 +76,15 @@ function GameState:OnUpdate(dt)
     UpdateActiveCharacters(dt)
     self:UpdateContacts()
     rainGen:Update(dt) 
+    --LUA_INFO("H")
 end
 
 function GameState:OnRender()
 end
 
 function GameState:HandleInputs()
-	if Keyboard.just_released(KEY_BACKSPACE) then 
+	if Keyboard.just_pressed(KEY_G) then 
+        LUA_INFO("Hello")
 		self.m_Stack:pop()
 		return 
 	end
@@ -83,4 +95,12 @@ function GameState:UpdateContacts()
 	if uda and udb then 
 		gCollisionEvent:EmitEvent(uda, udb)
 	end 
+
+    local sensor1, sensor2 = SensorListener:get_user_data()
+    if sensor1 and sensor2 then
+        gSensorEvent:EmitEvent(sensor1, sensor2)
+        --LUA_INFO(sensor1:to_string())
+        --LUA_INFO(sensor2:to_string())
+    end
+
 end

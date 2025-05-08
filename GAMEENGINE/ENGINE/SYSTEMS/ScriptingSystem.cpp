@@ -145,6 +145,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	RigidBodyComponent::CreateRigidBodyBind(lua);
 	FollowCamera::CreateLuaFollowCamera(lua, registry);
 	ContactListenerBind::CreateLuaContactListener(lua, registry.GetRegistry());
+	SensorListenerBind::CreateLuaContactListener(lua, registry.GetRegistry());
 
 	Entity::RegisterMetaComponent<TransformComponent>();
 	Entity::RegisterMetaComponent<SpriteComponent>();

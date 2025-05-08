@@ -79,6 +79,7 @@
  		local newPhysicsAttr = PhysicsAttributes()
  
  		newPhysicsAttr.eType = physAttr.type 
+		newPhysicsAttr.bInteractionType = BodyInteractionType.NORMAL
  		newPhysicsAttr.density = physAttr.density
  		newPhysicsAttr.friction = physAttr.friction
  		newPhysicsAttr.restitution = physAttr.restitution
@@ -95,6 +96,7 @@
  			physAttr.object_data.group,
  			physAttr.object_data.bCollider,
  			physAttr.object_data.bTrigger,
+ 			physAttr.object_data.bSensor,
  			newEntity:id()
  		)
  		
@@ -237,7 +239,7 @@ function LoadMap(mapDef)
 
 				-- Currently the box collider has a sprite, this will be changed once we can draw
 				-- Simple Primitives in the engine.
-				if tileset.name == "collider" or tileset.name == "trigger" then 
+				if tileset.name == "collider" or tileset.name == "trigger" or tileset.name == "sensor" then 
 					tile:add_component(
 						BoxCollider(
 							tileset.tilewidth,
@@ -263,11 +265,16 @@ function LoadMap(mapDef)
 
 						if tileset.name == "trigger" then 
 							--physicsAttribs.bIsSensor = true 
-                           physicsAttribs.bIsContactEventsEnabled = true
-                           physicsAttribs.objectData = ObjectData("", "hole_triggers", false, true, tile:id())
-                        else 
-                            physicsAttribs.bIsContactEventsEnabled = true
-                            physicsAttribs.objectData = ObjectData("", "colliders", true, false, tile:id())
+                           --physicsAttribs.bIsContactEventsEnabled = true
+						   physicsAttribs.bInteractionType = BodyInteractionType.TRIGGER
+                           physicsAttribs.objectData = ObjectData("", "hole_triggers", false, true, false, tile:id())
+                        elseif tileset.name == "collider" then
+                            --physicsAttribs.bIsContactEventsEnabled = true
+                            physicsAttribs.objectData = ObjectData("", "colliders", true, false, false, tile:id())
+							physicsAttribs.bInteractionType = BodyInteractionType.COLLIDER
+						elseif tileset.name == "sensor" then
+							physicsAttribs.objectData = ObjectData("", "sensors", false, false, true, tile:id())
+							physicsAttribs.bInteractionType = BodyInteractionType.SENSOR
 						end
                         tile:add_component(PhysicsComp(physicsAttribs))
 					end

@@ -15,7 +15,7 @@ struct UserData
 struct ObjectData
 {
     std::string tag{ "" }, group{ "" };
-    bool bCollider{ false }, bTrigger{ false };
+    bool bCollider{ false }, bTrigger{ false }, bSensor{ false };
     std::uint32_t entityID{};
     std::vector<const ObjectData*> contactEntities;
 
@@ -29,4 +29,5 @@ private:
     // The add/remove contact functions should never be called
     // outside of the contact listener.
     friend class ContactListener;
+    friend class SensorListener;
 };

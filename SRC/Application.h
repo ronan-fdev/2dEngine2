@@ -24,6 +24,7 @@
 #include "ENGINE/ECS/COMPONENTS/TextComponent.h"
 
 #include "ENGINE/PHYSICS/ContactListener.h"
+#include "ENGINE/PHYSICS/SensorListener.h"
 		  
 #include "ENGINE/SYSTEMS/ScriptingSystem.h"
 #include "ENGINE/SYSTEMS/RenderSystem.h"

@@ -73,9 +73,35 @@ void PhysicsComponent::Init(int windowWidth, int windowHeight)
 	fixtureDef.density = m_InitialAttribs.density;
 	fixtureDef.friction = m_InitialAttribs.friction;
 	fixtureDef.restitution = m_InitialAttribs.restitution;
-	fixtureDef.isSensor = m_InitialAttribs.bIsSensor;
-	fixtureDef.enableContactEvents = m_InitialAttribs.bIsContactEventsEnabled;
+	//fixtureDef.isSensor = m_InitialAttribs.bIsSensor;
+	//fixtureDef.enableContactEvents = m_InitialAttribs.bIsContactEventsEnabled;
 	fixtureDef.userData = reinterpret_cast<void*>(m_pUserData.get());//TODO:: Some problem could be present.
+
+	if (m_InitialAttribs.bInteractionType == BodyInteractionType::COLLIDER)
+	{
+		fixtureDef.enableContactEvents = true;
+	}
+	else if (m_InitialAttribs.bInteractionType == BodyInteractionType::SENSOR)
+	{
+		fixtureDef.isSensor = true;
+		fixtureDef.enableSensorEvents = true;
+	}
+	else if (m_InitialAttribs.bInteractionType == BodyInteractionType::TRIGGER)
+	{
+		fixtureDef.enableContactEvents = true;
+		b2ShapeDef tempSensorBodyDef = b2DefaultShapeDef();
+		tempSensorBodyDef.userData = reinterpret_cast<void*>(m_pUserData.get());
+		tempSensorBodyDef.isSensor = true;
+		tempSensorBodyDef.enableSensorEvents = true;
+		if (m_InitialAttribs.bCircle)
+		{
+			b2CreateCircleShape(bodyId, &tempSensorBodyDef, &circleShape);
+		}
+		else
+		{
+			b2CreatePolygonShape(bodyId, &tempSensorBodyDef, &polyShape);
+		}
+	}
 
 	if (m_InitialAttribs.bCircle)
 	{
@@ -114,13 +140,14 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 		sol::call_constructor,
 		sol::factories(
 			[](const std::string& tag, const std::string& group,
-				bool bCollider, bool bTrigger, std::uint32_t entityID)
+				bool bCollider, bool bTrigger, bool bSensor, std::uint32_t entityID)
 			{
 				return ObjectData{
 					.tag = tag,
 					.group = group,
 					.bCollider = bCollider,
 					.bTrigger = bTrigger,
+					.bSensor = bSensor,
 					.entityID = entityID
 				};
 			},
@@ -131,6 +158,7 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 					.group = objectData["group"].get_or(std::string{""}),
 					.bCollider = objectData["bCollider"].get_or(false),
 					.bTrigger = objectData["bTrigger"].get_or(false),
+					.bSensor = objectData["bSensor"].get_or(false),
 					.entityID = objectData["entityID"].get_or((std::uint32_t)entt::null)
 				};
 			}
@@ -139,6 +167,7 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 		"group", &ObjectData::group,
 		"bCollider", &ObjectData::bCollider,
 		"bTrigger", &ObjectData::bTrigger,
+		"bSensor", &ObjectData::bSensor,
 		"entityID", &ObjectData::entityID,
 		"contactEntities", &ObjectData::contactEntities,
 		"to_string", &ObjectData::to_string
@@ -149,6 +178,15 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 			{"Static", RigidBodyType::STATIC },
 			{"Kinematic", RigidBodyType::KINEMATIC},
 			{"Dynamic", RigidBodyType::DYNAMIC }
+		}
+	);
+
+	lua.new_enum<BodyInteractionType>(
+		"BodyInteractionType", {
+			{"NORMAL", BodyInteractionType::NORMAL},
+			{"COLLIDER", BodyInteractionType::COLLIDER},
+			{"SENSOR", BodyInteractionType::SENSOR},
+			{"TRIGGER", BodyInteractionType::TRIGGER}
 		}
 	);
 	
@@ -162,6 +200,7 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 			[](const sol::table& physAttr) {
 				return PhysicsAttributes{
 					.eType = physAttr["eType"].get_or(RigidBodyType::STATIC),
+					.bInteractionType = physAttr["bInteractionType"].get_or(BodyInteractionType::NORMAL),
 					.density = physAttr["density"].get_or(100.f),
 					.friction = physAttr["friction"].get_or(0.2f),
 					.restitution = physAttr["restitution"].get_or(0.2f),
@@ -196,6 +235,7 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 						.group = physAttr["objectData"]["group"].get_or(std::string{""}),
 						.bCollider = physAttr["objectData"]["bCollider"].get_or(false),
 						.bTrigger = physAttr["objectData"]["bTrigger"].get_or(false),
+						.bSensor = physAttr["objectData"]["bSensor"].get_or(false),
 						.entityID = physAttr["objectData"]["entityID"].get_or((std::uint32_t)0)
 					}
 				};
@@ -203,6 +243,7 @@ void PhysicsComponent::CreatePhysicsLuaBind(sol::state& lua, Registry& registry)
 			// TODO: Add more specific ctor
 				),
 		"eType", &PhysicsAttributes::eType,
+		"bInteractionType", &PhysicsAttributes::bInteractionType,
 		"density", &PhysicsAttributes::density,
 		"friction", &PhysicsAttributes::friction,
 		"restitution", &PhysicsAttributes::restitution,

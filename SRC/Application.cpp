@@ -206,6 +206,14 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to add the contact listener to the registry context!");
 		return false;
 	}
+		//Create the sensor binder for the physics world.
+	auto pSensorListener = std::make_shared<SensorListener>();
+
+	if (!pRegistry->AddToContext<std::shared_ptr<SensorListener>>(pSensorListener))
+	{
+		LOG_ERROR("Failed to add the sensor listener to the registry context!");
+		return false;
+	}
 		//Create the physics world
 	auto pPhysicsWorld = std::make_shared<Box2DWrappers>();
 
@@ -397,30 +405,24 @@ void Application::ProcessEvents()
 
 void Application::Update()
 {
+	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
+	scriptSystem->Update();
 	auto view = pRegistry->GetRegistry().view<TransformComponent, SpriteComponent>();
-
 	auto& camera = pRegistry->GetContext<std::shared_ptr<Camera2D>>();
 	if (!camera)
 	{
 		LOG_ERROR("Failed to get the camera from the registry context!");
 		return;
 	}
-
 	camera->Update();
-
-	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
-	scriptSystem->Update();
-
 	auto& animationSystem = pRegistry->GetContext<std::shared_ptr<AnimationSystem>>();
 	animationSystem->Update();
-
 	// Update inputs
 	auto& inputManager = InputManager::GetInstance();
 	auto& keyboard = inputManager.GetKeyboard();
 	keyboard.Update();
 	auto& mouse = inputManager.GetMouse();
 	mouse.Update();
-
 	//Update SoundSystem
 	auto& soundSystem = pRegistry->GetContext<std::shared_ptr<SoundSystem>>();
 	soundSystem->Update(Window::getdt(), *pRegistry);
@@ -429,15 +431,27 @@ void Application::Update()
 	auto& physics = pRegistry->GetContext<std::shared_ptr<Box2DWrappers>>();
 	float timeStep = 1.0f / 60.0f;
 	int subStepCount = 4;
+
+	// Reset active contacts before processing physics
+	auto& pSensorListener = pRegistry->GetContext<std::shared_ptr<SensorListener>>();
+
+	// Perform physics step
 	b2World_Step(physics->GetWorldID(), timeStep, subStepCount);
 
+	// Process sensor contacts
+	pSensorListener->BeginSensorContact(physics->GetWorldID());
+	pSensorListener->EndSensorContact(physics->GetWorldID());
+
+	// Process contacts
 	auto& pContactListener = pRegistry->GetContext<std::shared_ptr<ContactListener>>();
 	pContactListener->BeginContact(physics->GetWorldID());
 	pContactListener->EndContact(physics->GetWorldID());
 
+	
+
+	// Update physics system
 	auto& pPhysicsSystem = pRegistry->GetContext<std::shared_ptr<PhysicsSystem>>();
 	pPhysicsSystem->Update(pRegistry->GetRegistry());
-
 }
 
 void Application::Render()

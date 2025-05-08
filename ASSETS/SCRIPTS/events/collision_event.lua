@@ -1,20 +1,29 @@
-CollisionEvent = Event:Create() 
 
-function CollisionEvent:Create()
-	local object_a = nil 
-	local object_b = nil 
+CollisionEvent = {}
+CollisionEvent.__index = CollisionEvent
+setmetatable(CollisionEvent, Event)
 
-	function self:Execute()
-		for k, v in pairs(self.m_Subscribers) do 
-			v:OnCollision(object_a, object_b)
-		end
+function CollisionEvent.new()
+
+	-- Fixed: Call parent constructor first
+    local this = Event.new()
+    
+    -- Add CollisionEvent specific properties
+    this.object_a = nil  -- Fixed: corrected "nill" typo
+    this.object_b = nil  -- Fixed: corrected "nill" typo
+
+	local instance = setmetatable(this, CollisionEvent)
+	return instance
+end
+
+function CollisionEvent:Execute()
+	for k, v in pairs(self.m_Subscribers) do 
+		v:OnCollision(self.object_a, self.object_b)
 	end
+end
 
-	function self:EmitEvent(obj_a, obj_b)
-		object_a = obj_a 
-		object_b = obj_b 
-		self:Execute()
-	end
-
-	return CreateObject(CollisionEvent):new()
+function CollisionEvent:EmitEvent(obj_a, obj_b)
+	self.object_a = obj_a 
+	self.object_b = obj_b 
+	self:Execute()
 end

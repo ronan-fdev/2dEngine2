@@ -6,6 +6,8 @@ LoadAssets(AssetDefs)
 
 gCollisionEvent = nil 
 gTriggerSystem = nil 
+gSensorEvent = nil
+gSensorTriggerEvent = nil
 gPlayer = nil 
 rainGen = nil
 
@@ -15,12 +17,6 @@ gStateStack = StateStack()
 
 local title = TitleState:Create(gStateStack)
 gStateStack:change_state(title)
-
-LUA_TRACE("Hello Lua Logging into LUA_TRACE!")  
-LUA_INFO("Hello Lua Logging into LUA_INFO!")   
-LUA_WARN("Hello Lua Logging into LUA_WARN!")   
-LUA_ERROR("Hello Lua Logging! into LUA_ERROR")  
-LUA_FATAL("Hello Lua Logging! into LUA_FATAL")  
 
 main = {
 	[1] = {
@@ -37,6 +33,14 @@ main = {
  				gCollisionEvent:EmitEvent(uda, udb)
  			end 
 			]]
+
+			local sensor1, sensor2 = SensorListener:get_user_data()
+			if sensor1 and sensor2 then
+				--gSensorEvent:EmitEvent(sensor1, sensor2)
+				sensor1:to_string()
+				sensor2:to_string()
+			end
+
             Debug()
 
 			gStateStack:update(0.016)

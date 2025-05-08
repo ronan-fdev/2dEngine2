@@ -1,8 +1,14 @@
-TriggerSystem = Subscriber:Create()
 
-function TriggerSystem:Create()
-	return CreateObject(TriggerSystem):new()
-end 
+
+TriggerSystem = {}
+TriggerSystem.__index = TriggerSystem
+setmetatable(TriggerSystem, Subscriber)
+
+function TriggerSystem.new()
+	local instance = Subscriber.new()
+	local instance = setmetatable({}, TriggerSystem)
+	return instance
+end
 
 function TriggerSystem:OnCollision(object_a, object_b)
 	if object_a.bTrigger and object_b.tag == "player" then 
@@ -15,7 +21,7 @@ function TriggerSystem:OnCollision(object_a, object_b)
 end
 
 function TriggerSystem:OnPlayerTriggered(trigger, player)
-	print(trigger.group .. "has been activated by " ..player.tag)
+	--print(trigger.group .. "has been activated by " ..player.tag)
 	local playerEntity = Entity(player.entityID)
 	local playerTransform = playerEntity:get_component(PhysicsComp)
 	--print(playerTransform.position.x)
