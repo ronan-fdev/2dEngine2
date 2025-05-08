@@ -43,6 +43,7 @@
 #include "Imgui/backends/imgui_impl_opengl3.h"
 
 #include "EDITOR/DISPLAYS/SceneDisplay.h"
+#include "EDITOR/DISPLAYS/LogDisplay.h"
 
 class Application
 {
@@ -63,6 +64,7 @@ private:
 	void CleanUp();
 
 	//TEMP IMGUI TESTING --> TODO: REMOVE TO OWN CLASS
+	bool CreateDisplays();
 	bool InitImGui();
 	void Begin();
 	void End();

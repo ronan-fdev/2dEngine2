@@ -119,6 +119,9 @@
     <ClCompile Include="SRC\EDITOR\DISPLAYS\SceneDisplay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SRC\EDITOR\DISPLAYS\LogDisplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\Application.h">
@@ -152,6 +155,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SRC\EDITOR\DISPLAYS\SceneDisplay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\EDITOR\DISPLAYS\IDisplay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\EDITOR\DISPLAYS\LogDisplay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

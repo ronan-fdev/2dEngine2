@@ -260,6 +260,12 @@ bool Application::Initialize()
 		return false;
 	}
 
+	if (!CreateDisplays())
+	{
+		LOG_ERROR("Failed to create displays.");
+		return false;
+	}
+
 	//Lua and ENTT::meta BINDING
 	ScriptingSystem::RegisterLuaBindings(*lua, *pRegistry);
 	ScriptingSystem::RegisterLuaFunctions(*lua, *pRegistry);
@@ -284,7 +290,7 @@ bool Application::Initialize()
 		return false;
 	}
 
-	auto pSceneDisplay = std::make_shared<SceneDisplay>(*pRegistry);
+	/*auto pSceneDisplay = std::make_shared<SceneDisplay>(*pRegistry);
 	if (!pSceneDisplay)
 	{
 		LOG_ERROR("Failed to Create test SceneDisplay!");
@@ -295,7 +301,7 @@ bool Application::Initialize()
 	{
 		LOG_ERROR("Failed add test pSceneDisplay to registry context!");
 		return false;
-	}
+	}*/
 	
 	return true;
 }
@@ -509,6 +515,40 @@ void Application::CleanUp()
 	Window::cleanup();
 }
 
+bool Application::CreateDisplays()
+{
+	auto& mainRegistry = MAIN_REGISTRY();
+
+	auto pDisplayHolder = std::make_shared<DisplayHolder>();
+
+	if (!mainRegistry.AddToContext<std::shared_ptr<DisplayHolder>>(pDisplayHolder))
+	{
+		LOG_ERROR("Failed to add the display holder to the main registry.");
+		return false;
+	}
+
+	auto pSceneDisplay = std::make_unique<SceneDisplay>(*pRegistry);
+	if (!pSceneDisplay)
+	{
+		LOG_ERROR("Failed to Create Scene Display!");
+		return false;
+	}
+
+	auto pLogDisplay = std::make_unique<LogDisplay>();
+	if (!pLogDisplay)
+	{
+		LOG_ERROR("Failed to Create Log Display!");
+		return false;
+	}
+
+	// TODO: Create and add other displays as needed
+
+	pDisplayHolder->displays.push_back(std::move(pSceneDisplay));
+	pDisplayHolder->displays.push_back(std::move(pLogDisplay));
+
+	return true;
+}
+
 bool Application::InitImGui()
 {
 	const char* glslVersion = "#version 330";
@@ -576,8 +616,13 @@ void Application::RenderImGui()
 	ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
 
 	// TODO: Add new Scene Display!
-	auto& pSceneDisplay = pRegistry->GetContext<std::shared_ptr<SceneDisplay>>();
-	pSceneDisplay->Draw();
+	auto& mainRegistry = MAIN_REGISTRY();
+	auto& pDisplayHolder = mainRegistry.GetContext<std::shared_ptr<DisplayHolder>>();
+
+	for (const auto& pDisplay : pDisplayHolder->displays)
+	{
+		pDisplay->Draw();
+	}
 
 
 	ImGui::ShowDemoWindow();

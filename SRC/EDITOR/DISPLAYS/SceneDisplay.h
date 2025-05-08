@@ -2,10 +2,11 @@
 
 #include "../../ImGui/imgui.h"
 
+#include "IDisplay.h"
 #include "ENGINE/ECS/Registry.h"
 #include "ENGINE/RENDERER/BUFFERS/FrameBuffer.h"
 
-class SceneDisplay
+class SceneDisplay : public IDisplay
 {
 private:
     Registry& m_Registry;
@@ -14,6 +15,6 @@ public:
     SceneDisplay(Registry& registry);
     ~SceneDisplay() = default;
 
-    void Draw();
+    virtual void Draw() override;
 };
 
