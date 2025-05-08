@@ -195,6 +195,9 @@
     <ClCompile Include="ENGINE\SCRIPTING\SensorListenerBind.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ENGINE\ECS\MainRegistry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\ECS\COMPONENTS\AnimationComponent.h">
@@ -411,6 +414,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ENGINE\SCRIPTING\SensorListenerBind.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\ECS\MainRegistry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

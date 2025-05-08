@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../ECS/MainRegistry.h"
 #include "../RENDERER/TEXTURE/TextureLoader.h";
 #include "../RENDERER/SHADER/ShaderLoader.h";
 #include "../RENDERER/ESSENTIALS/Font.h"

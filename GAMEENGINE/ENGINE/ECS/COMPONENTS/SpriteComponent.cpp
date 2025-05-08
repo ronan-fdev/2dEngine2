@@ -60,8 +60,10 @@ void SpriteComponent::CreateSpriteLuaBind(sol::state& lua, Registry& registry)
 		"bHidden", &SpriteComponent::bHidden,
 		"uvs", &SpriteComponent::uvs,
 		"generate_uvs", [&](SpriteComponent& sprite) {
-			auto& assetManager = registry.GetContext<std::shared_ptr<AssetManager>>();
-			auto& texture = assetManager->GetTexture(sprite.texture_name);
+			auto& mainRegistry = MAIN_REGISTRY();
+			auto& assetManager = mainRegistry.GetAssetManager();
+
+			auto& texture = assetManager.GetTexture(sprite.texture_name);
 			if (texture.getID() == 0)
 			{
 				LOG_ERROR("Failed to generate uvs -- Texture [{}] -- Does not exists or invalid", sprite.texture_name);

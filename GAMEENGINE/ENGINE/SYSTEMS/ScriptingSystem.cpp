@@ -227,9 +227,10 @@ void ScriptingSystem::RegisterLuaFunctions(sol::state& lua, Registry& registry)
 		}
 	);
 
-	auto& assetManager = registry.GetContext<std::shared_ptr<AssetManager>>();
+	auto& mainRegistry = MAIN_REGISTRY();
+	auto& assetManager = mainRegistry.GetAssetManager();
 	lua.set_function("measure_text", [&](const std::string& text, const std::string& fontName) {
-		const auto& pFont = assetManager->GetFont(fontName);
+		const auto& pFont = assetManager.GetFont(fontName);
 		if (!pFont)
 		{
 			LOG_ERROR("Failed to get font [{}] - Does not exist in asset manager!", fontName);

@@ -12,8 +12,10 @@ RenderUISystem::RenderUISystem(Registry& registry)
 
 void RenderUISystem::Update(entt::registry& registry)
 {
-    auto& assetManager = m_Registry.GetContext<std::shared_ptr<AssetManager>>();
-    auto& pFontShader = assetManager->GetShader("font");
+    auto& mainRegistry = MAIN_REGISTRY();
+    auto& assetManager = mainRegistry.GetAssetManager();
+
+    auto& pFontShader = assetManager.GetShader("font");
 
     /*if (!pFontShader)
     {
@@ -36,7 +38,7 @@ void RenderUISystem::Update(entt::registry& registry)
         if (text.sFontName.empty() || text.bHidden)
             continue;
 
-        const auto& pFont = assetManager->GetFont(text.sFontName);
+        const auto& pFont = assetManager.GetFont(text.sFontName);
         if (!pFont)
         {
             LOG_ERROR("Font [{}] does not exist in the asset manager!", text.sFontName);

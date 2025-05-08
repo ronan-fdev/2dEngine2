@@ -51,7 +51,21 @@ bool Application::Initialize()
 
 	Window::init("2DENGINE");
 
-	auto assetManager = std::make_shared<AssetManager>();
+	auto& mainRegistry = MAIN_REGISTRY();
+	mainRegistry.Initialize();
+
+	if (!mainRegistry.GetAssetManager().AddTexture("texture1", "ASSETS/IMAGES/spritesheet.png"))
+	{
+		LUA_ERROR("Failed to add Default Texture to the Engine from the Asset Manager");
+		return false;
+	}
+
+	if (!mainRegistry.GetAssetManager().AddFontFromMemory("pixel2", pixel_font))
+	{
+		LUA_ERROR("Failed to add Default Font to the Engine from the Asset Manager");
+	}
+
+	/*auto assetManager = std::make_shared<AssetManager>();
 	if (!assetManager)
 	{
 		LOG_ERROR("Failed to create the asset manager");
@@ -68,7 +82,7 @@ bool Application::Initialize()
 	{
 		LOG_ERROR("Failed to add default font to the engine!");
 		return -1;
-	}
+	}*/
 
 	// Create a new entity -- for test
 	pRegistry = std::make_unique<Registry>();
@@ -162,12 +176,6 @@ bool Application::Initialize()
 
 	// Create a temp camera
 	auto camera = std::make_shared<Camera2D>();
-
-	if (!pRegistry->AddToContext<std::shared_ptr<AssetManager>>(assetManager))
-	{
-		LOG_ERROR("Failed to add the asset manager to the registry context!");
-		return false;
-	}
 	if (!pRegistry->AddToContext<std::shared_ptr<Camera2D>>(camera))
 	{
 		LOG_ERROR("Failed to add the camera to the registry context!");
@@ -294,35 +302,31 @@ bool Application::Initialize()
 
 bool Application::LoadShaders()
 {
-	auto& assetManager = pRegistry->GetContext<std::shared_ptr<AssetManager>>();
+	auto& mainRegistry = MAIN_REGISTRY();
+	auto& assetManager = mainRegistry.GetAssetManager();
 
-	if (!assetManager)
-	{
-		LOG_ERROR("Failed to get the asset manager from the registry context");
-		return false;
-	}
-	if (!assetManager->AddShader("shader1", "ASSETS/SHADER/shader.vert"
+	if (!assetManager.AddShader("shader1", "ASSETS/SHADER/shader.vert"
 		, "ASSETS/SHADER/shader.frag"))
 	{
 		LOG_ERROR("Failed to add shader!");
 		return false;
 	}
 
-	if (!assetManager->AddShader("color", "ASSETS/SHADER/colorShader.vert",
+	if (!assetManager.AddShader("color", "ASSETS/SHADER/colorShader.vert",
 		"ASSETS/SHADER/colorShader.frag"))
 	{
 		LOG_ERROR("Failed to add the color shader to the asset manager");
 		return false;
 	}
 
-	if (!assetManager->AddShader("circle", "ASSETS/SHADER/circleShader.vert",
+	if (!assetManager.AddShader("circle", "ASSETS/SHADER/circleShader.vert",
 		"ASSETS/SHADER/circleShader.frag"))
 	{
 		LOG_ERROR("Failed to add the color shader to the asset manager");
 		return false;
 	}
 
-	if (!assetManager->AddShader("font", "ASSETS/SHADER/fontShader.vert",
+	if (!assetManager.AddShader("font", "ASSETS/SHADER/fontShader.vert",
 		"ASSETS/SHADER/fontShader.frag"))
 	{
 		LOG_ERROR("Failed to add the font shader to the asset manager");
@@ -462,11 +466,12 @@ void Application::Render()
 	
 	auto& camera = pRegistry->GetContext<std::shared_ptr<Camera2D>>();
 	auto& renderer = pRegistry->GetContext<std::shared_ptr<Renderer>>();
-	auto& assetManager = pRegistry->GetContext<std::shared_ptr<AssetManager>>();
+	auto& mainRegistry = MAIN_REGISTRY();
+	auto& assetManager = mainRegistry.GetAssetManager();
 
-	auto& shader = assetManager->GetShader("color");
-	auto& circleShader = assetManager->GetShader("circle");
-	auto& fontShader = assetManager->GetShader("font");
+	auto& shader = assetManager.GetShader("color");
+	auto& circleShader = assetManager.GetShader("circle");
+	auto& fontShader = assetManager.GetShader("font");
 
 	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
 

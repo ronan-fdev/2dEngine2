@@ -10,8 +10,9 @@ RenderSystem::RenderSystem(Registry& registry)
 void RenderSystem::Update()
 {
 	auto& camera = m_Registry.GetContext<std::shared_ptr<Camera2D>>();
-	auto& assetManager = m_Registry.GetContext<std::shared_ptr<AssetManager>>();
-	auto& spriteShader = assetManager->GetShader("shader1");
+	auto& mainRegistry = MAIN_REGISTRY();
+	auto& assetManager = mainRegistry.GetAssetManager();
+	auto& spriteShader = assetManager.GetShader("shader1");
 	auto cam_mat = camera->GetCameraMatrix();
 	if (spriteShader.getID() == 0)
 	{
@@ -29,7 +30,7 @@ void RenderSystem::Update()
 		const auto& sprite = view.get<SpriteComponent>(entity);
 		if (sprite.texture_name.empty() || sprite.bHidden)
 			continue;
-		const auto& texture = assetManager->GetTexture(sprite.texture_name);
+		const auto& texture = assetManager.GetTexture(sprite.texture_name);
 		if (texture.getID() == 0)
 		{
 			LOG_ERROR("Texture [{0}] was not created correctly!", sprite.texture_name);

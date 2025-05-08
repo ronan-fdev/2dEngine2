@@ -13,9 +13,11 @@ void RenderShapeSystem::Update()
         return;
 
     auto& camera = m_Registry.GetContext<std::shared_ptr<Camera2D>>();
-    auto& assetManager = m_Registry.GetContext<std::shared_ptr<AssetManager>>();
 
-    auto& colorShader = assetManager->GetShader("color");
+    auto& mainRegistry = MAIN_REGISTRY();
+    auto& assetManager = mainRegistry.GetAssetManager();
+
+    auto& colorShader = assetManager.GetShader("color");
     auto cam_mat = camera->GetCameraMatrix();
 
     colorShader.use();
@@ -72,7 +74,7 @@ void RenderShapeSystem::Update()
     colorShader.unuse();
 
     //Don't forget to use the & symbol here. Its creates a lot error!. The object will be not be proper.
-    auto& circleShader = assetManager->GetShader("circle");
+    auto& circleShader = assetManager.GetShader("circle");
 
     circleShader.use();
     circleShader.setMat4("uProjection", cam_mat);

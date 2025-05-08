@@ -221,6 +221,7 @@
     <ClCompile Include="ENGINE\STATES\StateMachine.cpp" />
     <ClCompile Include="ENGINE\PHYSICS\SensorListener.cpp" />
     <ClCompile Include="ENGINE\SCRIPTING\SensorListenerBind.cpp" />
+    <ClCompile Include="ENGINE\ECS\MainRegistry.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\LOGGER\LuaLogBinding.h" />
@@ -295,6 +296,7 @@
     <ClInclude Include="ENGINE\STATES\StateMachine.h" />
     <ClInclude Include="ENGINE\PHYSICS\SensorListener.h" />
     <ClInclude Include="ENGINE\SCRIPTING\SensorListenerBind.h" />
+    <ClInclude Include="ENGINE\ECS\MainRegistry.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ENGINE\ECS\Entity.inl" />

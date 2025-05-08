@@ -3,7 +3,8 @@
 void RendererBinder::CreateRenderingBind(sol::state& lua, Registry& registry)
 {
     // Get the Asset Manager 
-    auto& assetManager = registry.GetContext<std::shared_ptr<AssetManager>>();
+    auto& mainRegistry = MAIN_REGISTRY();
+    auto& assetManager = mainRegistry.GetAssetManager();
 
     // Primitives Bind
     lua.new_usertype<Line>(
@@ -145,7 +146,7 @@ void RendererBinder::CreateRenderingBind(sol::state& lua, Registry& registry)
             [&](const glm::vec2& position, const std::string& textStr, const std::string& fontName, float wrap,
                 const Color& color)
             {
-                auto pFont = assetManager->GetFont(fontName);
+                auto pFont = assetManager.GetFont(fontName);
                 if (!pFont)
                 {
                     LOG_ERROR("Failed to get font [{}] -- Does not exist in asset manager!", fontName);

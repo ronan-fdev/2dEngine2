@@ -8,7 +8,7 @@ std::tuple<sol::object, sol::object> SensorListenerBind::GetUserData(SensorListe
     if (!pUserSensorDataA || !pUserSensorDataB)
         return std::make_tuple(sol::lua_nil_t{}, sol::lua_nil_t{});
 
-    assert(pUserDataA->type_id != 0 && pUserDataB->type_id != 0 && "User Data Type id must be set!");
+    assert(pUserSensorDataA->type_id != 0 && pUserSensorDataB->type_id != 0 && "User Data Type id must be set!");
 
     using namespace entt::literals;
 
