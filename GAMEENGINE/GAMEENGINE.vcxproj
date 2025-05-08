@@ -301,6 +301,7 @@
   <ItemGroup>
     <None Include="ENGINE\ECS\Entity.inl" />
     <None Include="ENGINE\ECS\Registry.inl" />
+    <None Include="ENGINE\LOGGER\log.inl" />
     <None Include="ENGINE\SCRIPTING\UserDataBinding.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -430,5 +430,8 @@
     <None Include="ENGINE\SCRIPTING\UserDataBinding.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="ENGINE\LOGGER\log.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

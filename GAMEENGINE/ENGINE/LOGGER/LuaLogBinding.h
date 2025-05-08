@@ -1,27 +1,10 @@
 #pragma once
 #include <sol/sol.hpp>
-#include <fmt/format.h>
 #include <vector>
 #include "log.h"
 class LuaLogBinding {
 public:
     static void RegisterLuaLogBinding(sol::state& lua) {
-        // Register LUA_TRACE
-        lua["LUA_TRACE"] = [](const std::string& message, sol::variadic_args args) {
-            std::ostringstream oss;
-            oss << message;  // Start with the base message
-
-            // Append any additional arguments
-            for (auto it = args.begin(); it != args.end(); ++it) {
-                oss << " ";  // Add spacing between arguments
-                if (it->is<double>()) oss << it->as<double>();
-                else if (it->is<std::string>()) oss << it->as<std::string>();
-                else if (it->is<bool>()) oss << (it->as<bool>() ? "true" : "false");
-                else oss << "<?>";
-            }
-
-            LUA_TRACE("{}", oss.str());
-        };
 
         // Register LUA_INFO
         lua["LUA_INFO"] = [](const std::string& message, sol::variadic_args args) {
@@ -72,23 +55,6 @@ public:
             }
 
             LUA_ERROR("{}", oss.str());
-        };
-
-        // Register LUA_FATAL
-        lua["LUA_FATAL"] = [](const std::string& message, sol::variadic_args args) {
-            std::ostringstream oss;
-            oss << message;  // Start with the base message
-
-            // Append any additional arguments
-            for (auto it = args.begin(); it != args.end(); ++it) {
-                oss << " ";  // Add spacing between arguments
-                if (it->is<double>()) oss << it->as<double>();
-                else if (it->is<std::string>()) oss << it->as<std::string>();
-                else if (it->is<bool>()) oss << (it->as<bool>() ? "true" : "false");
-                else oss << "<?>";
-            }
-
-            LUA_FATAL("{}", oss.str());
         };
     };
 };

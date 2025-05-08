@@ -13,7 +13,7 @@ class AssetManager;
 class MainRegistry
 {
 private:
-	std::unique_ptr<class Registry> m_pMainRegistry{ nullptr };
+	std::unique_ptr<Registry> m_pMainRegistry{ nullptr };
 	bool m_bInitialized{ false };
 
 	MainRegistry() = default;
@@ -28,5 +28,18 @@ public:
 	AssetManager& GetAssetManager();
 	//SCION_SOUNDS::MusicPlayer& GetMusicPlayer();
 	//SCION_SOUNDS::SoundFxPlayer& GetSoundPlayer();
+
+	template <typename TContext>
+	TContext AddToContext(TContext context)
+	{
+		return m_pMainRegistry->AddToContext<TContext>(context);
+	}
+
+	template <typename TContext>
+	TContext& GetContext()
+	{
+		return m_pMainRegistry->GetContext<TContext>();
+	}
+
 };
 

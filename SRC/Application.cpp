@@ -47,7 +47,7 @@ bool Application::Initialize()
 	std::cout << "Hello World!" << std::endl;
 
 	//Logger
-	log::Init();
+	LOGGER_INIT_LOGS(true, true);
 
 	Window::init("2DENGINE");
 
