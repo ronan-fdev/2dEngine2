@@ -551,31 +551,40 @@ bool Application::CreateDisplays()
 
 bool Application::InitImGui()
 {
-	const char* glslVersion = "#version 330";
-	IMGUI_CHECKVERSION();
+	const char* glslVersion = "#version 330";//This sets the GLSL (OpenGL Shading Language) version to 330
+	
+	IMGUI_CHECKVERSION();/*This macro checks that the version of the compiled ImGui code matches the version used in the application.
+		It's a safeguard to prevent mismatches that could cause undefined behavior.*/
 
-	if (!ImGui::CreateContext())
+	if (!ImGui::CreateContext())//Creates the core ImGui context, which is necessary before any other ImGui function can be used.
 	{
 		LOG_ERROR("Failed to create ImGui Context");
 		return false;
 	}
 
-	ImGuiIO& io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+	ImGuiIO& io = ImGui::GetIO();//Retrieves the ImGuiIO object, which handles configuration and input/output for ImGui.
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;//Enables docking, which allows ImGui windows to be docked into each other or a main window.
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;//Enables keyboard navigation through UI elements.
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;//Enables multi-viewport support, allowing ImGui windows to be dragged outside the main application window
 
-	io.ConfigWindowsMoveFromTitleBarOnly = true;
+	io.ConfigWindowsMoveFromTitleBarOnly = true;/*When set to true, ImGui windows can only be moved by dragging their title bars instead of any region.
+		This prevents accidental dragging when interacting with the window contents.*/
 
 	if (!ImGui_ImplGlfw_InitForOpenGL(
 		Window::getGLFWWindow(), false
-	))
+	))/*Initializes the GLFW backend of ImGui for use with OpenGL.
+
+		Window::getGLFWWindow() retrieves the pointer to your GLFW window.
+
+		The second parameter(install_callbacks) is set to false, meaning you’ll manually handle GLFW callbacks like key presses, mouse movement, etc., 
+		instead of letting ImGui install its own.*/
 	{
 		LOG_ERROR("Failed to intialize ImGui GLFW for OpenGL!");
 		return false;
 	}
 
-	if (!ImGui_ImplOpenGL3_Init(glslVersion))
+	if (!ImGui_ImplOpenGL3_Init(glslVersion))/*Initializes the OpenGL 3 backend of ImGui using the previously defined GLSL version("#version 330").
+		This sets up shaders, buffers, etc., required to render ImGui with OpenGL.*/
 	{
 		LOG_ERROR("Failed to intialize ImGui OpenGL3!");
 		return false;
@@ -586,34 +595,57 @@ bool Application::InitImGui()
 
 void Application::Begin()
 {
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplGlfw_NewFrame();
-	ImGui::NewFrame();
+	ImGui_ImplOpenGL3_NewFrame();//Prepares the OpenGL3 backend for a new frame. Updates GPU-related state like shaders and buffers.
+	ImGui_ImplGlfw_NewFrame();//Prepares the GLFW backend for the new frame. Processes input (mouse, keyboard, etc.) from GLFW.
+	ImGui::NewFrame();//Starts a new ImGui frame internally. After this call, you can begin defining your ImGui UI.
 }
 
 void Application::End()
 {
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	ImGui::Render();//This function finalizes the current ImGui frame.
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());//Renders the ImGui draw data using the OpenGL3 backend.
 
 	ImGuiIO& io = ImGui::GetIO();
 	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 	{
 		// Backup current context
-		GLFWwindow* backupContext = glfwGetCurrentContext();
+		GLFWwindow* backupContext = glfwGetCurrentContext();//Saves the current OpenGL context (your main window’s rendering context).
 
-		ImGui::UpdatePlatformWindows();
-		ImGui::RenderPlatformWindowsDefault();
+		ImGui::UpdatePlatformWindows();//Updates all platform windows created by ImGui.
+		ImGui::RenderPlatformWindowsDefault();//Renders ImGui draw data to each platform window.
 
 		// Restore original context
-		glfwMakeContextCurrent(backupContext);
+		glfwMakeContextCurrent(backupContext);//Restores the original OpenGL context to avoid breaking rendering in the main window.
 	}
 }
 
 
 void Application::RenderImGui()
 {
-	ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
+	const auto dockSpaceId = ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());//Creates a Docking Space that fills the main viewport (usually your full application window).
+
+	if (static auto firstTime = true; firstTime) [[unlikely]]//This runs only once, the first time RenderImGui() is called. [[unlikely]] hints to the compiler that this is rarely executed 
+		{
+			firstTime = false;
+
+			ImGui::DockBuilderRemoveNode(dockSpaceId);//Remove and re-add the docking node to ensure a fresh layout state.
+			ImGui::DockBuilderAddNode(dockSpaceId);//Remove and re-add the docking node to ensure a fresh layout state.
+
+			auto centerNodeId = dockSpaceId;
+			const auto leftNodeId =
+				ImGui::DockBuilderSplitNode(centerNodeId, ImGuiDir_Left, 0.2f, nullptr, &centerNodeId);
+			/*Split the dock node into a left pane(20 % width) and remaining center pane.
+				The original dockSpaceId becomes the left node; centerNodeId becomes the center portion.*/
+
+			const auto LogNodeId = ImGui::DockBuilderSplitNode(centerNodeId, ImGuiDir_Down, 0.25f, nullptr, &centerNodeId);
+			//Further splits the center node downward to create a bottom log panel (25% height).
+			ImGui::DockBuilderDockWindow("Dear ImGui Demo", leftNodeId);//Assigns named ImGui windows to specific dock areas
+			ImGui::DockBuilderDockWindow("Scene", centerNodeId);//Assigns named ImGui windows to specific dock areas 
+			ImGui::DockBuilderDockWindow("Logs", LogNodeId);//Assigns named ImGui windows to specific dock areas 
+
+			ImGui::DockBuilderFinish(dockSpaceId);//Finalizes the layout and applies it.
+		}
+
 
 	// TODO: Add new Scene Display!
 	auto& mainRegistry = MAIN_REGISTRY();
@@ -625,5 +657,5 @@ void Application::RenderImGui()
 	}
 
 
-	ImGui::ShowDemoWindow();
+	ImGui::ShowDemoWindow();//Displays the built-in ImGui demo window, useful for testing and exploration.
 }

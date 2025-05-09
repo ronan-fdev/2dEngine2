@@ -46,16 +46,25 @@ void SceneDisplay::Draw()
         ImGui::End();
         return;
     }
+    /*Begins an ImGui window titled "Scene".
+        If the window is collapsed or not visible, it immediately ends the window and returns early.*/
 
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+    /*Removes the default padding inside the window.
+        This is important because we want the framebuffer image to take up the entire window content without extra spacing.*/
 
     if (ImGui::BeginChild("##SceneChild", ImVec2(0, 0), false,
         ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar))
+        /*Creates a child region inside the Scene window with :
+            No scrolling
+            No scrollbars
+            Full size(ImVec2(0, 0) means it expands to fill available space)
+        "##SceneChild": The ## prefix hides the label but still gives it a unique internal ID.*/
     {
         auto& fb = m_Registry.GetContext<std::shared_ptr<FrameBuffer>>();
 
         // 1. FIRST get available space
-        ImVec2 availableSize = ImGui::GetContentRegionAvail();
+        ImVec2 availableSize = ImGui::GetContentRegionAvail();//Queries the available drawable area inside the child window.
 
         // 2. THEN resize if needed (before rendering)
         if (fb->Width() != (int)availableSize.x || fb->Height() != (int)availableSize.y)
@@ -66,7 +75,7 @@ void SceneDisplay::Draw()
         ImGui::Image(
             (ImTextureID)fb->GetTextureID(),
             availableSize, // Use validated available size
-            ImVec2(0, 1), ImVec2(1, 0)
+            ImVec2(0, 1), ImVec2(1, 0)//These UV coordinates flip the image vertically
         );
 
         ImGui::EndChild();

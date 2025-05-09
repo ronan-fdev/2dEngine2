@@ -38,9 +38,10 @@
 #include "ENGINE/WINDOW/INPUT/Keyboard.h"
 #include "ENGINE/WINDOW/INPUT/Mouse.h"
 
-#include "Imgui/imgui.h"
+//#include "Imgui/imgui.h"
 #include "Imgui/backends/imgui_impl_glfw.h"
 #include "Imgui/backends/imgui_impl_opengl3.h"
+#include "Imgui/imgui_internal.h"
 
 #include "EDITOR/DISPLAYS/SceneDisplay.h"
 #include "EDITOR/DISPLAYS/LogDisplay.h"
