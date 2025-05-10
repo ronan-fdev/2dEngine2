@@ -51,7 +51,7 @@ public:
     ~PhysicsComponent() = default;
 
     void Init(int windowWidth, int windowHeight);
-    b2BodyId getBodyID() const { return bodyId; }
+    b2BodyId getBodyID() const { return m_pBody ? m_pBody->bodyId : b2_nullBodyId; }
     glm::vec2 BodyPosition();
 
     const bool IsSensor() const;
@@ -60,7 +60,7 @@ public:
 
 private:
     b2WorldId worldId;
-    b2BodyId bodyId;
+    std::shared_ptr<BodyWrapper> m_pBody;
     b2ShapeId shapeId;
 
     std::shared_ptr<UserData> m_pUserData;
