@@ -7,112 +7,110 @@
  	definition.
  	Returns the newly created entity's ID
  --]]
- function LoadEntity(def)
- 	assert(def, "Def does not exist")
- 
- 	local tag = ""
- 	if def.tag then
- 		tag = def.tag 
- 	end
- 
- 	local group = ""
- 	if def.group then 
- 		group = def.group 
- 	end 
- 
- 	local newEntity = Entity(tag, group)
- 
- 	if def.components.transform then
- 		newEntity:add_component(
- 			Transform(
- 				vec2(
- 					def.components.transform.position.x,
- 					def.components.transform.position.y
- 				),
- 				vec2(
- 					def.components.transform.scale.x,
- 					def.components.transform.scale.y
- 				),
- 				def.components.transform.rotation
- 			)
- 		)
- 	end
- 
- 	if def.components.sprite then
- 		local sprite = newEntity:add_component(
- 			Sprite(
- 				def.components.sprite.asset_name,
- 				def.components.sprite.width,
- 				def.components.sprite.height,
- 				def.components.sprite.start_x,
- 				def.components.sprite.start_y,
- 				def.components.sprite.layer
- 			)
- 		)
- 		sprite:generate_uvs()
- 		sprite.bHidden = def.components.sprite.bHidden or false
- 	end
- 
- 	if def.components.circle_collider then
- 		newEntity:add_component(
- 			CircleCollider(
- 				def.components.circle_collider.radius,
-                def.components.circle_collider.offset
- 			)
- 		)
- 	end
- 
- 	if def.components.animation then 
- 		newEntity:add_component(
- 			Animation(
- 				def.components.animation.num_frames,
- 				def.components.animation.frame_rate,
- 				def.components.animation.frame_offset,
- 				def.components.animation.bVertical,
- 				def.components.animation.bLooped
- 			)
- 		)
- 	end
+function LoadEntity(def)
+	assert(def, "Def does not exist")
 
-    if def.components.physics_attributes then 
- 		local physAttr = def.components.physics_attributes 
- 		local newPhysicsAttr = PhysicsAttributes()
- 
- 		newPhysicsAttr.eType = physAttr.type 
-		newPhysicsAttr.bInteractionType = BodyInteractionType.NORMAL
- 		newPhysicsAttr.density = physAttr.density
- 		newPhysicsAttr.friction = physAttr.friction
- 		newPhysicsAttr.restitution = physAttr.restitution
- 		newPhysicsAttr.position = physAttr.position
- 		newPhysicsAttr.radius = physAttr.radius
- 		newPhysicsAttr.bCircle = physAttr.bCircle or false
- 		newPhysicsAttr.bFixedRotation = physAttr.bFixedRotation or false
-        newPhysicsAttr.gravityScale = physAttr.gravityScale or -1
-        newPhysicsAttr.scale = physAttr.scale
- 		newPhysicsAttr.bIsSensor = physAttr.bIsSensor or false
- 
- 		newPhysicsAttr.objectData = ObjectData(
- 			physAttr.object_data.tag,
- 			physAttr.object_data.group,
- 			physAttr.object_data.bCollider,
- 			physAttr.object_data.bTrigger,
- 			physAttr.object_data.bSensor,
- 			newEntity:id()
- 		)
- 		
- 		newEntity:add_component(PhysicsComp(newPhysicsAttr))
- 	end
- 
- 	return newEntity:id()
- end
- 
- -- Returns a random vec2 based on the min/max speed arguments
- function GetRandomVelocity(min_speed, max_speed)
- 	return vec2(
- 		math.random(min_speed, max_speed),
- 		math.random(min_speed, max_speed)
- 	)
- end
+	local tag = ""
+	if def.tag then
+		tag = def.tag 
+	end
+
+	local group = ""
+	if def.group then 
+		group = def.group 
+	end 
+
+	local newEntity = Entity(tag, group)
+
+	if def.components.transform then
+		newEntity:add_component(
+			Transform(
+				vec2(
+					def.components.transform.position.x,
+					def.components.transform.position.y
+				),
+				vec2(
+					def.components.transform.scale.x,
+					def.components.transform.scale.y
+				),
+				def.components.transform.rotation
+			)
+		)
+	end
+
+	if def.components.sprite then
+		local sprite = newEntity:add_component(
+			Sprite(
+				def.components.sprite.asset_name,
+				def.components.sprite.width,
+				def.components.sprite.height,
+				def.components.sprite.start_x,
+				def.components.sprite.start_y,
+				def.components.sprite.layer
+			)
+		)
+		sprite:generate_uvs()
+		sprite.bHidden = def.components.sprite.bHidden or false
+	end
+
+	if def.components.circle_collider then
+		newEntity:add_component(
+			CircleCollider(
+				def.components.circle_collider.radius,
+               def.components.circle_collider.offset
+			)
+		)
+	end
+
+	if def.components.animation then 
+		newEntity:add_component(
+			Animation(
+				def.components.animation.num_frames,
+				def.components.animation.frame_rate,
+				def.components.animation.frame_offset,
+				def.components.animation.bVertical,
+				def.components.animation.bLooped
+			)
+		)
+	end
+   if def.components.physics_attributes then 
+		local physAttr = def.components.physics_attributes 
+		local newPhysicsAttr = PhysicsAttributes()
+
+		newPhysicsAttr.eType = physAttr.type 		newPhysicsAttr.bInteractionType = BodyInteractionType.NORMAL
+		newPhysicsAttr.density = physAttr.density
+		newPhysicsAttr.friction = physAttr.friction
+		newPhysicsAttr.restitution = physAttr.restitution
+		newPhysicsAttr.position = physAttr.position
+		newPhysicsAttr.radius = physAttr.radius
+		newPhysicsAttr.bCircle = physAttr.bCircle or false
+		newPhysicsAttr.bFixedRotation = physAttr.bFixedRotation or false
+       newPhysicsAttr.gravityScale = physAttr.gravityScale or -1
+       newPhysicsAttr.scale = physAttr.scale
+		newPhysicsAttr.bIsSensor = physAttr.bIsSensor or false
+
+		newPhysicsAttr.objectData = ObjectData(
+			physAttr.object_data.tag,
+			physAttr.object_data.group,
+			physAttr.object_data.bCollider,
+			physAttr.object_data.bTrigger,
+			physAttr.object_data.bSensor,
+			newEntity:id()
+		)
+		
+		newEntity:add_component(PhysicsComp(newPhysicsAttr))
+	end
+
+	return newEntity:id()
+end
+
+-- Returns a random vec2 based on the min/max speed arguments
+function GetRandomVelocity(min_speed, max_speed)
+	return vec2(
+		math.random(min_speed, max_speed),
+		math.random(min_speed, max_speed)
+	)
+end
  
  --[[
  	Gets the value of the specific digit for 
