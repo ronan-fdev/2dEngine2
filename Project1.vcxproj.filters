@@ -163,6 +163,9 @@
     <ClInclude Include="SRC\EDITOR\DISPLAYS\LogDisplay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SRC\EDITOR\UTILITIES\EditorTextures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="ASSETS\FONTS\Aaargh.ttf" />

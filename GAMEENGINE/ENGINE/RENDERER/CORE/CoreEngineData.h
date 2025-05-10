@@ -2,6 +2,8 @@
 
 #include <chrono>
 
+#define CORE_GLOBALS() CoreEngineData::GetInstance()
+
 class CoreEngineData
 {
 private:

@@ -69,7 +69,7 @@ void ScriptingSystem::Update()
 	}
 
 	auto& lua = m_Registry.GetContext<std::shared_ptr<sol::state>>();
-	lua->collect_garbage();
+	if (lua) lua->collect_garbage();
 }
 
 void ScriptingSystem::Render()
@@ -95,7 +95,7 @@ void ScriptingSystem::Render()
 	}
 
 	auto& lua = m_Registry.GetContext<std::shared_ptr<sol::state>>();
-	lua->collect_garbage();
+	if (lua) lua->collect_garbage();
 }
 
 auto create_timer = [](sol::state& lua) {

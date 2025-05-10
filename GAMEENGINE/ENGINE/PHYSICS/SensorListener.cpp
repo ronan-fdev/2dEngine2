@@ -46,3 +46,8 @@ void SensorListener::EndSensorContact(b2WorldId myWorldId)
 		}
 	}
 }
+
+void SensorListener::ResetUserSensorAB()
+{
+	SetUserSensorContacts(nullptr, nullptr);
+}

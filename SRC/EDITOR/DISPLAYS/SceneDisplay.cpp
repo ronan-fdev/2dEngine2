@@ -1,7 +1,59 @@
 #include "SceneDisplay.h"
 
+void SceneDisplay::LoadScene()
+{
+    auto& physicsWrappers = m_Registry.GetContext<std::shared_ptr<Box2DWrappers>>();
+    auto& scriptSystem = m_Registry.GetContext<std::shared_ptr<ScriptingSystem>>();
+    auto& lua = m_Registry.GetContext<std::shared_ptr<sol::state>>();
+
+    physicsWrappers->LoadBox2dWorld();
+
+    if (!lua)
+        lua = std::make_shared<sol::state>();
+
+    lua->open_libraries(sol::lib::base,
+        sol::lib::math,
+        sol::lib::os,
+        sol::lib::table,
+        sol::lib::io,
+        sol::lib::string,
+        sol::lib::package);
+
+    ScriptingSystem::RegisterLuaBindings(*lua, m_Registry);
+    ScriptingSystem::RegisterLuaFunctions(*lua, m_Registry);
+
+    if (!scriptSystem->LoadMainScript(*lua))
+    {
+        LOG_ERROR("Failed to load the main lua script!");
+        return;
+    }
+
+    m_bSceneLoaded = true;
+    m_bPlayScene = true;
+}
+
+void SceneDisplay::UnloadScene()
+{
+    auto& physicsWrappers = m_Registry.GetContext<std::shared_ptr<Box2DWrappers>>();
+    m_bPlayScene = false;
+    m_bSceneLoaded = false;
+    m_Registry.GetRegistry().clear();
+    physicsWrappers->UnLoadBox2dWorld();
+
+    auto& sensorListener = m_Registry.GetContext<std::shared_ptr<SensorListener>>();
+    sensorListener->ResetUserSensorAB();
+
+    auto& contactListener = m_Registry.GetContext<std::shared_ptr<ContactListener>>();
+    contactListener->ResetUserContactsAB();
+
+    auto& lua = m_Registry.GetContext<std::shared_ptr<sol::state>>();
+    lua.reset();
+}
+
 SceneDisplay::SceneDisplay(Registry& registry)
 	: m_Registry{ registry }
+    , m_bPlayScene{ false }
+    , m_bSceneLoaded{ false }
 {
 }
 
@@ -49,6 +101,68 @@ void SceneDisplay::Draw()
     /*Begins an ImGui window titled "Scene".
         If the window is collapsed or not visible, it immediately ends the window and returns early.*/
 
+    auto& mainRegistry = MAIN_REGISTRY();
+    auto& assetManager = mainRegistry.GetAssetManager();
+
+    auto& pPlayTexture = assetManager.GetTexture("play_button");
+    auto& pStopTexture = assetManager.GetTexture("stop_button");
+
+    const bool isScenePlaying = m_bPlayScene;
+    const bool isSceneLoaded = m_bSceneLoaded;
+
+    if (isScenePlaying)
+    {
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.f, 0.9f, 0.f, 0.3 });
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.f, 0.9f, 0.f, 0.3 });
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.f, 0.9f, 0.f, 0.3 });
+    }
+
+    if (ImGui::ImageButton("##play", (ImTextureID)pPlayTexture.getID(),
+        ImVec2{
+            (float)pPlayTexture.getWidth() * 0.25f,
+            (float)pPlayTexture.getHeight() * 0.25f,
+        }) &&
+        !isSceneLoaded)
+    {
+        LoadScene();
+    }
+
+    if (isScenePlaying)
+        ImGui::PopStyleColor(3);
+
+    /*if (ImGui::GetColorStackSize() > 0)
+        ImGui::PopStyleColor(ImGui::GetColorStackSize());*/
+
+    if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal))
+        ImGui::SetTooltip("Play Scene");
+
+    ImGui::SameLine();
+
+    const bool isSceneNotPlaying = !isScenePlaying;
+
+    if (isSceneNotPlaying)
+    {
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.f, 0.9f, 0.f, 0.3 });
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.f, 0.9f, 0.f, 0.3 });
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.f, 0.9f, 0.f, 0.3 });
+    }
+
+    if (ImGui::ImageButton("##stop",(ImTextureID)pStopTexture.getID(),
+        ImVec2{
+            (float)pStopTexture.getWidth() * 0.25f,
+            (float)pStopTexture.getHeight() * 0.25f,
+        }) &&
+        isSceneLoaded)
+    {
+        UnloadScene();
+    }
+
+    if (isSceneNotPlaying)
+        ImGui::PopStyleColor(3);
+
+    if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal))
+        ImGui::SetTooltip("Stop Scene");
+
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
     /*Removes the default padding inside the window.
         This is important because we want the framebuffer image to take up the entire window content without extra spacing.*/
@@ -82,4 +196,58 @@ void SceneDisplay::Draw()
     }
     ImGui::PopStyleVar();
     ImGui::End();
+}
+
+void SceneDisplay::Update()
+{
+    if (!m_bPlayScene)
+        return;
+
+    auto& mainRegistry = MAIN_REGISTRY();
+    auto& coreGlobals = CORE_GLOBALS();
+
+    auto& scriptSystem = m_Registry.GetContext<std::shared_ptr<ScriptingSystem>>();
+    scriptSystem->Update();
+
+    auto& camera = m_Registry.GetContext<std::shared_ptr<Camera2D>>();
+    if (!camera)
+    {
+        LOG_ERROR("Failed to get the camera from the registry context!");
+        return;
+    }
+    camera->Update();
+
+    auto& animationSystem = m_Registry.GetContext<std::shared_ptr<AnimationSystem>>();
+    animationSystem->Update();
+
+    ////Update SoundSystem
+    //auto& soundSystem = m_Registry.GetContext<std::shared_ptr<SoundSystem>>();
+    //soundSystem->Update(Window::getdt(), m_Registry);
+
+    auto& physics = m_Registry.GetContext<std::shared_ptr<Box2DWrappers>>();
+
+    if (coreGlobals.IsPhysicsEnabled())
+    {
+        //Update physics and physics system
+        float timeStep = 1.0f / 60.0f;
+        int subStepCount = 4;
+        // Perform physics step
+        b2World_Step(physics->GetWorldID(), timeStep, subStepCount);
+    }
+
+    // Reset active contacts before processing physics
+    auto& pSensorListener = m_Registry.GetContext<std::shared_ptr<SensorListener>>();
+
+    // Process sensor contacts
+    pSensorListener->BeginSensorContact(physics->GetWorldID());
+    pSensorListener->EndSensorContact(physics->GetWorldID());
+
+    // Process contacts
+    auto& pContactListener = m_Registry.GetContext<std::shared_ptr<ContactListener>>();
+    pContactListener->BeginContact(physics->GetWorldID());
+    pContactListener->EndContact(physics->GetWorldID());
+
+    // Update physics system
+    auto& pPhysicsSystem = m_Registry.GetContext<std::shared_ptr<PhysicsSystem>>();
+    pPhysicsSystem->Update(m_Registry.GetRegistry());
 }

@@ -1,6 +1,7 @@
 #include "Application.h"
 
 #include "ENGINE/RESOURCES/FONTS/default_font.h"
+#include "EDITOR/UTILITIES/EditorTextures.h"
 
 Application& Application::GetInstance()
 {
@@ -65,6 +66,11 @@ bool Application::Initialize()
 		LUA_ERROR("Failed to add Default Font to the Engine from the Asset Manager");
 	}
 
+	if (!LoadEditorTextures())
+	{
+		LOG_ERROR("Failed to load the Editor Textures!");
+	}
+
 	/*auto assetManager = std::make_shared<AssetManager>();
 	if (!assetManager)
 	{
@@ -107,14 +113,7 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to create the lua state!");
 		return false;
 	}
-	lua->open_libraries(
-		sol::lib::base,
-		sol::lib::math,
-		sol::lib::os,
-		sol::lib::table,
-		sol::lib::io,
-		sol::lib::string
-	);
+
 	if (!pRegistry->AddToContext<std::shared_ptr<sol::state>>(lua))
 	{
 		LOG_ERROR("Failed to add the sol::state to the registry context");
@@ -224,7 +223,7 @@ bool Application::Initialize()
 	}
 		//Create the physics world
 	auto pPhysicsWorld = std::make_shared<Box2DWrappers>();
-
+	//pPhysicsWorld->LoadBox2dWorld();
 	if (!pRegistry->AddToContext<std::shared_ptr<Box2DWrappers>>(pPhysicsWorld))
 	{
 		LOG_ERROR("Failed to add the Physics world to the registry context!");
@@ -264,15 +263,6 @@ bool Application::Initialize()
 	{
 		LOG_ERROR("Failed to create displays.");
 		return false;
-	}
-
-	//Lua and ENTT::meta BINDING
-	ScriptingSystem::RegisterLuaBindings(*lua, *pRegistry);
-	ScriptingSystem::RegisterLuaFunctions(*lua, *pRegistry);
-
-	if (!scriptSystem->LoadMainScript(*lua))
-	{
-		LOG_ERROR("Failed to load the main lua script");
 	}
 	
 	// CREATE TEMP FRAMEBUFFER
@@ -336,6 +326,28 @@ bool Application::LoadShaders()
 		"ASSETS/SHADER/fontShader.frag"))
 	{
 		LOG_ERROR("Failed to add the font shader to the asset manager");
+		return false;
+	}
+
+	return true;
+}
+
+bool Application::LoadEditorTextures()
+{
+	auto& mainRegistry = MAIN_REGISTRY();
+	auto& assetManager = mainRegistry.GetAssetManager();
+
+	if (!assetManager.AddTextureFromMemory(
+		"play_button", play_button, sizeof(play_button) / sizeof(play_button[0])))
+	{
+		LOG_ERROR("Failed to load texture [play_button] from memory.");
+		return false;
+	}
+
+	if (!assetManager.AddTextureFromMemory(
+		"stop_button", stop_button, sizeof(stop_button) / sizeof(stop_button[0])))
+	{
+		LOG_ERROR("Failed to load texture [stop_button] from memory.");
 		return false;
 	}
 
@@ -415,18 +427,15 @@ void Application::ProcessEvents()
 
 void Application::Update()
 {
-	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
-	scriptSystem->Update();
-	auto view = pRegistry->GetRegistry().view<TransformComponent, SpriteComponent>();
-	auto& camera = pRegistry->GetContext<std::shared_ptr<Camera2D>>();
-	if (!camera)
+	auto& mainRegistry = MAIN_REGISTRY();
+	auto& displayHolder = mainRegistry.GetContext<std::shared_ptr<DisplayHolder>>();
+	for (const auto& pDisplay : displayHolder->displays)
 	{
-		LOG_ERROR("Failed to get the camera from the registry context!");
-		return;
+		pDisplay->Update();
 	}
-	camera->Update();
-	auto& animationSystem = pRegistry->GetContext<std::shared_ptr<AnimationSystem>>();
-	animationSystem->Update();
+
+	auto view = pRegistry->GetRegistry().view<TransformComponent, SpriteComponent>();
+
 	// Update inputs
 	auto& inputManager = InputManager::GetInstance();
 	auto& keyboard = inputManager.GetKeyboard();
@@ -437,31 +446,6 @@ void Application::Update()
 	auto& soundSystem = pRegistry->GetContext<std::shared_ptr<SoundSystem>>();
 	soundSystem->Update(Window::getdt(), *pRegistry);
 
-	//Update physics and physics system
-	auto& physics = pRegistry->GetContext<std::shared_ptr<Box2DWrappers>>();
-	float timeStep = 1.0f / 60.0f;
-	int subStepCount = 4;
-
-	// Reset active contacts before processing physics
-	auto& pSensorListener = pRegistry->GetContext<std::shared_ptr<SensorListener>>();
-
-	// Perform physics step
-	b2World_Step(physics->GetWorldID(), timeStep, subStepCount);
-
-	// Process sensor contacts
-	pSensorListener->BeginSensorContact(physics->GetWorldID());
-	pSensorListener->EndSensorContact(physics->GetWorldID());
-
-	// Process contacts
-	auto& pContactListener = pRegistry->GetContext<std::shared_ptr<ContactListener>>();
-	pContactListener->BeginContact(physics->GetWorldID());
-	pContactListener->EndContact(physics->GetWorldID());
-
-	
-
-	// Update physics system
-	auto& pPhysicsSystem = pRegistry->GetContext<std::shared_ptr<PhysicsSystem>>();
-	pPhysicsSystem->Update(pRegistry->GetRegistry());
 }
 
 void Application::Render()
@@ -479,7 +463,7 @@ void Application::Render()
 	auto& circleShader = assetManager.GetShader("circle");
 	auto& fontShader = assetManager.GetShader("font");
 
-	auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
+	//auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
 
 	const auto& fb = pRegistry->GetContext<std::shared_ptr<FrameBuffer>>();
 
@@ -489,7 +473,7 @@ void Application::Render()
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	scriptSystem->Render();
+	//scriptSystem->Render();
 	renderSystem->Update();
 	renderShapeSystem->Update();
 	renderUISystem->Update(pRegistry->GetRegistry());

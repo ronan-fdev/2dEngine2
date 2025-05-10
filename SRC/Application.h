@@ -23,6 +23,7 @@
 #include "ENGINE/ECS/COMPONENTS/CircleColliderComponent.h"
 #include "ENGINE/ECS/COMPONENTS/TextComponent.h"
 
+#include "ENGINE/PHYSICS/Box2DWrappers.h"
 #include "ENGINE/PHYSICS/ContactListener.h"
 #include "ENGINE/PHYSICS/SensorListener.h"
 		  
@@ -59,6 +60,8 @@ public:
 private:
 	bool Initialize();
 	bool LoadShaders();
+	bool LoadEditorTextures();
+
 	void ProcessEvents();
 	void Update();
 	void Render();

@@ -38,6 +38,14 @@ struct PhysicsAttributes
 class PhysicsComponent
 {
 public:
+    //// In PhysicsComponent class declaration
+    //PhysicsComponent(const PhysicsComponent&) = delete;
+    //PhysicsComponent& operator=(const PhysicsComponent&) = delete;
+
+    //// In PhysicsComponent class declaration
+    //PhysicsComponent(PhysicsComponent&& other) noexcept;
+    //PhysicsComponent& operator=(PhysicsComponent&& other) noexcept;
+
     PhysicsComponent() = default;
     PhysicsComponent(const b2WorldId worldId, const PhysicsAttributes& physicsAttr);
     ~PhysicsComponent() = default;

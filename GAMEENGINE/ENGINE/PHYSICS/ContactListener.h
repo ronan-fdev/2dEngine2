@@ -23,5 +23,7 @@ public:
 
     UserData* GetUserDataA() { return m_pUserDataA; }
     UserData* GetUserDataB() { return m_pUserDataB; }
+
+    void ResetUserContactsAB();
 };
 

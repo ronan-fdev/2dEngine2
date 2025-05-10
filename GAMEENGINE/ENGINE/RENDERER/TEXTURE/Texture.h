@@ -3,23 +3,31 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <stdexcept>
+#include <tuple>
+#include <string>
 
 #include "../../LOGGER/log.h"
 
+struct TEXTURETYPE
+{
+	struct FILEPATH {};
+	struct FRAMEBUFFER {};
+	struct TEXTURE_FROM_MEMORY {};
+};
 
 class Texture
 {
 public:
-	enum class TextureType
-	{
-		PIXEL = 0,
-		BLENDED,
-		FRAMEBUFFER,
-		NONE
-	};
 	Texture();
-	Texture(const char* filePath);
-	Texture(const int& width, const int& height);//For the Frame Buffer.
+	//Factory methods to get the texture:
+	Texture(TEXTURETYPE::FILEPATH, const char* filePath);
+	Texture(TEXTURETYPE::FRAMEBUFFER, const int& width, const int& height);
+	Texture(TEXTURETYPE::TEXTURE_FROM_MEMORY, const unsigned char* fileData, int fileSize);
+
+	void InitTextureFromFilePath(const char* filePath);
+	void InitTextureFromFrameBuffer(const int& width, const int& height);//For the Frame Buffer.
+    void InitTextureFromMemory(const unsigned char* fileData, int fileSize);
 	~Texture();
 	void bind();
 	void unbind();
@@ -32,4 +40,3 @@ private:
 	int width;
 	int height;
 };
-

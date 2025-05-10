@@ -1,5 +1,33 @@
 #include "PhysicsComponent.h"
 
+//PhysicsComponent::PhysicsComponent(PhysicsComponent&& other) noexcept
+//	: worldId(other.worldId),
+//	bodyId(other.bodyId),
+//	shapeId(other.shapeId),
+//	m_pUserData(std::move(other.m_pUserData)),
+//	m_InitialAttribs(std::move(other.m_InitialAttribs)) {
+//	other.bodyId = b2_nullBodyId; // Invalidate source
+//	other.shapeId = b2_nullShapeId;
+//}
+//
+//PhysicsComponent& PhysicsComponent::operator=(PhysicsComponent&& other) noexcept {
+//	if (this != &other) {
+//		// Destroy current body if valid
+//		if (b2Body_IsValid(bodyId)) {
+//			b2DestroyBody(bodyId);
+//		}
+//		worldId = other.worldId;
+//		bodyId = other.bodyId;
+//		shapeId = other.shapeId;
+//		m_pUserData = std::move(other.m_pUserData);
+//		m_InitialAttribs = std::move(other.m_InitialAttribs);
+//		// Invalidate source
+//		other.bodyId = b2_nullBodyId;
+//		other.shapeId = b2_nullShapeId;
+//	}
+//	return *this;
+//}
+
 PhysicsComponent::PhysicsComponent(const b2WorldId worldID, const PhysicsAttributes& physicsAttr)
 	:
 	worldId(worldID),
@@ -9,6 +37,15 @@ PhysicsComponent::PhysicsComponent(const b2WorldId worldID, const PhysicsAttribu
 	shapeId(b2_nullShapeId)
 {
 }
+
+//PhysicsComponent::~PhysicsComponent()
+//{
+//	/*if (b2Body_IsValid(bodyId))
+//	{
+//		b2DestroyBody(bodyId);
+//	}*/
+//	
+//}
 
 void PhysicsComponent::Init(int windowWidth, int windowHeight)
 {

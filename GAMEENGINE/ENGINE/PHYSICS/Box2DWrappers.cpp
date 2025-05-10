@@ -4,6 +4,16 @@ Box2DWrappers::Box2DWrappers()
     :
     worldId(b2_nullWorldId)
 {
+    
+}
+
+Box2DWrappers::~Box2DWrappers()
+{
+    b2DestroyWorld(worldId);
+}
+
+void Box2DWrappers::LoadBox2dWorld()
+{
     b2WorldDef worldDef = b2DefaultWorldDef();
     worldDef.gravity = { 0.0f, -10.0f };
     worldId = b2CreateWorld(&worldDef);
@@ -13,7 +23,7 @@ Box2DWrappers::Box2DWrappers()
     }
 }
 
-Box2DWrappers::~Box2DWrappers()
+void Box2DWrappers::UnLoadBox2dWorld()
 {
     b2DestroyWorld(worldId);
 }

@@ -23,5 +23,7 @@ public:
 
     UserData* GetUserSensorDataA() { return m_pUserSensorDataA; }
     UserData* GetUserSensorDataB() { return m_pUserSensorDataB; }
+
+    void ResetUserSensorAB();
 };
 

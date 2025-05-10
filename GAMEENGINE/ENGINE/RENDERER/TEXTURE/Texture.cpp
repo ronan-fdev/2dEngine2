@@ -2,12 +2,33 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-Texture::Texture() : texture1(0), width(0), height(0), filePath(nullptr)
+Texture::Texture()
+    :
+    filePath(nullptr),
+    texture1(0),
+    width(0),
+    height(0)
 {
 }
 
-Texture::Texture(const char* filePath) : filePath(filePath)
+Texture::Texture(TEXTURETYPE::FILEPATH, const char* filePath)
 {
+    InitTextureFromFilePath(filePath);
+}
+
+Texture::Texture(TEXTURETYPE::FRAMEBUFFER, const int& width, const int& height)
+{
+    InitTextureFromFrameBuffer(width, height);
+}
+
+Texture::Texture(TEXTURETYPE::TEXTURE_FROM_MEMORY, const unsigned char* fileData, int fileSize)
+{
+    InitTextureFromMemory(fileData, fileSize);
+}
+
+void Texture::InitTextureFromFilePath(const char* file_path)
+{
+    filePath = file_path;
     glGenTextures(1, &texture1);
     glBindTexture(GL_TEXTURE_2D, texture1);
 
@@ -52,7 +73,7 @@ Texture::Texture(const char* filePath) : filePath(filePath)
     stbi_image_free(data);
 }
 
-Texture::Texture(const int& frameBufferWidth, const int& frameBufferHeight)
+void Texture::InitTextureFromFrameBuffer(const int& frameBufferWidth, const int& frameBufferHeight)
 {
     width = frameBufferWidth;
     height = frameBufferHeight;
@@ -67,6 +88,50 @@ Texture::Texture(const int& frameBufferWidth, const int& frameBufferHeight)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
+}
+
+void Texture::InitTextureFromMemory(const unsigned char* fileData, int fileSize)
+{
+    glGenTextures(1, &texture1);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+
+    // Set texture parameters (same as before)...
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    // Use STB Image to decode from memory
+    int width, height, nrChannels;
+    //stbi_set_flip_vertically_on_load(true); // Optional
+    unsigned char* pixelData = stbi_load_from_memory(
+        fileData,    // Pointer to compressed image data
+        fileSize,    // Size of the compressed data buffer
+        &width,
+        &height,
+        &nrChannels,
+        0
+    );
+
+
+    if (pixelData) {
+        // Determine format based on channel count
+        GLenum format = GL_RGB;
+        if (nrChannels == 4) format = GL_RGBA;
+        else if (nrChannels == 1) format = GL_RED;
+
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, pixelData);
+        glGenerateMipmap(GL_TEXTURE_2D);
+
+        this->width = width;
+        this->height = height;
+
+        stbi_image_free(pixelData);
+    }
+    else {
+        std::cerr << "Failed to decode texture from memory!\n";
+        LOG_ERROR("STB failed to decode image from memory");
+    }
 }
 
 Texture::~Texture()

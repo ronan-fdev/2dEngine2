@@ -66,6 +66,9 @@ public:
 	* @param An std::string for the fragment shader file path to be loaded.
 	* @return Returns true if the shader was created and loaded successfully, false otherwise.
 	*/
+
+	bool AddTextureFromMemory(const std::string& textureName, const unsigned char* imageData, int length);
+
 	bool AddShader(const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath);
 	/*
 	* @brief Checks to see if the shader exists based on the name and returns the Shader.

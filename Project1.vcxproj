@@ -227,6 +227,7 @@
     <ClInclude Include="SRC\EDITOR\DISPLAYS\IDisplay.h" />
     <ClInclude Include="SRC\EDITOR\DISPLAYS\SceneDisplay.h" />
     <ClInclude Include="SRC\Application.h" />
+    <ClInclude Include="SRC\EDITOR\UTILITIES\EditorTextures.h" />
     <ClInclude Include="SRC\ImGui\backends\imgui_impl_glfw.h" />
     <ClInclude Include="SRC\ImGui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="SRC\ImGui\backends\imgui_impl_opengl3_loader.h" />

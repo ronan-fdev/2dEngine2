@@ -21,6 +21,8 @@ void ContactListener::BeginContact(b2WorldId myWorldId)
 				b2Shape_GetUserData(beginEvent->shapeIdB)
 				);
 
+		if (!a_data || !b_data) return;//Add this because it caused runtime error after create Play/Stop Scenes.[EP: 57].
+
 		try
 		{
 			auto* a_any = std::any_cast<ObjectData>(&a_data->userData);
@@ -54,6 +56,8 @@ void ContactListener::EndContact(b2WorldId myWorldId)
 				b2Shape_GetUserData(endEvent->shapeIdB)
 				);
 
+		if (!a_data || !b_data) return;//Add this because it caused runtime error after create Play/Stop Scenes.[EP: 57].
+
 		try
 		{
 			//a_data->userData is the std::any itself
@@ -76,4 +80,9 @@ void ContactListener::EndContact(b2WorldId myWorldId)
 			SetUserContacts(nullptr, nullptr);
 		}
 	}
+}
+
+void ContactListener::ResetUserContactsAB()
+{
+	SetUserContacts(nullptr, nullptr);
 }

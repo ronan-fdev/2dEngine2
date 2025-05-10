@@ -82,6 +82,29 @@ std::shared_ptr<Font> AssetManager::GetFont(const std::string& fontName)
     return fontItr->second;
 }
 
+bool AssetManager::AddTextureFromMemory(const std::string& textureName, const unsigned char* imageData, int length)
+{
+    // Check to see if the Texture already exist
+    if (m_mapTextures.contains(textureName))
+    {
+        LOG_ERROR("AssetManager: Texture [{}] -- Already exists!", textureName);
+        return false;
+    }
+
+    auto texture = std::move(TextureLoader::createTextureFromMemory(imageData, length));
+    // Load the texture
+    if (!texture)
+    {
+        LOG_ERROR("Unable to load texture [{}] from memory!", textureName);
+        return false;
+    }
+
+    // Insert the texture into the map
+    m_mapTextures.emplace(textureName, std::move(texture));
+
+    return true;
+}
+
 bool AssetManager::AddShader(const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath)
 {
     // Check to see if the shader already exists

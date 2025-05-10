@@ -21,6 +21,7 @@ gStateStack:change_state(title)
 main = {
 	[1] = {
 		update = function()
+
 			--[[
             rainGen:Update(0.016) 
             UpdatePlayer(gPlayer)
@@ -49,7 +50,7 @@ main = {
 	},
 	[2] = {
 		render = function()
-			gStateStack:render()
+			--gStateStack:render()
 		end
 	},
 }
