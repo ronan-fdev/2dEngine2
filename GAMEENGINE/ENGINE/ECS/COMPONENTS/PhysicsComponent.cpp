@@ -33,7 +33,7 @@ PhysicsComponent::PhysicsComponent(const b2WorldId worldID, const PhysicsAttribu
 	worldId(worldID),
 	m_InitialAttribs(physicsAttr),
 	m_pUserData{ nullptr },
-	bodyId(b2_nullBodyId),
+	m_pBody{ nullptr },
 	shapeId(b2_nullShapeId)
 {
 }
@@ -73,10 +73,11 @@ void PhysicsComponent::Init(int windowWidth, int windowHeight)
 	bodyDef.fixedRotation = m_InitialAttribs.bFixedRotation;
 
 	//Create the Ridgid Body:
-	bodyId = b2CreateBody(worldId, &bodyDef);
-	if (!b2Body_IsValid(bodyId))
+	m_pBody = MakeSharedBody(worldId, &bodyDef);
+	if (!m_pBody || !b2Body_IsValid(m_pBody->bodyId))
 	{
-		LOG_ERROR("Failed to create the Box2D body [{0}]", bodyId.index1);
+		LOG_ERROR("Failed to create the Box2D body [{0}]", m_pBody ? m_pBody->bodyId.index1 : -1);
+		return;
 	}
 
 	//Create the shape:
@@ -132,21 +133,21 @@ void PhysicsComponent::Init(int windowWidth, int windowHeight)
 		tempSensorBodyDef.enableSensorEvents = true;
 		if (m_InitialAttribs.bCircle)
 		{
-			b2CreateCircleShape(bodyId, &tempSensorBodyDef, &circleShape);
+			b2CreateCircleShape(m_pBody->bodyId, &tempSensorBodyDef, &circleShape);
 		}
 		else
 		{
-			b2CreatePolygonShape(bodyId, &tempSensorBodyDef, &polyShape);
+			b2CreatePolygonShape(m_pBody->bodyId, &tempSensorBodyDef, &polyShape);
 		}
 	}
 
 	if (m_InitialAttribs.bCircle)
 	{
-		shapeId = b2CreateCircleShape(bodyId, &fixtureDef, &circleShape);
+		shapeId = b2CreateCircleShape(m_pBody->bodyId, &fixtureDef, &circleShape);
 	}
 	else
 	{
-		shapeId = b2CreatePolygonShape(bodyId, &fixtureDef, &polyShape);
+		shapeId = b2CreatePolygonShape(m_pBody->bodyId, &fixtureDef, &polyShape);
 	}
 
 	if (!b2Shape_IsValid(shapeId))
@@ -158,8 +159,8 @@ void PhysicsComponent::Init(int windowWidth, int windowHeight)
 
 glm::vec2 PhysicsComponent::BodyPosition()
 {
-	if (!b2Body_IsValid(bodyId)) return { 0,0 };
-	const b2Vec2 pos = b2Body_GetPosition(bodyId);
+	if (!b2Body_IsValid(m_pBody->bodyId)) return { 0,0 };
+	const b2Vec2 pos = b2Body_GetPosition(m_pBody->bodyId);
 	auto METERS_TO_PIXELS = CoreEngineData::GetInstance().MetersToPixels();
 	return { pos.x * METERS_TO_PIXELS, pos.y * METERS_TO_PIXELS };
 }
