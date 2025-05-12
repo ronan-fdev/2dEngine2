@@ -35,6 +35,7 @@
 #include "../STATES/State.h"
 #include "../STATES/StateStack.h"
 #include "../STATES/StateMachine.h"
+#include "../STATES/StateSubMachine.h"
 
 #include <sol/sol.hpp>
 

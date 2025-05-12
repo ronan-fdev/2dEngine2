@@ -22,7 +22,7 @@ function Character:Create(def)
 		m_bJumping = false,
 		m_bGrounded = true,
 		m_Type = def.type or "PLAYER",
-		m_Controller = StateMachine(),
+		m_Controller = StateSubMachine(),
 		m_Name = def.name,
 	}
 
@@ -67,11 +67,12 @@ function Character:InitStateMachine (def, character)
 	for _, name in ipairs(def.controller) do 
 		local state = states[name]
 		assert(state, string.format("State [%s] does not exist.", name))
+		assert(character)
 		local instance = state:Create(character)
 		character.m_Controller:add_state(instance)
 	end
 
-	character.m_Controller:change_state(def.default_state, false, nil)
+	--character.m_Controller:change_state(def.default_state, false, nil)
 	character.m_bInitialized = true
 
 end 

@@ -161,6 +161,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ENGINE\LOGGER\CrashLogger.cpp" />
     <ClCompile Include="ENGINE\PHYSICS\UserData.cpp" />
     <ClCompile Include="ENGINE\SCRIPTING\ContactListenerBind.cpp" />
     <ClCompile Include="ENGINE\PHYSICS\ContactListener.cpp" />
@@ -225,6 +226,7 @@
     <ClCompile Include="ENGINE\ECS\MainRegistry.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ENGINE\LOGGER\CrashLogger.h" />
     <ClInclude Include="ENGINE\LOGGER\LuaLogBinding.h" />
     <ClInclude Include="ENGINE\RESOURCES\FONTS\default_font.h" />
     <ClInclude Include="ENGINE\SCRIPTING\ContactListenerBind.h" />

@@ -12,6 +12,7 @@ AssetDefs =
         { name = "fireboyIdle", path = "ASSETS/TILEDMAP/FireBoyWaterGirl/fireboyIdle-sheet.png"},
         { name = "fireboyMoveLeft", path = "ASSETS/TILEDMAP/FireBoyWaterGirl/fireboyMoveLeft-sheet.png"},
         { name = "fireboy", path = "ASSETS/TILEDMAP/FireBoyWaterGirl/fireboy.png"},
+		{ name = "player_projectile", path = "ASSETS/SCRIPTS/TESTPROJECT1/requiremets/player_projectile.png"},
         { name = "fireboyMoveRight", path = "ASSETS/TILEDMAP/FireBoyWaterGirl/fireboyMoveRight-sheet.png"}
 
  	},

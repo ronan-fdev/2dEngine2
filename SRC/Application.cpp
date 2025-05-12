@@ -50,6 +50,12 @@ bool Application::Initialize()
 	//Logger
 	LOGGER_INIT_LOGS(true, true);
 
+	// Initialize crash logger first
+	ENGINE_INIT_CRASH_LOGS();
+
+	//// Optional: Set project path for organized crash logs
+	ENGINE_CRASH_LOGGER().SetProjectPath("C:/Aswin_Game_DEV/2DEngine2/Project1");
+
 	Window::init("2DENGINE");
 
 	auto& mainRegistry = MAIN_REGISTRY();

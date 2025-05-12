@@ -76,8 +76,19 @@ function LoadEntity(def)
    if def.components.physics_attributes then 
 		local physAttr = def.components.physics_attributes 
 		local newPhysicsAttr = PhysicsAttributes()
+		
+		if physAttr.bInteractionType == BodyInteractionType.TRIGGER then
+			newPhysicsAttr.bInteractionType = BodyInteractionType.TRIGGER
+		elseif physAttr.bInteractionType == BodyInteractionType.COLLIDER then
+			newPhysicsAttr.bInteractionType = BodyInteractionType.COLLIDER
+		elseif physAttr.bInteractionType == BodyInteractionType.SENSOR then
+			LUA_INFO("sensor initialization is being done.")
+			newPhysicsAttr.bInteractionType = BodyInteractionType.SENSOR
+		else
+			newPhysicsAttr.bInteractionType = BodyInteractionType.NORMAL
+		end
 
-		newPhysicsAttr.eType = physAttr.type 		newPhysicsAttr.bInteractionType = BodyInteractionType.NORMAL
+		newPhysicsAttr.eType = physAttr.type 		
 		newPhysicsAttr.density = physAttr.density
 		newPhysicsAttr.friction = physAttr.friction
 		newPhysicsAttr.restitution = physAttr.restitution
@@ -85,9 +96,8 @@ function LoadEntity(def)
 		newPhysicsAttr.radius = physAttr.radius
 		newPhysicsAttr.bCircle = physAttr.bCircle or false
 		newPhysicsAttr.bFixedRotation = physAttr.bFixedRotation or false
-       newPhysicsAttr.gravityScale = physAttr.gravityScale or -1
-       newPhysicsAttr.scale = physAttr.scale
-		newPhysicsAttr.bIsSensor = physAttr.bIsSensor or false
+        newPhysicsAttr.gravityScale = physAttr.gravityScale or -1
+        newPhysicsAttr.scale = physAttr.scale
 
 		newPhysicsAttr.objectData = ObjectData(
 			physAttr.object_data.tag,

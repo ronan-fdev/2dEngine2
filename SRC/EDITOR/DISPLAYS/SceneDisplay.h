@@ -7,6 +7,7 @@
 #include "ENGINE/RESOURCES/AssetManager.h"
 
 #include "ENGINE/LOGGER/log.h"
+#include "ENGINE/LOGGER/CrashLogger.h"
 
 #include "ENGINE/ECS/Registry.h"
 #include "ENGINE/ECS/MainRegistry.h"

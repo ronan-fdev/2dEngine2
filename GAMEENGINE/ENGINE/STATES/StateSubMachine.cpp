@@ -85,6 +85,26 @@ void StateSubMachine::AddState(const State& state)
     }
 
     m_mapStates.emplace(state.name, std::make_unique<State>(state));
+    auto newState = m_mapStates.find(state.name);
+    if (newState == m_mapStates.end())
+        return;
+    if (newState->second->on_enter.valid())
+    {
+        try
+        {
+            auto result = newState->second->on_enter();
+            if (!result.valid())
+            {
+                sol::error error = result;
+                throw error;
+            }
+        }
+        catch (const sol::error& error)
+        {
+            LOG_ERROR("Failed to enter state: {}", error.what());
+            return;
+        }
+    }
 }
 
 void StateSubMachine::ExitState(const State& state)

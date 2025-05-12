@@ -5,6 +5,7 @@
 
 #include "ENGINE/WINDOW/Window.h"
 #include "ENGINE/LOGGER/log.h"
+#include "ENGINE/LOGGER/CrashLogger.h"
 
 #include "ENGINE/RESOURCES/AssetManager.h"
 

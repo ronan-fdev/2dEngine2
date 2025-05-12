@@ -26,24 +26,24 @@ function Projectile:Create(params)
     local projEnt = Entity(this.m_EntityID)
 
     local transform = projEnt:get_component(Transform)
-    transform.positon = this.m_StartPos
+
+    transform.position = this.m_StartPos
     transform.rotation = this.m_Rotation
 
-    this.m_LifeTime:start()
+    this.m_LifeTimer:start()
 
     setmetatable(this, self)
     return this
 end
 
 function Projectile:Update(dt)
-    local Projectile = Entity(self.m_EntityID)
-    local physics = Projectile:get_component(PhysicsComp)
-
-    physics:set_linear_velocity(vec2(self.m_Dir * self.m_Speed * dt))
+    local projectile = Entity(self.m_EntityID)
+	local physics = projectile:get_component(PhysicsComp)
+	physics:set_linear_velocity(vec2(self.m_Dir * self.m_Speed * dt, 0))
 end
 
 function Projectile:TimesUp()
-    return self.m_LifeTimer:elapsed_ms() >= self.m_LifeTimer
+    return self.m_LifeTimer:elapsed_ms() >= self.m_LifeTime
 end
 
 function Projectile:Destroy()

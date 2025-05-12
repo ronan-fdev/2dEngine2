@@ -19,6 +19,8 @@ void SceneDisplay::LoadScene()
         sol::lib::string,
         sol::lib::package);
 
+    ENGINE_CRASH_LOGGER().SetLuaState(*lua);
+
     ScriptingSystem::RegisterLuaBindings(*lua, m_Registry);
     ScriptingSystem::RegisterLuaFunctions(*lua, m_Registry);
 

@@ -1,9 +1,10 @@
-assert(MoveState, "MoveState does not exist")
+
 
 
 CharacterStates = 
 {
-	move = MoveState
+	move = MoveState,
+	shoot = ShootState
 }
 
 PlayerDefs = 
@@ -60,7 +61,10 @@ PlayerDefs =
 				}
 			}
 		},
-		controller = { "move" },
+		controller = {
+			"move",
+			"shoot"
+		},
 		default_state = "move"
 	}
 }

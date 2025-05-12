@@ -1,10 +1,13 @@
 ScriptList = 
 {
+	"ASSETS/SCRIPTS/TESTPROJECT1/defs/projectile_def.lua",
+	"ASSETS/SCRIPTS/TESTPROJECT1/player_states/move_state.lua",
+	"ASSETS/SCRIPTS/TESTPROJECT1/player_states/shoot_state.lua",
 	"ASSETS/SCRIPTS/TESTPROJECT1/defs/assetdefs.lua",
+	"ASSETS/SCRIPTS/TESTPROJECT1/defs/player_def.lua",
 	"ASSETS/SCRIPTS/TESTPROJECT1/samplemap.lua",
 	"ASSETS/SCRIPTS/TESTPROJECT1/characters/character.lua",
-	"ASSETS/SCRIPTS/TESTPROJECT1/player_states/move_state.lua",
-	"ASSETS/SCRIPTS/TESTPROJECT1/defs/player_def.lua",
+	"ASSETS/SCRIPTS/TESTPROJECT1/projectiles/projectile.lua",
 	"ASSETS/SCRIPTS/utilities.lua",
 	"ASSETS/SCRIPTS/rain_generator.lua",
 	"ASSETS/SCRIPTS/events/event_manager.lua",

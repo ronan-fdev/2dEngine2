@@ -175,6 +175,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	State::CreateLuaStateBind(lua);
 	StateStack::CreateLuaStateStackBind(lua);
 	StateMachine::CreateLuaStateMachine(lua);
+	StateSubMachine::CreateLuaStateSubMachine(lua);
 	
 }
 

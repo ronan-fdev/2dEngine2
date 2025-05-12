@@ -73,7 +73,7 @@ void Texture::InitTextureFromFilePath(const char* file_path)
     }
     else
     {
-        std::cout << "Failed to load texture: " << filePath << std::endl;
+        std::cout << "Failed to load texture: " << filePath << std::endl;//One error has to be corrected. The asset manager will not be indicated incase of this error.
         LOG_ERROR("FAILED TO LOAD TEXTURE :{0}", filePath);
         width = 0;
         height = 0;

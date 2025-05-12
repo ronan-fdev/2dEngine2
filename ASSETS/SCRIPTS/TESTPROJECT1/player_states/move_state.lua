@@ -44,14 +44,16 @@ function MoveState:OnUpdate(dt)
     local horizontalInput = 0
     if Keyboard.pressed(KEY_A) then
         horizontalInput = -1
-        if m_PlayerState ~= ANIMATION_STATE.RUN_LEFT then
+        if self.m_Character.m_bPlayerState ~= ANIMATION_STATE.RUN_LEFT then
+            self.m_Character.m_bPlayerState = ANIMATION_STATE.RUN_LEFT
             m_PlayerState = ANIMATION_STATE.RUN_LEFT
             animation.num_frames = 4
             animation.frame_offset = 2
         end
     elseif Keyboard.pressed(KEY_D) then
         horizontalInput = 1
-        if m_PlayerState ~= ANIMATION_STATE.RUN_RIGHT then
+        if self.m_Character.m_bPlayerState ~= ANIMATION_STATE.RUN_RIGHT then
+            self.m_Character.m_bPlayerState = ANIMATION_STATE.RUN_RIGHT
             m_PlayerState = ANIMATION_STATE.RUN_RIGHT
             animation.num_frames = 4
             animation.frame_offset = 6
