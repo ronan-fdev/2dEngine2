@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../UTILITIES/2dEngineUtilities.h"
 #include "../ECS/MainRegistry.h"
 #include "../RENDERER/TEXTURE/TextureLoader.h";
 #include "../RENDERER/SHADER/ShaderLoader.h";
@@ -69,6 +70,8 @@ public:
 
 	bool AddTextureFromMemory(const std::string& textureName, const unsigned char* imageData, int length);
 
+	bool AddTilesetTexture(const std::string& textureName, const std::string& texturePath);
+
 	bool AddShader(const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath);
 	/*
 	* @brief Checks to see if the shader exists based on the name and returns the Shader.
@@ -76,6 +79,10 @@ public:
 	* @return Returns the desired shader if it exists, else returns an empty Shader object
 	*/
 	Shader& GetShader(const std::string& shaderName);
+
+	std::vector<std::string> GetTilesetNames() const;
+
+	inline const std::map<std::string, std::shared_ptr<Texture>>& GetAllTextures() const { return m_mapTextures; }
 
 	static void CreateLuaAssetManager(sol::state& lua, Registry& registry);
 

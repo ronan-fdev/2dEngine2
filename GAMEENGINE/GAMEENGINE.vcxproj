@@ -190,6 +190,7 @@
     <ClCompile Include="ENGINE\SCRIPTING\InputManager.cpp" />
     <ClCompile Include="ENGINE\SOUND\AudioEvent.cpp" />
     <ClCompile Include="ENGINE\SOUND\FMODAudioSystem.cpp" />
+    <ClCompile Include="ENGINE\STATES\StateSubMachine.cpp" />
     <ClCompile Include="ENGINE\SYSTEMS\AnimationSystem.cpp" />
     <ClCompile Include="ENGINE\SYSTEMS\RenderSystem.cpp" />
     <ClCompile Include="ENGINE\SYSTEMS\ScriptingSystem.cpp" />
@@ -262,10 +263,12 @@
     <ClInclude Include="ENGINE\SCRIPTING\InputManager.h" />
     <ClInclude Include="ENGINE\SOUND\AudioEvent.h" />
     <ClInclude Include="ENGINE\SOUND\FMODAudioSystem.h" />
+    <ClInclude Include="ENGINE\STATES\StateSubMachine.h" />
     <ClInclude Include="ENGINE\SYSTEMS\AnimationSystem.h" />
     <ClInclude Include="ENGINE\SYSTEMS\RenderSystem.h" />
     <ClInclude Include="ENGINE\SYSTEMS\ScriptingSystem.h" />
     <ClInclude Include="ENGINE\SYSTEMS\SoundSystem.h" />
+    <ClInclude Include="ENGINE\UTILITIES\2dEngineUtilities.h" />
     <ClInclude Include="ENGINE\UTILITIES\Time.h" />
     <ClInclude Include="ENGINE\UTILITIES\Timer.h" />
     <ClInclude Include="ENGINE\WINDOW\INPUT\Button.h" />

@@ -7,23 +7,31 @@ Texture::Texture()
     filePath(nullptr),
     texture1(0),
     width(0),
-    height(0)
+    height(0),
+    m_bTileSetTexture(false),
+    m_bEditorTexture(false)
 {
 }
 
-Texture::Texture(TEXTURETYPE::FILEPATH, const char* filePath)
+Texture::Texture(TEXTURETYPE::FILEPATH, const char* filePath) : Texture()
 {
     InitTextureFromFilePath(filePath);
 }
 
-Texture::Texture(TEXTURETYPE::FRAMEBUFFER, const int& width, const int& height)
+Texture::Texture(TEXTURETYPE::FRAMEBUFFER, const int& width, const int& height) : Texture()
 {
     InitTextureFromFrameBuffer(width, height);
 }
 
-Texture::Texture(TEXTURETYPE::TEXTURE_FROM_MEMORY, const unsigned char* fileData, int fileSize)
+Texture::Texture(TEXTURETYPE::TEXTURE_FROM_MEMORY, const unsigned char* fileData, int fileSize) : Texture()
 {
     InitTextureFromMemory(fileData, fileSize);
+}
+
+Texture::Texture(TEXTURETYPE::FILEPATH, TEXTURECATEGORY::TILESETTEXTURE, const char* filePath) : Texture()
+{
+    m_bTileSetTexture = true;
+    InitTextureFromFilePath(filePath);
 }
 
 void Texture::InitTextureFromFilePath(const char* file_path)

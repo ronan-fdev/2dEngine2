@@ -221,6 +221,7 @@
     <ClCompile Include="SRC\ImGui\imgui_tables.cpp" />
     <ClCompile Include="SRC\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="SRC\main.cpp" />
+    <ClCompile Include="SRC\EDITOR\DISPLAYS\TilesetDisplay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\EDITOR\DISPLAYS\LogDisplay.h" />
@@ -237,6 +238,7 @@
     <ClInclude Include="SRC\ImGui\imstb_rectpack.h" />
     <ClInclude Include="SRC\ImGui\imstb_textedit.h" />
     <ClInclude Include="SRC\ImGui\imstb_truetype.h" />
+    <ClInclude Include="SRC\EDITOR\DISPLAYS\TilesetDisplay.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="GAMEENGINE\GAMEENGINE.vcxproj">

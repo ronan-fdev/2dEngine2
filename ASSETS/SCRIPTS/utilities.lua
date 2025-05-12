@@ -321,6 +321,15 @@ function LoadAssets(assets)
 		end
 	end
 
+	for k,v in pairs(assets.tileset) do
+		if not AssetManager.add_tileset_texture(v.name, v.path) then
+			LUA_ERROR("Failed to load texture ",v.name," at path ",v.path)
+			print()
+		else
+			LUA_INFO("Loaded Texture :",v.name)
+		end
+	end
+
 	for k, v in pairs(assets.music) do 
 		if not AssetManager.add_music(v.name, v.path) then 
 			LUA_ERROR("Failed to load music ",v.name," at path ",v.path)

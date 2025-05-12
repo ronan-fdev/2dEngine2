@@ -22,4 +22,10 @@ public:
 
 		return std::make_shared<Texture>(TEXTURETYPE::TEXTURE_FROM_MEMORY{}, imageData, fileSize);
 	}
+
+	static std::shared_ptr<Texture> createTilesetTextureTexture(const char* filePath)
+	{
+
+		return std::make_shared<Texture>(TEXTURETYPE::FILEPATH{}, TEXTURECATEGORY::TILESETTEXTURE{}, filePath);
+	}
 };

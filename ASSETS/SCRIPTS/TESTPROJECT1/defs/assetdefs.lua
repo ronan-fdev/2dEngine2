@@ -15,6 +15,11 @@ AssetDefs =
         { name = "fireboyMoveRight", path = "ASSETS/TILEDMAP/FireBoyWaterGirl/fireboyMoveRight-sheet.png"}
 
  	},
+	tileset = 
+	{
+		{name = "overworld", path = "ASSETS/TEXTURES/overworld.png"},
+		{name = "underworld", path = "ASSETS/TEXTURES/underworld.png"}
+	},
  	music = 
  	{
  		

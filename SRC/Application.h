@@ -46,6 +46,7 @@
 
 #include "EDITOR/DISPLAYS/SceneDisplay.h"
 #include "EDITOR/DISPLAYS/LogDisplay.h"
+#include "EDITOR/DISPLAYS/TilesetDisplay.h"
 
 class Application
 {

@@ -55,7 +55,7 @@ function GameState:Initialize()
 
      -- Create the player
     if not gPlayer then
-       local character = Character:Create({ name = "main_player" })
+    	local character = Character:Create({ name = "main_player" })
  		gPlayer = Entity(character.m_EntityID)
  		AddActiveCharacter(gPlayer:id(), character)
     end

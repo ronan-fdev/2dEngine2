@@ -17,6 +17,8 @@ bool AssetManager::AddTexture(const std::string& textureName, const std::string&
     return true;
 }
 
+
+
 const Texture& AssetManager::GetTexture(const std::string& textureName)
 {
     auto texItr = m_mapTextures.find(textureName);
@@ -105,6 +107,23 @@ bool AssetManager::AddTextureFromMemory(const std::string& textureName, const un
     return true;
 }
 
+bool AssetManager::AddTilesetTexture(const std::string& textureName, const std::string& texturePath)
+{
+    if (m_mapTextures.find(textureName) != m_mapTextures.end())
+    {
+        LOG_WARN("Failed to add texture [{0}] -- Already exists!", textureName);
+        return false;
+    }
+    auto texture = std::move(TextureLoader::createTilesetTextureTexture(texturePath.c_str()));
+    if (!texture)
+    {
+        LOG_ERROR("Failed to load texture [{0}] at path [{1}]", textureName, texturePath);
+        return false;
+    }
+    m_mapTextures.emplace(textureName, std::move(texture));
+    return true;
+}
+
 bool AssetManager::AddShader(const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath)
 {
     // Check to see if the shader already exists
@@ -137,6 +156,11 @@ Shader& AssetManager::GetShader(const std::string& shaderName)
 
 }
 
+std::vector<std::string> AssetManager::GetTilesetNames() const
+{
+    return GetKeys(m_mapTextures, [](const auto& pair) { return pair.second->IsTileset(); });
+}
+
 void AssetManager::CreateLuaAssetManager(sol::state& lua, Registry& registry)
 {
     auto& mainRegistry = MAIN_REGISTRY();
@@ -148,6 +172,10 @@ void AssetManager::CreateLuaAssetManager(sol::state& lua, Registry& registry)
         "add_texture", [&](const std::string& assetName, const std::string& filepath)
         {
             return asset_manager.AddTexture(assetName, filepath);
+        },
+        "add_tileset_texture", [&](const std::string& assetName, const std::string& filepath)
+        {
+            return asset_manager.AddTilesetTexture(assetName, filepath);
         },
         "add_font", [&](const std::string& fontName, const std::string& fontPath, float fontSize)
         {
