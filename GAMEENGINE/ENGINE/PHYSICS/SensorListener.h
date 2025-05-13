@@ -1,6 +1,9 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
+#include <map>
+#include <utility>
 
 #include "Box2DWrappers.h"
 #include "UserData.h"
@@ -25,5 +28,9 @@ public:
     UserData* GetUserSensorDataB() { return m_pUserSensorDataB; }
 
     void ResetUserSensorAB();
+
+    
+    static std::map<std::pair<b2BodyId, b2BodyId>, std::pair<UserData*, UserData*>> sensorData;
+
 };
 

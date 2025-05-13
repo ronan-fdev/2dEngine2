@@ -22,7 +22,18 @@ void SensorListener::BeginSensorContact(b2WorldId myWorldId)
 				);
 			if (a_data && b_data)
 			{
-				SetUserSensorContacts(a_data, b_data);
+				//SetUserSensorContacts(a_data, b_data);
+				// Get body IDs from the shape-to-body map
+				b2BodyId bodyA = b2Shape_GetBody(beginTouch->sensorShapeId);
+				b2BodyId bodyB = b2Shape_GetBody(beginTouch->visitorShapeId);
+
+				// Use sorted body pair to ensure consistent key ordering
+				std::pair<b2BodyId, b2BodyId> key = (bodyA.index1 < bodyB.index1)
+					? std::make_pair(bodyA, bodyB)
+					: std::make_pair(bodyB, bodyA);
+
+				// Store the user data
+				sensorData[key] = std::make_pair(a_data, b_data);
 			}
 		}
 	}
@@ -42,7 +53,23 @@ void SensorListener::EndSensorContact(b2WorldId myWorldId)
 			UserData* b_data = reinterpret_cast<UserData*>(
 				b2Shape_GetUserData(endTouch->visitorShapeId)
 				);
-			SetUserSensorContacts(nullptr, nullptr);
+			
+			if (a_data && b_data)
+			{
+				// Get body IDs from shape-to-body map
+				b2BodyId bodyA = b2Shape_GetBody(endTouch->sensorShapeId);
+				b2BodyId bodyB = b2Shape_GetBody(endTouch->visitorShapeId);
+
+				// Construct a sorted key (same order as BeginSensorContact)
+				std::pair<b2BodyId, b2BodyId> key = (bodyA.index1 < bodyB.index1)
+					? std::make_pair(bodyA, bodyB)
+					: std::make_pair(bodyB, bodyA);
+
+				// Remove from the map if it exists
+				sensorData.erase(key);
+
+				//SetUserSensorContacts(nullptr, nullptr);
+			}
 		}
 	}
 }
