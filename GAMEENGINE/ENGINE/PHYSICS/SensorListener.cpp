@@ -1,5 +1,7 @@
 #include "SensorListener.h"
 
+std::map<std::pair<b2BodyId, b2BodyId>, std::pair<UserData*, UserData*>, BodyPairComparator> SensorListener::sensorData;
+
 void SensorListener::SetUserSensorContacts(UserData* a, UserData* b)
 {
 	m_pUserSensorDataA = a;

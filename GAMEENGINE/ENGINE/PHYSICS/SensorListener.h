@@ -5,9 +5,21 @@
 #include <map>
 #include <utility>
 
-#include "Box2DWrappers.h"
+#include <box2d/box2d.h>
 #include "UserData.h"
 #include "../LOGGER/log.h"
+
+// Custom comparator for std::pair<b2BodyId, b2BodyId>
+struct BodyPairComparator {
+    bool operator()(const std::pair<b2BodyId, b2BodyId>& a, const std::pair<b2BodyId, b2BodyId>& b) const {
+        // Compare first body indices
+        if (a.first.index1 != b.first.index1) {
+            return a.first.index1 < b.first.index1;
+        }
+        // If first bodies are equal, compare second body indices
+        return a.second.index1 < b.second.index1;
+    }
+};
 
 class SensorListener
 {
@@ -30,7 +42,7 @@ public:
     void ResetUserSensorAB();
 
     
-    static std::map<std::pair<b2BodyId, b2BodyId>, std::pair<UserData*, UserData*>> sensorData;
+    static std::map<std::pair<b2BodyId, b2BodyId>, std::pair<UserData*, UserData*>, BodyPairComparator> sensorData;
 
 };
 

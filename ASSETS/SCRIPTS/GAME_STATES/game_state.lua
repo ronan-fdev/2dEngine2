@@ -96,11 +96,18 @@ function GameState:UpdateContacts()
 		gCollisionEvent:EmitEvent(uda, udb)
 	end 
 
-    local sensor1, sensor2 = SensorListener:get_user_data()
-    if sensor1 and sensor2 then
-        gSensorEvent:EmitEvent(sensor1, sensor2)
-        --LUA_INFO(sensor1:to_string())
-        --LUA_INFO(sensor2:to_string())
-    end
+	local allSensorContact = SensorListener:get_user_data()
+	for i, contactPair in ipairs(allSensorContact) do
+		local dataA = contactPair[1]
+		local dataB = contactPair[2]
+		gSensorEvent:EmitEvent(dataA, dataB)
+	end
+
+    -- local sensor1, sensor2 = SensorListener:get_user_data()
+    -- if sensor1 and sensor2 then
+        
+    --     --LUA_INFO(sensor1:to_string())
+    --     --LUA_INFO(sensor2:to_string())
+    -- end
 
 end

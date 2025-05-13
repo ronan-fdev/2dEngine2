@@ -6,6 +6,7 @@
 #include "../LOGGER/log.h"
 #include "SensorListener.h"
 
+
 struct BodyWrapper
 {
 	b2BodyId bodyId{ b2_nullBodyId };
@@ -19,17 +20,18 @@ struct BodyDestroyer
 		if (b2Body_IsValid(body->bodyId))
 		{
 			auto& sensorMapRef = SensorListener::sensorData;
+			LUA_INFO("The size of sensor contact vector is : {}", sensorMapRef.size());
 
-			for (auto it = sensorMapRef.begin(); it != sensorMapRef.end(); it++)
-			{
+			for (auto it = sensorMapRef.begin(); it != sensorMapRef.end();) {
 				const auto& [bodyA, bodyB] = it->first;
-
-				if (bodyA.index1 == body->bodyId.index1 || bodyB.index1 == body->bodyId.index1)
-				{
-					LOG_INFO("Removing sensor contact data for body {}", body->bodyId.index1);
-					sensorMapRef.erase(it); // Remove and advance iterator safely
+				if (bodyA.index1 == body->bodyId.index1 || bodyB.index1 == body->bodyId.index1) {
+					LOG_INFO("Removing sensor contact data for body {} and body {}", bodyA.index1, bodyB.index1);
+					//LOG_INFO("Removing sensor contact data for body {}", body->bodyId.index1);
+					it = sensorMapRef.erase(it);  // Use the returned iterator
 				}
-
+				else {
+					++it;
+				}
 			}
 
 			b2DestroyBody(body->bodyId);

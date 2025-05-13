@@ -12,7 +12,7 @@
 class SensorListenerBind
 {
 private:
-    static std::tuple<sol::object, sol::object> GetUserData(SensorListener& sensorListener, sol::this_state s);
+    static sol::table GetUserData(SensorListener& sensorListener, sol::this_state s);
 
 public:
     static void CreateLuaContactListener(sol::state& lua, entt::registry& registry);

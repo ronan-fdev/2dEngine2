@@ -35,12 +35,12 @@ main = {
  			end 
 			]]
 
-			local sensor1, sensor2 = SensorListener:get_user_data()
-			if sensor1 and sensor2 then
-				--gSensorEvent:EmitEvent(sensor1, sensor2)
-				sensor1:to_string()
-				sensor2:to_string()
-			end
+			-- local sensor1, sensor2 = SensorListener:get_user_data()
+			-- if sensor1 and sensor2 then
+			-- 	--gSensorEvent:EmitEvent(sensor1, sensor2)
+			-- 	sensor1:to_string()
+			-- 	sensor2:to_string()
+			-- end
 
             Debug()
 
