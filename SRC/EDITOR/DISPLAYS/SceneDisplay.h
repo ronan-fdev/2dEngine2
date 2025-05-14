@@ -3,6 +3,7 @@
 #include "../../ImGui/imgui_internal.h"
 
 #include "IDisplay.h"
+#include "../UTILITIES/EditorFrameBuffers.h"
 
 #include "ENGINE/RESOURCES/AssetManager.h"
 
@@ -21,6 +22,9 @@
 #include "ENGINE/SYSTEMS/ScriptingSystem.h"
 #include "ENGINE/SYSTEMS/PhysicsSystem.h"
 #include "ENGINE/SYSTEMS/SoundSystem.h"
+#include "ENGINE/SYSTEMS/RenderSystem.h"
+#include "ENGINE/SYSTEMS/RenderUISystem.h"
+#include "ENGINE/SYSTEMS/RenderShapeSystem.h"
 
 #include "ENGINE/PHYSICS/Box2DWrappers.h"
 #include "ENGINE/PHYSICS/ContactListener.h"
@@ -35,6 +39,7 @@ private:
 private:
     void LoadScene();
     void UnloadScene();
+    void RenderScene();
 
 public:
     SceneDisplay(Registry& registry);

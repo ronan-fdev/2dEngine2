@@ -104,9 +104,9 @@ bool Application::Initialize()
 	}
 
 	auto renderer = std::make_shared<Renderer>();
-	if (!pRegistry->AddToContext<std::shared_ptr<Renderer>>(renderer))
+	if (!mainRegistry.AddToContext<std::shared_ptr<Renderer>>(renderer))
 	{
-		LOG_ERROR("Failed to add the renderer to the registry context");
+		LOG_ERROR("Failed to add the renderer to the main registry context!");
 		return false;
 	}
 
@@ -146,7 +146,7 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to create the render system!");
 		return false;
 	}
-	if (!pRegistry->AddToContext<std::shared_ptr<RenderSystem>>(renderSystem))
+	if (!mainRegistry.AddToContext<std::shared_ptr<RenderSystem>>(renderSystem))
 	{
 		LOG_ERROR("Failed to add the rendersystem to the registry context");
 		return false;
@@ -160,9 +160,23 @@ bool Application::Initialize()
 		return false;
 	}
 
-	if (!pRegistry->AddToContext<std::shared_ptr<RenderShapeSystem>>(renderShapeSystem))
+	if (!mainRegistry.AddToContext<std::shared_ptr<RenderShapeSystem>>(renderShapeSystem))
 	{
 		LOG_ERROR("Failed to add the render Shape system to the registry context!");
+		return false;
+	}
+
+	//Setting up the RenderUISystem:
+	auto renderUISystem = std::make_shared<RenderUISystem>(*pRegistry);
+	if (!renderUISystem)
+	{
+		LOG_ERROR("Failed to create the render UI system!");
+		return false;
+	}
+
+	if (!mainRegistry.AddToContext<std::shared_ptr<RenderUISystem>>(renderUISystem))
+	{
+		LOG_ERROR("Failed to add the render UI system to the registry context!");
 		return false;
 	}
 
@@ -244,20 +258,6 @@ bool Application::Initialize()
 		return false;
 	}
 
-	//Setting up the RenderUISystem:
-	auto renderUISystem = std::make_shared<RenderUISystem>(*pRegistry);
-	if (!renderUISystem)
-	{
-		LOG_ERROR("Failed to create the render UI system!");
-		return false;
-	}
-
-	if (!pRegistry->AddToContext<std::shared_ptr<RenderUISystem>>(renderUISystem))
-	{
-		LOG_ERROR("Failed to add the render UI system to the registry context!");
-		return false;
-	}
-
 	//Setup for the Editor using ImGui
 	if (!InitImGui())
 	{
@@ -271,33 +271,46 @@ bool Application::Initialize()
 		return false;
 	}
 	
-	// CREATE TEMP FRAMEBUFFER
-	auto pFramebuffer = std::make_shared<FrameBuffer>(640, 480, true);
+	//// CREATE TEMP FRAMEBUFFER
+	//auto pFramebuffer = std::make_shared<FrameBuffer>(640, 480, true);
 
-	if (!pFramebuffer)
+	//if (!pFramebuffer)
+	//{
+	//	LOG_ERROR("Failed to Create test framebuffer!");
+	//	return false;
+	//}
+
+	//if (!pRegistry->AddToContext<std::shared_ptr<FrameBuffer>>(pFramebuffer))
+	//{
+	//	LOG_ERROR("Failed add test framebuffer to registry context!");
+	//	return false;
+	//}
+
+	auto pEditorFramebuffers = std::make_shared<EditorFramebuffers>();
+
+	if (!pEditorFramebuffers)
 	{
-		LOG_ERROR("Failed to Create test framebuffer!");
+		LOG_ERROR("Failed to create editor frame buffers!");
 		return false;
 	}
 
-	if (!pRegistry->AddToContext<std::shared_ptr<FrameBuffer>>(pFramebuffer))
+	if (!mainRegistry.AddToContext<std::shared_ptr<EditorFramebuffers>>(pEditorFramebuffers))
 	{
-		LOG_ERROR("Failed add test framebuffer to registry context!");
+		LOG_ERROR("Failed add the editor frame buffers to registry context!");
 		return false;
 	}
 
-	/*auto pSceneDisplay = std::make_shared<SceneDisplay>(*pRegistry);
-	if (!pSceneDisplay)
+	pEditorFramebuffers->mapFramebuffers.emplace(FramebufferType::SCENE,
+		std::make_shared<FrameBuffer>(640, 480, false));
+
+	pEditorFramebuffers->mapFramebuffers.emplace(FramebufferType::TILEMAP,
+		std::make_shared<FrameBuffer>(640, 480, false));
+
+	if (!mainRegistry.AddToContext<std::shared_ptr<GridSystem>>(std::make_shared<GridSystem>()))
 	{
-		LOG_ERROR("Failed to Create test SceneDisplay!");
+		LOG_ERROR("Failed add the grid system registry context!");
 		return false;
 	}
-
-	if (!pRegistry->AddToContext<std::shared_ptr<SceneDisplay>>(pSceneDisplay))
-	{
-		LOG_ERROR("Failed add test pSceneDisplay to registry context!");
-		return false;
-	}*/
 	
 	return true;
 }
@@ -456,35 +469,17 @@ void Application::Update()
 
 void Application::Render()
 {
-	auto& renderSystem = pRegistry->GetContext<std::shared_ptr<RenderSystem>>();
-	auto& renderShapeSystem = pRegistry->GetContext<std::shared_ptr<RenderShapeSystem>>();
-	auto& renderUISystem = pRegistry->GetContext<std::shared_ptr<RenderUISystem>>();
-	
 	auto& camera = pRegistry->GetContext<std::shared_ptr<Camera2D>>();
-	auto& renderer = pRegistry->GetContext<std::shared_ptr<Renderer>>();
+	
 	auto& mainRegistry = MAIN_REGISTRY();
 	auto& assetManager = mainRegistry.GetAssetManager();
+	auto& renderer = mainRegistry.GetContext<std::shared_ptr<Renderer>>();
 
 	auto& shader = assetManager.GetShader("color");
 	auto& circleShader = assetManager.GetShader("circle");
 	auto& fontShader = assetManager.GetShader("font");
 
 	//auto& scriptSystem = pRegistry->GetContext<std::shared_ptr<ScriptingSystem>>();
-
-	const auto& fb = pRegistry->GetContext<std::shared_ptr<FrameBuffer>>();
-
-	fb->Bind();
-
-	glViewport(0, 0, fb->Width(), fb->Height());
-	glClearColor(0.f, 0.f, 0.f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	//scriptSystem->Render();
-	renderSystem->Update();
-	renderShapeSystem->Update();
-	renderUISystem->Update(pRegistry->GetRegistry());
-
-	fb->Unbind();
 
 	Begin();
 	RenderImGui();
@@ -497,7 +492,6 @@ void Application::Render()
 
 	renderer->ClearPrimitives();
 
-	fb->CheckResize();
 }
 
 void Application::CleanUp()
@@ -538,11 +532,19 @@ bool Application::CreateDisplays()
 		return false;
 	}
 
+	auto pTilemapDisplay = std::make_unique<TilemapDisplay>();
+	if (!pTilemapDisplay)
+	{
+		LOG_ERROR("Failed to Create TilemapDisplay!");
+		return false;
+	}
+
 	// TODO: Create and add other displays as needed
 
 	pDisplayHolder->displays.push_back(std::move(pSceneDisplay));
 	pDisplayHolder->displays.push_back(std::move(pLogDisplay));
 	pDisplayHolder->displays.push_back(std::move(pTilesetDisplay));
+	pDisplayHolder->displays.push_back(std::move(pTilemapDisplay));
 
 	return true;
 }
@@ -639,7 +641,9 @@ void Application::RenderImGui()
 			//Further splits the center node downward to create a bottom log panel (25% height).
 			ImGui::DockBuilderDockWindow("Dear ImGui Demo", leftNodeId);//Assigns named ImGui windows to specific dock areas
 			ImGui::DockBuilderDockWindow("Scene", centerNodeId);//Assigns named ImGui windows to specific dock areas 
+			ImGui::DockBuilderDockWindow("Tilemap Editor", centerNodeId);
 			ImGui::DockBuilderDockWindow("Logs", LogNodeId);//Assigns named ImGui windows to specific dock areas 
+			ImGui::DockBuilderDockWindow("Tileset", LogNodeId);
 
 			ImGui::DockBuilderFinish(dockSpaceId);//Finalizes the layout and applies it.
 		}

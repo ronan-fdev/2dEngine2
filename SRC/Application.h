@@ -48,6 +48,11 @@
 #include "EDITOR/DISPLAYS/SceneDisplay.h"
 #include "EDITOR/DISPLAYS/LogDisplay.h"
 #include "EDITOR/DISPLAYS/TilesetDisplay.h"
+#include "EDITOR/DISPLAYS/TilemapDisplay.h"
+
+#include "EDITOR/UTILITIES/EditorFrameBuffers.h"
+
+#include "EDITOR/SYSTEMS/GridSystem.h"
 
 class Application
 {

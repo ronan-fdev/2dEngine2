@@ -52,6 +52,35 @@ void SceneDisplay::UnloadScene()
     lua.reset();
 }
 
+void SceneDisplay::RenderScene()
+{
+    auto& mainRegistry = MAIN_REGISTRY();
+    auto& editorFramebuffers = mainRegistry.GetContext<std::shared_ptr<EditorFramebuffers>>();
+    auto& renderer = mainRegistry.GetContext<std::shared_ptr<Renderer>>();
+
+    auto& renderSystem = mainRegistry.GetContext<std::shared_ptr<RenderSystem>>();
+    auto& renderUISystem = mainRegistry.GetContext<std::shared_ptr<RenderUISystem>>();
+    auto& renderShapeSystem = mainRegistry.GetContext<std::shared_ptr<RenderShapeSystem>>();
+
+    const auto& fb = editorFramebuffers->mapFramebuffers[FramebufferType::SCENE];
+
+    fb->Bind();
+
+    glViewport(0, 0, fb->Width(), fb->Height());
+    glClearColor(0.f, 0.f, 0.f, 1.f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    //scriptSystem->Render();
+    renderSystem->Update();
+    renderShapeSystem->Update();
+    renderUISystem->Update(m_Registry.GetRegistry());
+
+    fb->Unbind();
+
+    fb->CheckResize();
+
+}
+
 SceneDisplay::SceneDisplay(Registry& registry)
 	: m_Registry{ registry }
     , m_bPlayScene{ false }
@@ -149,6 +178,8 @@ void SceneDisplay::Draw()
         ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.f, 0.9f, 0.f, 0.3 });
     }
 
+    RenderScene();
+
     if (ImGui::ImageButton("##stop",(ImTextureID)pStopTexture.getID(),
         ImVec2{
             (float)pStopTexture.getWidth() * 0.25f,
@@ -177,7 +208,8 @@ void SceneDisplay::Draw()
             Full size(ImVec2(0, 0) means it expands to fill available space)
         "##SceneChild": The ## prefix hides the label but still gives it a unique internal ID.*/
     {
-        auto& fb = m_Registry.GetContext<std::shared_ptr<FrameBuffer>>();
+        auto& editorFramebuffers = mainRegistry.GetContext<std::shared_ptr<EditorFramebuffers>>();
+        const auto& fb = editorFramebuffers->mapFramebuffers[FramebufferType::SCENE];
 
         // 1. FIRST get available space
         ImVec2 availableSize = ImGui::GetContentRegionAvail();//Queries the available drawable area inside the child window.
@@ -239,7 +271,6 @@ void SceneDisplay::Update()
 
     // Reset active contacts before processing physics
     auto& pSensorListener = m_Registry.GetContext<std::shared_ptr<SensorListener>>();
-
     // Process sensor contacts
     pSensorListener->ProcessSensorContactEvents(physics->GetWorldID());
 
