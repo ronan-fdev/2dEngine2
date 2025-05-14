@@ -241,8 +241,7 @@ void SceneDisplay::Update()
     auto& pSensorListener = m_Registry.GetContext<std::shared_ptr<SensorListener>>();
 
     // Process sensor contacts
-    pSensorListener->BeginSensorContact(physics->GetWorldID());
-    pSensorListener->EndSensorContact(physics->GetWorldID());
+    pSensorListener->ProcessSensorContactEvents(physics->GetWorldID());
 
     // Process contacts
     auto& pContactListener = m_Registry.GetContext<std::shared_ptr<ContactListener>>();

@@ -42,8 +42,8 @@ PlayerDefs =
 			},
 			physics_attributes = {
 				type = BodyType.Dynamic,
-				bInteractionType = BodyInteractionType.NORMAL,
-				density = 75.0,
+				bInteractionType = BodyInteractionType.TRIGGER,
+				density = 1,
 				friction = 1.0,
 				restitution = 0.0,
 				position = vec2(528,224),

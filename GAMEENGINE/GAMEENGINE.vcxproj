@@ -89,7 +89,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\BOX2D\lib\Debug;$(SolutionDir)EXTERNAL\SOIL\lib\debug;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>box2d.lib;soil.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>box2dd.lib;soil.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -133,7 +133,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\BOX2D\lib\Debug;$(SolutionDir)EXTERNAL\SOIL\lib\debug;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>box2d.lib;soil.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>box2dd.lib;soil.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

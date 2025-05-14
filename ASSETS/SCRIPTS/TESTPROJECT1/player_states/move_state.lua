@@ -1,97 +1,127 @@
+
 MoveState = {}
 MoveState.__index = MoveState
 
 function MoveState:Create(character)
-	assert(character)
-	local this = 
-	{
-		m_Character = character,
-		m_EntityID = character.m_EntityID,
-		m_Controller = character.m_Controller,
-        m_PlayerState = character.m_bPlayerState,
-		m_JumpSteps = 10,
-		m_NumJumps = 0,
-		m_bAttacking = false
-	}
+    assert(character)
+    local this = 
+    {
+        m_Character = character,
+        m_EntityID = character.m_EntityID,
+        m_Controller = character.m_Controller,
+        m_bPlayerState = ANIMATION_STATE.IDLE,  -- Initialize with IDLE state
+        m_JumpSteps = 10,
+        m_NumJumps = 0,
+        m_bAttacking = false
+    }
 
-	local state = State("move")
-	state:set_variable_table(this)
-	state:set_on_enter( function(...) this:OnEnter(...) end )
-	state:set_on_exit( function() this:OnExit() end)
-	state:set_on_update( function(dt) this:OnUpdate(dt) end)
-	state:set_on_render( function() end)
+    -- Initialize character's animation state if not already set
+    if character.m_bPlayerState == nil then
+        character.m_bPlayerState = ANIMATION_STATE.IDLE
+    end
 
-	setmetatable(this, self)
-	return state
+    local state = State("move")
+    state:set_variable_table(this)
+    state:set_on_enter( function(...) this:OnEnter(...) end )
+    state:set_on_exit( function() this:OnExit() end)
+    state:set_on_update( function(dt) this:OnUpdate(dt) end)
+    state:set_on_render( function() end)
+
+    setmetatable(this, self)
+    return state
 end
 
-function MoveState:OnEnter(params) end
-function MoveState:OnExit() end
+function MoveState:OnEnter(params)
+    -- Initialize animation to idle state when entering move state
+    local player = Entity(self.m_EntityID)
+    local animation = player:get_component(Animation)
+    
+    -- Set to idle animation
+    self.m_Character.m_bPlayerState = ANIMATION_STATE.IDLE
+    self.m_bPlayerState = ANIMATION_STATE.IDLE
+    animation.num_frames = 2
+    animation.frame_offset = 0
+    animation.bLooped = true
+end
+
 function MoveState:OnUpdate(dt) 
-	local player = Entity(self.m_EntityID)
-	local physics = player:get_component(PhysicsComp)
+    local player = Entity(self.m_EntityID)
+    local physics = player:get_component(PhysicsComp)
     local transform = player:get_component(Transform)
     local sprite = player:get_component(Sprite)
     local animation = player:get_component(Animation)
 
     local velocity = physics:get_linear_velocity()
     
-    -- Better grounded check
+    -- Better grounded check with a small threshold
     local isGrounded = math.abs(velocity.y) < 0.1
     
     -- Improved movement control
-    local moveSpeed = 11800  -- Slightly reduced force for better control
+    local moveSpeed = 300
     local horizontalInput = 0
+    
+    -- Handle movement and animations
     if Keyboard.pressed(KEY_A) then
         horizontalInput = -1
         if self.m_Character.m_bPlayerState ~= ANIMATION_STATE.RUN_LEFT then
             self.m_Character.m_bPlayerState = ANIMATION_STATE.RUN_LEFT
-            m_PlayerState = ANIMATION_STATE.RUN_LEFT
             animation.num_frames = 4
             animation.frame_offset = 2
+            animation.bLooped = true
         end
     elseif Keyboard.pressed(KEY_D) then
         horizontalInput = 1
         if self.m_Character.m_bPlayerState ~= ANIMATION_STATE.RUN_RIGHT then
             self.m_Character.m_bPlayerState = ANIMATION_STATE.RUN_RIGHT
-            m_PlayerState = ANIMATION_STATE.RUN_RIGHT
             animation.num_frames = 4
             animation.frame_offset = 6
+            animation.bLooped = true
         end
-    end
-    
-    -- Apply counter-force for smoother deceleration when changing directions
-    if horizontalInput == 0 then
-        -- Apply friction/damping when not pressing movement keys
-        local dampingForce = -velocity.x * 500
-        physics:apply_force_center(vec2(dampingForce, 0))
-        if m_PlayerState ~= ANIMATION_STATE.IDLE then
-            m_PlayerState = ANIMATION_STATE.IDLE
+    else
+        -- No movement keys pressed - idle state
+        if self.m_Character.m_bPlayerState ~= ANIMATION_STATE.IDLE then
+            self.m_Character.m_bPlayerState = ANIMATION_STATE.IDLE
             animation.num_frames = 2
             animation.frame_offset = 0
+            animation.bLooped = true
         end
-     
-    elseif (horizontalInput < 0 and velocity.x > 0) or (horizontalInput > 0 and velocity.x < 0) then
-        -- Counter force when changing directions - makes it feel more responsive
-        local counterForce = -velocity.x * 1000
-        physics:apply_force_center(vec2(counterForce, 0))
     end
     
-    -- Apply movement force after counter-forces
-    physics:apply_force_center(vec2(horizontalInput * moveSpeed, 0))
+    -- Apply horizontal movement
+    if horizontalInput == 0 then
+        -- Apply friction/damping when not pressing movement keys
+        local dampingFactor = 8.0 * dt  -- Adjust for smoother deceleration
+        local newVelocityX = velocity.x * (1.0 - dampingFactor)
+        
+        -- If velocity is very small, just stop completely
+        if math.abs(newVelocityX) < 1.0 then
+            newVelocityX = 0
+        end
+        
+        physics:set_linear_velocity(vec2(newVelocityX, velocity.y))
+    else
+        -- Apply movement force - use impulse for more responsive control
+        local targetSpeed = horizontalInput * moveSpeed
+        local speedDiff = targetSpeed - velocity.x
+        local impulse = speedDiff * 0.5  -- Adjust this factor for responsiveness
+        
+        physics:apply_force_center(vec2(impulse, 0))
+    end
     
     -- Improved jump handling
     if Keyboard.just_pressed(KEY_W) and isGrounded then
-        -- Small upward velocity reset before applying impulse (reduces inconsistency)
-        physics:set_linear_velocity(vec2(velocity.x, 0))
-        physics:linear_impulse(vec2(0, -6500))  -- Slightly reduced for better control
+        -- Using impulse for more consistent jump
+        physics:linear_impulse(vec2(0, -200))
+        
     end
     
     -- Better speed cap implementation
     local maxSpeed = 400
     velocity = physics:get_linear_velocity()  -- Get updated velocity after forces
+    
     if math.abs(velocity.x) > maxSpeed then
-        -- Smoother capping that preserves vertical velocity accurately
-        physics:set_linear_velocity(vec2(maxSpeed * math.sign(velocity.x), velocity.y))
-    end	
+        physics:set_linear_velocity(vec2(maxSpeed * (velocity.x > 0 and 1 or -1), velocity.y))
+    end
 end
+
+function MoveState:OnExit() end

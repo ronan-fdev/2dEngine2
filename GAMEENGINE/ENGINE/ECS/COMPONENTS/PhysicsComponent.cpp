@@ -106,11 +106,14 @@ void PhysicsComponent::Init(int windowWidth, int windowHeight)
 	m_pUserData->userData = m_InitialAttribs.objectData;
 	m_pUserData->type_id = entt::type_hash<ObjectData>::value();
 
+	//Create a surface material.
+	b2SurfaceMaterial material = {};
+
 	//Create the fixture def
 	b2ShapeDef fixtureDef = b2DefaultShapeDef();
 	fixtureDef.density = m_InitialAttribs.density;
-	fixtureDef.friction = m_InitialAttribs.friction;
-	fixtureDef.restitution = m_InitialAttribs.restitution;
+	fixtureDef.material.friction = m_InitialAttribs.friction;
+	fixtureDef.material.restitution = m_InitialAttribs.restitution;
 	//fixtureDef.isSensor = m_InitialAttribs.bIsSensor;
 	//fixtureDef.enableContactEvents = m_InitialAttribs.bIsContactEventsEnabled;
 	fixtureDef.userData = reinterpret_cast<void*>(m_pUserData.get());//TODO:: Some problem could be present.
@@ -129,7 +132,6 @@ void PhysicsComponent::Init(int windowWidth, int windowHeight)
 		fixtureDef.enableContactEvents = true;
 		b2ShapeDef tempSensorBodyDef = b2DefaultShapeDef();
 		tempSensorBodyDef.userData = reinterpret_cast<void*>(m_pUserData.get());
-		tempSensorBodyDef.isSensor = true;
 		tempSensorBodyDef.enableSensorEvents = true;
 		if (m_InitialAttribs.bCircle)
 		{
