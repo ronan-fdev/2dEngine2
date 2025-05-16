@@ -12,6 +12,7 @@
 #include "../ECS/Components/SoundListener.h"
 #include "../ECS/COMPONENTS/TextComponent.h"
 #include "../ECS/COMPONENTS/RigidBodyComponent.h"
+#include "../ECS/COMPONENTS/MINIAudioSoundComponent.h"
 #include "../ECS/Entity.h"
 
 #include "../LOGGER/log.h"

@@ -13,6 +13,11 @@ rainGen = nil
 
 gStateStack = StateStack()
 
+--MINI AUDIO TESTING:
+local miniAudio = Entity("MINIAudio", "")
+local audioTest = miniAudio:add_component(MINIAudioSoundComponent())
+AddMusic("sampleSound", "ASSETS/SCRIPTS/TESTPROJECT1/SOUNDS/sound/magic-spell.wav", AudioCategory.MUSIC)
+audioTest:PlayMusic("sampleSound", true)
 
 
 local title = TitleState:Create(gStateStack)
@@ -21,7 +26,6 @@ gStateStack:change_state(title)
 main = {
 	[1] = {
 		update = function()
-
 			--[[
             rainGen:Update(0.016) 
             UpdatePlayer(gPlayer)

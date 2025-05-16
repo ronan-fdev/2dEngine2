@@ -23,6 +23,7 @@
 #include "ENGINE/ECS/COMPONENTS/BoxColliderComponent.h"
 #include "ENGINE/ECS/COMPONENTS/CircleColliderComponent.h"
 #include "ENGINE/ECS/COMPONENTS/TextComponent.h"
+#include "ENGINE/ECS/COMPONENTS/MINIAudioSoundComponent.h"
 
 #include "ENGINE/PHYSICS/Box2DWrappers.h"
 #include "ENGINE/PHYSICS/ContactListener.h"
@@ -35,6 +36,7 @@
 #include "ENGINE/SYSTEMS/PhysicsSystem.h"
 #include "ENGINE/SYSTEMS/RenderShapeSystem.h"
 #include "ENGINE/SYSTEMS/RenderUISystem.h"
+#include "ENGINE/SYSTEMS/MINIAudioSoundSystem.h"
 		  
 #include "ENGINE/SCRIPTING/InputManager.h"
 #include "ENGINE/WINDOW/INPUT/Keyboard.h"
@@ -64,6 +66,8 @@ public:
 
 	static Application& GetInstance();
 	void Run();
+
+	MINIAudioSoundComponent audio;
 private:
 	bool Initialize();
 	bool LoadShaders();

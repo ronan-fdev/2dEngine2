@@ -109,7 +109,7 @@ function MoveState:OnUpdate(dt)
     end
     
     -- Improved jump handling
-    if Keyboard.just_pressed(KEY_W) and isGrounded then
+    if Keyboard.pressed(KEY_W) and isGrounded then
         -- Using impulse for more consistent jump
         physics:linear_impulse(vec2(0, -200))
         

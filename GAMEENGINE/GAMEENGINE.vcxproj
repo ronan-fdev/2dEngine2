@@ -80,7 +80,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\IMGUI;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\GLEW\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/utf-8
+      <AdditionalOptions>/bigobj /utf-8
  %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -124,7 +124,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\IMGUI;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\GLEW\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/utf-8
+      <AdditionalOptions>/bigobj /utf-8
  %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -224,10 +224,16 @@
     <ClCompile Include="ENGINE\PHYSICS\SensorListener.cpp" />
     <ClCompile Include="ENGINE\SCRIPTING\SensorListenerBind.cpp" />
     <ClCompile Include="ENGINE\ECS\MainRegistry.cpp" />
+    <ClCompile Include="ENGINE\MINIAUDIOSOUND\MINIAudioEngine.cpp" />
+    <ClCompile Include="ENGINE\MINIAUDIOSOUND\MINIAudioMusic.cpp" />
+    <ClCompile Include="ENGINE\MINIAUDIOSOUND\MINIAudioSound.cpp" />
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\MINIAudioSoundComponent.cpp" />
+    <ClCompile Include="ENGINE\SYSTEMS\MINIAudioSoundSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\LOGGER\CrashLogger.h" />
     <ClInclude Include="ENGINE\LOGGER\LuaLogBinding.h" />
+    <ClInclude Include="ENGINE\MINIAUDIOSOUND\miniaudio.h" />
     <ClInclude Include="ENGINE\RESOURCES\FONTS\default_font.h" />
     <ClInclude Include="ENGINE\SCRIPTING\ContactListenerBind.h" />
     <ClInclude Include="ENGINE\PHYSICS\ContactListener.h" />
@@ -302,6 +308,11 @@
     <ClInclude Include="ENGINE\PHYSICS\SensorListener.h" />
     <ClInclude Include="ENGINE\SCRIPTING\SensorListenerBind.h" />
     <ClInclude Include="ENGINE\ECS\MainRegistry.h" />
+    <ClInclude Include="ENGINE\MINIAUDIOSOUND\MINIAudioEngine.h" />
+    <ClInclude Include="ENGINE\MINIAUDIOSOUND\MINIAudioMusic.h" />
+    <ClInclude Include="ENGINE\MINIAUDIOSOUND\MINIAudioSound.h" />
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\MINIAudioSoundComponent.h" />
+    <ClInclude Include="ENGINE\SYSTEMS\MINIAudioSoundSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ENGINE\ECS\Entity.inl" />

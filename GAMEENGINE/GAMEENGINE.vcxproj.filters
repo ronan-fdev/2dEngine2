@@ -204,6 +204,21 @@
     <ClCompile Include="ENGINE\LOGGER\CrashLogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ENGINE\MINIAUDIOSOUND\MINIAudioEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ENGINE\MINIAUDIOSOUND\MINIAudioMusic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ENGINE\MINIAUDIOSOUND\MINIAudioSound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\MINIAudioSoundComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ENGINE\SYSTEMS\MINIAudioSoundSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\ECS\COMPONENTS\AnimationComponent.h">
@@ -432,6 +447,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ENGINE\LOGGER\CrashLogger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\MINIAUDIOSOUND\MINIAudioEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\MINIAUDIOSOUND\MINIAudioMusic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\MINIAUDIOSOUND\MINIAudioSound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\MINIAUDIOSOUND\miniaudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\MINIAudioSoundComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\SYSTEMS\MINIAudioSoundSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

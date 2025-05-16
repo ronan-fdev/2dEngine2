@@ -25,6 +25,7 @@
 #include "ENGINE/SYSTEMS/RenderSystem.h"
 #include "ENGINE/SYSTEMS/RenderUISystem.h"
 #include "ENGINE/SYSTEMS/RenderShapeSystem.h"
+#include "ENGINE/SYSTEMS/MINIAudioSoundSystem.h"
 
 #include "ENGINE/PHYSICS/Box2DWrappers.h"
 #include "ENGINE/PHYSICS/ContactListener.h"
