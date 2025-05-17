@@ -13,11 +13,9 @@ rainGen = nil
 
 gStateStack = StateStack()
 
---MINI AUDIO TESTING:
-local miniAudio = Entity("MINIAudio", "")
-local audioTest = miniAudio:add_component(MINIAudioSoundComponent())
-AddMusic("sampleSound", "ASSETS/SCRIPTS/TESTPROJECT1/SOUNDS/sound/magic-spell.wav", AudioCategory.MUSIC)
-audioTest:PlayMusic("sampleSound", true)
+local soundTest = Entity("soundTest", "")
+local sound = soundTest:add_component(OpenALSoundComponent())
+sound:Play("sample")
 
 
 local title = TitleState:Create(gStateStack)

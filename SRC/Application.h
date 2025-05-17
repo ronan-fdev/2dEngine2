@@ -23,7 +23,7 @@
 #include "ENGINE/ECS/COMPONENTS/BoxColliderComponent.h"
 #include "ENGINE/ECS/COMPONENTS/CircleColliderComponent.h"
 #include "ENGINE/ECS/COMPONENTS/TextComponent.h"
-#include "ENGINE/ECS/COMPONENTS/MINIAudioSoundComponent.h"
+#include "ENGINE/ECS/COMPONENTS/OpenALSoundComponent.h"
 
 #include "ENGINE/PHYSICS/Box2DWrappers.h"
 #include "ENGINE/PHYSICS/ContactListener.h"
@@ -36,11 +36,12 @@
 #include "ENGINE/SYSTEMS/PhysicsSystem.h"
 #include "ENGINE/SYSTEMS/RenderShapeSystem.h"
 #include "ENGINE/SYSTEMS/RenderUISystem.h"
-#include "ENGINE/SYSTEMS/MINIAudioSoundSystem.h"
 		  
 #include "ENGINE/SCRIPTING/InputManager.h"
 #include "ENGINE/WINDOW/INPUT/Keyboard.h"
 #include "ENGINE/WINDOW/INPUT/Mouse.h"
+
+#include "ENGINE/OPENALSOUNDS/OpenALDevice.h"
 
 //#include "Imgui/imgui.h"
 #include "Imgui/backends/imgui_impl_glfw.h"

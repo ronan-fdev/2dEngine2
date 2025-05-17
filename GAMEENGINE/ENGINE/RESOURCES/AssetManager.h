@@ -1,5 +1,11 @@
 #pragma once
 
+#include <AL/al.h>
+#include <AL/alext.h>
+#include <sndfile.h>
+#include <inttypes.h>
+#include <filesystem>
+
 #include "../UTILITIES/2dEngineUtilities.h"
 #include "../ECS/MainRegistry.h"
 #include "../RENDERER/TEXTURE/TextureLoader.h";
@@ -84,11 +90,17 @@ public:
 
 	inline const std::map<std::string, std::shared_ptr<Texture>>& GetAllTextures() const { return m_mapTextures; }
 
+	//OpenAl Sound Buffer Setup:
+	bool AddSoundEffect(std::string name, const char* filename);
+	bool RemoveSoundEffect(std::string name);
+	ALuint GetSoundEffect(std::string name);
+
 	static void CreateLuaAssetManager(sol::state& lua, Registry& registry);
 
 private:
 	std::map<std::string, std::shared_ptr<Texture>> m_mapTextures{};
 	std::map<std::string, std::shared_ptr<Shader>> m_mapShader{};
 	std::map<std::string, std::shared_ptr<Font>> m_mapFonts{};
+	std::map<std::string, ALuint> p_SoundEffectBuffers{};
 };
 

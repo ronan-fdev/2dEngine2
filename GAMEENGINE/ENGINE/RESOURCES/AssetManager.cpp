@@ -161,6 +161,122 @@ std::vector<std::string> AssetManager::GetTilesetNames() const
     return GetKeys(m_mapTextures, [](const auto& pair) { return pair.second->IsTileset(); });
 }
 
+bool AssetManager::AddSoundEffect(std::string name, const char* filename)
+{
+    // Check to see if the sound effect already exists
+    if (m_mapShader.find(name) != m_mapShader.end())
+    {
+        LOG_ERROR("Failed to add sound effect [{0}] -- Already Exists!", name);
+        return false;
+    }
+    ALenum err, format;
+    ALuint buffer;
+    SNDFILE* sndfile;
+    SF_INFO sfinfo;
+    short* membuf;
+    sf_count_t num_frames;
+    ALsizei num_bytes;
+
+    std::string fullPath = (std::filesystem::current_path() / filename).string();
+    const char* path = fullPath.c_str();
+
+    //Open the audio file and check that it's usable.
+    sndfile = sf_open(path, SFM_READ, &sfinfo);
+    if (!sndfile)
+    {
+        fprintf(stderr, "Could not open audio in %s: %s\n", filename, sf_strerror(sndfile));
+        return false;
+    }
+
+    if (sfinfo.frames < 1 || sfinfo.frames >(sf_count_t)(INT_MAX / sizeof(short)) / sfinfo.channels)
+    {
+        fprintf(stderr, "Bad sample count in %s (%" PRId64 ")\n", filename, sfinfo.frames);
+        sf_close(sndfile);
+        return false;
+    }
+
+    /* Get the sound format, and figure out the OpenAL format */
+    format = AL_NONE;
+    if (sfinfo.channels == 1)
+        format = AL_FORMAT_MONO16;
+    else if (sfinfo.channels == 2)
+        format = AL_FORMAT_STEREO16;
+    else if (sfinfo.channels == 3)
+    {
+        if (sf_command(sndfile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
+            format = AL_FORMAT_BFORMAT2D_16;
+    }
+    else if (sfinfo.channels == 4)
+    {
+        if (sf_command(sndfile, SFC_WAVEX_GET_AMBISONIC, NULL, 0) == SF_AMBISONIC_B_FORMAT)
+            format = AL_FORMAT_BFORMAT3D_16;
+    }
+    if (!format)
+    {
+        fprintf(stderr, "Unsupported channel count: %d\n", sfinfo.channels);
+        sf_close(sndfile);
+        return false;
+    }
+
+    /* Decode the whole audio file to a buffer. */
+    membuf = static_cast<short*>(malloc((size_t)(sfinfo.frames * sfinfo.channels) * sizeof(short)));
+
+    num_frames = sf_readf_short(sndfile, membuf, sfinfo.frames);
+    if (num_frames < 1)
+    {
+        free(membuf);
+        sf_close(sndfile);
+        fprintf(stderr, "Failed to read samples in %s (%" PRId64 ")\n", filename, num_frames);
+        return false;
+    }
+    num_bytes = (ALsizei)(num_frames * sfinfo.channels) * (ALsizei)sizeof(short);
+
+    /* Buffer the audio data into a new buffer object, then free the data and
+     * close the file.
+     */
+    buffer = 0;
+    alGenBuffers(1, &buffer);
+    alBufferData(buffer, format, membuf, num_bytes, sfinfo.samplerate);
+
+    free(membuf);
+    sf_close(sndfile);
+
+    /* Check if an error occured, and clean up if so. */
+    err = alGetError();
+    if (err != AL_NO_ERROR)
+    {
+        fprintf(stderr, "OpenAL Error: %s\n", alGetString(err));
+        if (buffer && alIsBuffer(buffer))
+            alDeleteBuffers(1, &buffer);
+        return false;
+    }
+    p_SoundEffectBuffers.emplace(name, buffer);
+    return true;
+}
+
+bool AssetManager::RemoveSoundEffect(std::string name)
+{
+    auto it = p_SoundEffectBuffers.find(name);
+    if (it != p_SoundEffectBuffers.end())
+    {
+        alDeleteBuffers(1, &it->second);  // Delete OpenAL buffer
+        p_SoundEffectBuffers.erase(it);   // Remove from map
+        return true;
+    }
+    return false;  // Couldn't find buffer with that name
+}
+
+ALuint AssetManager::GetSoundEffect(std::string name)
+{
+    auto it = p_SoundEffectBuffers.find(name);
+    if (it != p_SoundEffectBuffers.end())
+    {
+        return it->second;  // Return the OpenAL buffer handle
+    }
+    LUA_ERROR("Failed to get the sound effect buffer!");
+    return 0;  // 0 = invalid buffer
+}
+
 void AssetManager::CreateLuaAssetManager(sol::state& lua, Registry& registry)
 {
     auto& mainRegistry = MAIN_REGISTRY();

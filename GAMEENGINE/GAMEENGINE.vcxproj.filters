@@ -204,19 +204,10 @@
     <ClCompile Include="ENGINE\LOGGER\CrashLogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ENGINE\MINIAUDIOSOUND\MINIAudioEngine.cpp">
+    <ClCompile Include="ENGINE\OPENALSOUNDS\OpenALDevice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ENGINE\MINIAUDIOSOUND\MINIAudioMusic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\MINIAUDIOSOUND\MINIAudioSound.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\ECS\COMPONENTS\MINIAudioSoundComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ENGINE\SYSTEMS\MINIAudioSoundSystem.cpp">
+    <ClCompile Include="ENGINE\ECS\COMPONENTS\OpenALSoundComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -449,22 +440,10 @@
     <ClInclude Include="ENGINE\LOGGER\CrashLogger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ENGINE\MINIAUDIOSOUND\MINIAudioEngine.h">
+    <ClInclude Include="ENGINE\OPENALSOUNDS\OpenALDevice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ENGINE\MINIAUDIOSOUND\MINIAudioMusic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\MINIAUDIOSOUND\MINIAudioSound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\MINIAUDIOSOUND\miniaudio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\ECS\COMPONENTS\MINIAudioSoundComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENGINE\SYSTEMS\MINIAudioSoundSystem.h">
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\OpenALSoundComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -146,7 +146,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	FollowCamera::CreateLuaFollowCamera(lua, registry);
 	ContactListenerBind::CreateLuaContactListener(lua, registry.GetRegistry());
 	SensorListenerBind::CreateLuaContactListener(lua, registry.GetRegistry());
-	MINIAudioSoundComponent::CreateLuaMINIAudioBind(lua);
+	OpenALSoundComponent::CreateLuaOpenALSoundComponentBind(lua);
 
 	Entity::RegisterMetaComponent<TransformComponent>();
 	Entity::RegisterMetaComponent<SpriteComponent>();
@@ -158,7 +158,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	Entity::RegisterMetaComponent<SoundListener>();
 	Entity::RegisterMetaComponent<TextComponent>();
 	Entity::RegisterMetaComponent<RigidBodyComponent>();
-	Entity::RegisterMetaComponent<MINIAudioSoundComponent>();
+	Entity::RegisterMetaComponent<OpenALSoundComponent>();
 
 	Registry::RegisterMetaComponent<TransformComponent>();
 	Registry::RegisterMetaComponent<SpriteComponent>();
@@ -170,7 +170,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	Registry::RegisterMetaComponent<SoundListener>();
 	Registry::RegisterMetaComponent<TextComponent>();
 	Registry::RegisterMetaComponent<RigidBodyComponent>();
-	Registry::RegisterMetaComponent<MINIAudioSoundComponent>();
+	Registry::RegisterMetaComponent<OpenALSoundComponent>();
 
 	UserDataBinder::CreateLuaUserData(lua);
 	UserDataBinder::register_meta_user_data<ObjectData>();

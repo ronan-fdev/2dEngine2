@@ -77,6 +77,7 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to load the Editor Textures!");
 	}
 
+
 	/*auto assetManager = std::make_shared<AssetManager>();
 	if (!assetManager)
 	{
@@ -101,6 +102,18 @@ bool Application::Initialize()
 	if (!pRegistry)
 	{
 		LOG_ERROR("Failed to create a entt registry!");
+	}
+	auto openALDevice = std::make_shared<OpenALDevice>();
+	if (!mainRegistry.AddToContext<std::shared_ptr<OpenALDevice>>(openALDevice))
+	{
+		LOG_ERROR("Failed to add the renderer to the main registry context!");
+		return false;
+	}
+	auto& assetManager = MAIN_REGISTRY().GetAssetManager();
+	bool inserted = assetManager.AddSoundEffect("sample", "ASSETS/SCRIPTS/TESTPROJECT1/SOUNDS/music/piano_bpm.wav");
+	if (!inserted)
+	{
+		LOG_ERROR("Sample music is not inserted!");
 	}
 
 	auto renderer = std::make_shared<Renderer>();
@@ -223,13 +236,6 @@ bool Application::Initialize()
 	{
 		LOG_ERROR("Failed to LoadBanks for SoundSystem");
 	}
-
-	////Initialize MINIAudio Sounds:
-	//auto pMINIAudioSoundSystem = std::make_shared<MINIAudioSoundSystem>(*pRegistry);
-	//if (!pRegistry->AddToContext<std::shared_ptr<MINIAudioSoundSystem>>(pMINIAudioSoundSystem))
-	//{
-	//	LOG_ERROR("Failed to initialize the MINIAudioSoundSystem");
-	//}
 	
 	//Create the physics 
 		//Create the contact binder for the physics world.
@@ -472,9 +478,6 @@ void Application::Update()
 	auto& soundSystem = pRegistry->GetContext<std::shared_ptr<SoundSystem>>();
 	soundSystem->Update(Window::getdt(), *pRegistry);
 
-	////Update MINIAudioSoundSystem
-	//auto& pMINIAudioSoundSystem = pRegistry->GetContext<std::shared_ptr<MINIAudioSoundSystem>>();
-	//pMINIAudioSoundSystem->MINIAudioUpdate(Window::getdt());
 }
 
 void Application::Render()
