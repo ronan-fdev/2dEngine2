@@ -332,6 +332,10 @@ void MINIAudioEngine::SetListenerWorldUp(float x, float y, float z) {
 }
 
 void MINIAudioEngine::Update(float deltaTime) {
+    if (!initialized)
+    {
+        return;
+    }
     // Clean up any finished MINIAudioSounds
     std::lock_guard<std::mutex> lock(soundMutex);
     auto MINIAudioSoundIt = activeSounds.begin();

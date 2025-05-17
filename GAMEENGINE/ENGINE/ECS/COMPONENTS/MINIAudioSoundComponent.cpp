@@ -20,8 +20,8 @@ MINIAudioSoundComponent::MINIAudioSoundComponent()
 }
 
 MINIAudioSoundComponent::~MINIAudioSoundComponent() {
-    StopAllSounds();
-    StopAllMusic();
+    //StopAllSounds();
+    //StopAllMusic();
 }
 
 void MINIAudioSoundComponent::AddSound(const std::string& name, const std::string& filePath, AudioCategory category) {
@@ -425,8 +425,6 @@ void MINIAudioSoundComponent::CreateLuaMINIAudioBind(sol::state& lua)
         sol::factories([]() { 
             return MINIAudioSoundComponent(); 
             }),
-        /*"AddSound", &MINIAudioSoundComponent::AddSound,
-        "AddMusic", &MINIAudioSoundComponent::AddMusic,*/
         "PlaySound", &MINIAudioSoundComponent::PlaySound,
         "StopSound", &MINIAudioSoundComponent::StopSound,
         "PlayMusic", &MINIAudioSoundComponent::PlayMusic,
@@ -438,7 +436,6 @@ void MINIAudioSoundComponent::CreateLuaMINIAudioBind(sol::state& lua)
         "SetVelocity", &MINIAudioSoundComponent::SetVelocity,
         "SetAttenuationRange", &MINIAudioSoundComponent::SetAttenuationRange,
         "SetSoundVolume", &MINIAudioSoundComponent::SetSoundVolume,
-        "SetMusicVolume", &MINIAudioSoundComponent::SetMusicVolume,
-        "Update", &MINIAudioSoundComponent::Update
+        "SetMusicVolume", &MINIAudioSoundComponent::SetMusicVolume
     );
 }

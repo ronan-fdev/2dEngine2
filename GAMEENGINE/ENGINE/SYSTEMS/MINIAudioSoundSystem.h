@@ -14,7 +14,9 @@ public:
 
 	void MINIAudioInitialize();
 
-	void MINIAudioUpdate();
+	void MINIAudioCleanUp();
+
+	void MINIAudioUpdate(float dt);
 
 private:
 	Registry& m_Registry;

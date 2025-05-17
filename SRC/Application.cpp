@@ -224,16 +224,12 @@ bool Application::Initialize()
 		LOG_ERROR("Failed to LoadBanks for SoundSystem");
 	}
 
-	//Initialize MINIAudio Sounds:
-	auto pMINIAudioSoundSystem = std::make_shared<MINIAudioSoundSystem>(*pRegistry);
-	if (!pRegistry->AddToContext<std::shared_ptr<MINIAudioSoundSystem>>(pMINIAudioSoundSystem))
-	{
-		LOG_ERROR("Failed to initialize the MINIAudioSoundSystem");
-	}
-	pMINIAudioSoundSystem->MINIAudioInitialize();
-	MINIAudioSoundComponent::AddMusic("sampleSound", "ASSETS/SCRIPTS/TESTPROJECT1/SOUNDS/sound/magic-spell.wav", AudioCategory::MUSIC);
-	audio = MINIAudioSoundComponent();
-	audio.PlayMusic("sampleSound");
+	////Initialize MINIAudio Sounds:
+	//auto pMINIAudioSoundSystem = std::make_shared<MINIAudioSoundSystem>(*pRegistry);
+	//if (!pRegistry->AddToContext<std::shared_ptr<MINIAudioSoundSystem>>(pMINIAudioSoundSystem))
+	//{
+	//	LOG_ERROR("Failed to initialize the MINIAudioSoundSystem");
+	//}
 	
 	//Create the physics 
 		//Create the contact binder for the physics world.
@@ -476,12 +472,9 @@ void Application::Update()
 	auto& soundSystem = pRegistry->GetContext<std::shared_ptr<SoundSystem>>();
 	soundSystem->Update(Window::getdt(), *pRegistry);
 
-	//Update MINIAudioSoundSystem
-	auto& pMINIAudioSoundSystem = pRegistry->GetContext<std::shared_ptr<MINIAudioSoundSystem>>();
-	pMINIAudioSoundSystem->MINIAudioUpdate();
-
-	audio.Update(0.016);
-
+	////Update MINIAudioSoundSystem
+	//auto& pMINIAudioSoundSystem = pRegistry->GetContext<std::shared_ptr<MINIAudioSoundSystem>>();
+	//pMINIAudioSoundSystem->MINIAudioUpdate(Window::getdt());
 }
 
 void Application::Render()

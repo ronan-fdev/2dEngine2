@@ -42,8 +42,8 @@ public:
     void StopMusic(const std::string& name);
 
     // Stop all sounds/music associated with this component
-    void StopAllSounds();
-    void StopAllMusic();
+    static void StopAllSounds();
+    static void StopAllMusic();
 
     // Pause/resume specific sound/music
     void PauseSound(const std::string& name);

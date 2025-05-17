@@ -3,11 +3,12 @@
 MINIAudioSoundSystem::MINIAudioSoundSystem(Registry& registry)
 	: m_Registry(registry)
 {
-	MINIAudioInitialize();
 }
 
 MINIAudioSoundSystem::~MINIAudioSoundSystem()
 {
+	MINIAudioSoundComponent::StopAllMusic();
+	MINIAudioSoundComponent::StopAllSounds();
 	MINIAudioEngine::Instance().Shutdown();
 }
 
@@ -19,13 +20,25 @@ void MINIAudioSoundSystem::MINIAudioInitialize()
 	}
 }
 
-void MINIAudioSoundSystem::MINIAudioUpdate()
+void MINIAudioSoundSystem::MINIAudioCleanUp()
 {
-	MINIAudioEngine::Instance().Update(0.016);
+	MINIAudioEngine::Instance().Shutdown();
+}
+
+void MINIAudioSoundSystem::MINIAudioUpdate(float dt)
+{
+	bool atLeastSingleElementPresentInView = false;
+	
 	auto view = m_Registry.GetRegistry().view<MINIAudioSoundComponent>();
 	for (const auto& entity : view)
 	{
 		auto& miniAudioSoundComponent = view.get<MINIAudioSoundComponent>(entity);
-		miniAudioSoundComponent.Update(0.016);
+		miniAudioSoundComponent.Update(dt);
+		atLeastSingleElementPresentInView = true;
+	}
+
+	if (atLeastSingleElementPresentInView)
+	{
+		MINIAudioEngine::Instance().Update(dt);
 	}
 }

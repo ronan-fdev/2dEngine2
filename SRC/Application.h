@@ -67,7 +67,6 @@ public:
 	static Application& GetInstance();
 	void Run();
 
-	MINIAudioSoundComponent audio;
 private:
 	bool Initialize();
 	bool LoadShaders();

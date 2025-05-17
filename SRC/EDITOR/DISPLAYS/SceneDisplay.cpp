@@ -6,6 +6,9 @@ void SceneDisplay::LoadScene()
     auto& scriptSystem = m_Registry.GetContext<std::shared_ptr<ScriptingSystem>>();
     auto& lua = m_Registry.GetContext<std::shared_ptr<sol::state>>();
 
+    /*auto& pMINIAudioSoundSystem = m_Registry.GetContext<std::shared_ptr<MINIAudioSoundSystem>>();
+    pMINIAudioSoundSystem->MINIAudioInitialize();*/
+
     physicsWrappers->LoadBox2dWorld();
 
     if (!lua)
@@ -47,6 +50,9 @@ void SceneDisplay::UnloadScene()
 
     auto& contactListener = m_Registry.GetContext<std::shared_ptr<ContactListener>>();
     contactListener->ResetUserContactsAB();
+
+    /*auto& pMINIAudioSoundSystem = m_Registry.GetContext<std::shared_ptr<MINIAudioSoundSystem>>();
+    pMINIAudioSoundSystem->MINIAudioCleanUp();*/
 
     auto& lua = m_Registry.GetContext<std::shared_ptr<sol::state>>();
     lua.reset();
