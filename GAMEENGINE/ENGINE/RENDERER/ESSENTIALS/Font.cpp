@@ -6,7 +6,7 @@ Font::Font(GLuint fontAtlasID, int width, int height
 	m_FontAtlasID{ fontAtlasID }, 
 	m_Width{ width },m_Height{ height }, 
 	m_FontSize{ fontSize }, 
-	m_pData{ data }
+	m_pData{ std::move(data)}
 {
 }
 
@@ -15,8 +15,11 @@ Font::~Font()
 	if (m_FontAtlasID != 0)
 		glDeleteTextures(1, &m_FontAtlasID);
 
-	if (m_pData)
-		delete m_pData;
+    if (m_pData)
+    {
+        typedef stbtt_bakedchar(stbtt_bakedchar)[96];
+        delete (stbtt_bakedchar*)m_pData;
+    }
 }
 
 FontGlyph Font::GetGlyph(char c, glm::vec2& pos)
