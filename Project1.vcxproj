@@ -294,6 +294,7 @@
     <Image Include="ASSETS\TILEDMAP\FireBoyWaterGirl\FBWGTileset.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SRC\EDITOR\DISPLAYS\AssetDisplay.cpp" />
     <ClCompile Include="SRC\EDITOR\SYSTEMS\GridSystem.cpp" />
     <ClCompile Include="SRC\EDITOR\DISPLAYS\LogDisplay.cpp" />
     <ClCompile Include="SRC\EDITOR\DISPLAYS\SceneDisplay.cpp" />
@@ -310,6 +311,7 @@
     <ClCompile Include="SRC\EDITOR\DISPLAYS\TilemapDisplay.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SRC\EDITOR\DISPLAYS\AssetDisplay.h" />
     <ClInclude Include="SRC\EDITOR\SYSTEMS\GridSystem.h" />
     <ClInclude Include="SRC\EDITOR\DISPLAYS\LogDisplay.h" />
     <ClInclude Include="SRC\EDITOR\DISPLAYS\IDisplay.h" />
@@ -317,6 +319,7 @@
     <ClInclude Include="SRC\Application.h" />
     <ClInclude Include="SRC\EDITOR\UTILITIES\EditorFrameBuffers.h" />
     <ClInclude Include="SRC\EDITOR\UTILITIES\EditorTextures.h" />
+    <ClInclude Include="SRC\EDITOR\UTILITIES\EditorUtilities.h" />
     <ClInclude Include="SRC\ImGui\backends\imgui_impl_glfw.h" />
     <ClInclude Include="SRC\ImGui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="SRC\ImGui\backends\imgui_impl_opengl3_loader.h" />

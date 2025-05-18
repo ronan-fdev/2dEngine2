@@ -47,8 +47,8 @@ void TilesetDisplay::Draw()
 	float ux{ 0.f }, uy{ 0.f }, vx{ uv_w }, vy{ uv_h };
 
 	ImGuiTableFlags tableFlags{ 0 };
-	tableFlags |= ImGuiTableFlags_SizingFixedFit;
-	tableFlags |= ImGuiTableFlags_ScrollX;
+	tableFlags |= ImGuiTableFlags_SizingFixedFit;//Columns take up just enough space to fit content tightly.
+	tableFlags |= ImGuiTableFlags_ScrollX;//Adds horizontal scrolling if content is wider than the table.
 
 	int k{ 0 }, id{ 0 };
 
@@ -66,6 +66,7 @@ void TilesetDisplay::Draw()
 						ImGui::GetColorU32(ImVec4{ 0.f, 0.9f, 0.f, 0.3f }));
 
 				// Create unique id for the buttons
+				//The main reason begind using the PushID and PopID is to distinguish between the button which have the same labelID("##Tile")
 				ImGui::PushID(k++);
 
 				if (ImGui::ImageButton("##tile", (ImTextureID)pTexture.getID(), ImVec2{16.f * 1.5, 16.f * 1.5,}, ImVec2{ux, uy}, ImVec2{vx, vy}))

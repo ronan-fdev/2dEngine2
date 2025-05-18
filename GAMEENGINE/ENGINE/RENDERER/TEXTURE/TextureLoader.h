@@ -23,6 +23,12 @@ public:
 		return std::make_shared<Texture>(TEXTURETYPE::TEXTURE_FROM_MEMORY{}, imageData, fileSize);
 	}
 
+	static std::shared_ptr<Texture> createEditorTextureFromMemory(const unsigned char* imageData, int fileSize)
+	{
+
+		return std::make_shared<Texture>(TEXTURETYPE::TEXTURE_FROM_MEMORY{}, TEXTURECATEGORY::EDITORTEXTURE{}, imageData, fileSize);
+	}
+
 	static std::shared_ptr<Texture> createTilesetTextureTexture(const char* filePath)
 	{
 

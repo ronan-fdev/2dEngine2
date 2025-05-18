@@ -131,6 +131,9 @@
     <ClCompile Include="SRC\EDITOR\DISPLAYS\TilemapDisplay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SRC\EDITOR\DISPLAYS\AssetDisplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\Application.h">
@@ -185,6 +188,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SRC\EDITOR\DISPLAYS\TilemapDisplay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\EDITOR\DISPLAYS\AssetDisplay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\EDITOR\UTILITIES\EditorUtilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

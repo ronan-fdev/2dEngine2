@@ -31,6 +31,7 @@ public:
 	Texture(TEXTURETYPE::FRAMEBUFFER, const int& width, const int& height);
 	Texture(TEXTURETYPE::TEXTURE_FROM_MEMORY, const unsigned char* fileData, int fileSize);
 	Texture(TEXTURETYPE::FILEPATH, TEXTURECATEGORY::TILESETTEXTURE ,const char* filePath);
+	Texture(TEXTURETYPE::TEXTURE_FROM_MEMORY, TEXTURECATEGORY::EDITORTEXTURE, const unsigned char* fileData, int fileSize);
 
 	void InitTextureFromFilePath(const char* filePath);
 	void InitTextureFromFrameBuffer(const int& width, const int& height);//For the Frame Buffer.

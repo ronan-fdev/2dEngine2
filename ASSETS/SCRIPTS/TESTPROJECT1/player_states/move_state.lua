@@ -57,7 +57,7 @@ function MoveState:OnUpdate(dt)
     local isGrounded = math.abs(velocity.y) < 0.1
     
     -- Improved movement control
-    local moveSpeed = 300
+    local moveSpeed = 400
     local horizontalInput = 0
     
     -- Handle movement and animations

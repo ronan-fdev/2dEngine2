@@ -78,6 +78,8 @@ public:
 
 	bool AddTilesetTexture(const std::string& textureName, const std::string& texturePath);
 
+	bool AddEditorTextureFromMemory(const std::string& textureName, const unsigned char* imageData, int length);
+
 	bool AddShader(const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath);
 	/*
 	* @brief Checks to see if the shader exists based on the name and returns the Shader.
@@ -90,6 +92,12 @@ public:
 
 	inline const std::map<std::string, std::shared_ptr<Texture>>& GetAllTextures() const { return m_mapTextures; }
 
+	std::vector<std::string> GetAssetKeyNames(AssetType eAssetType) const;
+
+	bool ChangeAssetName(const std::string& sOldName, const std::string& sNewName, AssetType eAssetType);
+
+	bool CheckHasAsset(const std::string& sNameCheck, AssetType eAssetType);
+
 	//OpenAl Sound Buffer Setup:
 	bool AddSoundEffect(std::string name, const char* filename);
 	bool RemoveSoundEffect(std::string name);
@@ -101,6 +109,7 @@ private:
 	std::map<std::string, std::shared_ptr<Texture>> m_mapTextures{};
 	std::map<std::string, std::shared_ptr<Shader>> m_mapShader{};
 	std::map<std::string, std::shared_ptr<Font>> m_mapFonts{};
-	std::map<std::string, ALuint> p_SoundEffectBuffers{};
+	std::map<std::string, ALuint> p_SoundEffectBuffers{};  //=>Destructor has to be make to destroy all the buffers which has been allocated for the program
+	std::map<std::string, ALuint> p_MusicEffectBuffers{};
 };
 

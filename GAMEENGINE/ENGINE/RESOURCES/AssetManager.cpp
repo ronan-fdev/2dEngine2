@@ -124,6 +124,29 @@ bool AssetManager::AddTilesetTexture(const std::string& textureName, const std::
     return true;
 }
 
+bool AssetManager::AddEditorTextureFromMemory(const std::string& textureName, const unsigned char* imageData, int length)
+{
+    // Check to see if the Texture already exist
+    if (m_mapTextures.contains(textureName))
+    {
+        LOG_ERROR("AssetManager: Texture [{}] -- Already exists!", textureName);
+        return false;
+    }
+
+    auto texture = std::move(TextureLoader::createEditorTextureFromMemory(imageData, length));
+    // Load the texture
+    if (!texture)
+    {
+        LOG_ERROR("Unable to load texture [{}] from memory!", textureName);
+        return false;
+    }
+
+    // Insert the texture into the map
+    m_mapTextures.emplace(textureName, std::move(texture));
+
+    return true;
+}
+
 bool AssetManager::AddShader(const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath)
 {
     // Check to see if the shader already exists
@@ -159,6 +182,49 @@ Shader& AssetManager::GetShader(const std::string& shaderName)
 std::vector<std::string> AssetManager::GetTilesetNames() const
 {
     return GetKeys(m_mapTextures, [](const auto& pair) { return pair.second->IsTileset(); });
+}
+
+std::vector<std::string> AssetManager::GetAssetKeyNames(AssetType eAssetType) const
+{
+    switch (eAssetType)
+    {
+    case AssetType::TEXTURE:
+        return GetKeys(m_mapTextures, [](const auto& pair) { return !pair.second->IsEditorTexture(); });
+    case AssetType::FONT: return GetKeys(m_mapFonts);
+    case AssetType::SOUNDFX: return GetKeys(p_SoundEffectBuffers);
+    case AssetType::MUSIC: return GetKeys(p_MusicEffectBuffers);
+    default: assert(false && "Cannot get this type!");
+    }
+
+    return std::vector<std::string>{};
+}
+
+bool AssetManager::ChangeAssetName(const std::string& sOldName, const std::string& sNewName, AssetType eAssetType)
+{
+    switch (eAssetType)
+    {
+    case AssetType::TEXTURE: return KeyChange(m_mapTextures, sOldName, sNewName);
+    case AssetType::FONT: return KeyChange(m_mapFonts, sOldName, sNewName);
+    case AssetType::SOUNDFX: return KeyChange(p_SoundEffectBuffers, sOldName, sNewName);
+    case AssetType::MUSIC: return KeyChange(p_MusicEffectBuffers, sOldName, sNewName);
+    default: assert(false && "Cannot get this type!");
+    }
+
+    return false;
+}
+
+bool AssetManager::CheckHasAsset(const std::string& sNameCheck, AssetType eAssetType)
+{
+    switch (eAssetType)
+    {
+    case AssetType::TEXTURE: return m_mapTextures.contains(sNameCheck);
+    case AssetType::FONT: return m_mapFonts.contains(sNameCheck);
+    case AssetType::SOUNDFX: return p_SoundEffectBuffers.contains(sNameCheck);
+    case AssetType::MUSIC: return p_MusicEffectBuffers.contains(sNameCheck);
+    default: assert(false && "Cannot get this type!");
+    }
+
+    return false;
 }
 
 bool AssetManager::AddSoundEffect(std::string name, const char* filename)

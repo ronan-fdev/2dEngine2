@@ -369,17 +369,31 @@ bool Application::LoadEditorTextures()
 	auto& mainRegistry = MAIN_REGISTRY();
 	auto& assetManager = mainRegistry.GetAssetManager();
 
-	if (!assetManager.AddTextureFromMemory(
+	if (!assetManager.AddEditorTextureFromMemory(
 		"play_button", play_button, sizeof(play_button) / sizeof(play_button[0])))
 	{
 		LOG_ERROR("Failed to load texture [play_button] from memory.");
 		return false;
 	}
 
-	if (!assetManager.AddTextureFromMemory(
+	if (!assetManager.AddEditorTextureFromMemory(
 		"stop_button", stop_button, sizeof(stop_button) / sizeof(stop_button[0])))
 	{
 		LOG_ERROR("Failed to load texture [stop_button] from memory.");
+		return false;
+	}
+
+	if (!assetManager.AddEditorTextureFromMemory(
+		"music_icon", music_icon, sizeof(music_icon) / sizeof(music_icon[0])))
+	{
+		LOG_ERROR("Failed to load texture [music_icon] from memory.");
+		return false;
+	}
+
+	if (!assetManager.AddEditorTextureFromMemory(
+		"scene_icon", scene_icon, sizeof(scene_icon) / sizeof(scene_icon[0])))
+	{
+		LOG_ERROR("Failed to load texture [scene_icon] from memory.");
 		return false;
 	}
 
@@ -400,10 +414,10 @@ void Application::ProcessEvents()
 		m_bIsRunning = false;
 	}
 
-	// Check ESC key directly for quitting
-	if (glfwGetKey(Window::getGLFWWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-		m_bIsRunning = false;
-	}
+	//// Check ESC key directly for quitting
+	//if (glfwGetKey(Window::getGLFWWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+	//	m_bIsRunning = false;
+	//}
 
 	// Instead of directly handling keyboard events here, you'll want to set up GLFW callbacks
 	// Add this during window/input initialization:
@@ -455,6 +469,11 @@ void Application::ProcessEvents()
 		auto& mouse = inputManager.GetMouse();
 		mouse.SetMouseMoving(true);
 	});
+
+	glfwSetCharCallback(Window::getGLFWWindow(),
+		[](GLFWwindow* window, unsigned int codepoint) {
+			ImGui_ImplGlfw_CharCallback(window, codepoint);
+		});
 }
 
 void Application::Update()
@@ -552,12 +571,20 @@ bool Application::CreateDisplays()
 		return false;
 	}
 
+	auto pAssetDisplay = std::make_unique<AssetDisplay>();
+	if (!pAssetDisplay)
+	{
+		LOG_ERROR("Failed to Create AssetDisplay!");
+		return false;
+	}
+
 	// TODO: Create and add other displays as needed
 
 	pDisplayHolder->displays.push_back(std::move(pSceneDisplay));
 	pDisplayHolder->displays.push_back(std::move(pLogDisplay));
 	pDisplayHolder->displays.push_back(std::move(pTilesetDisplay));
 	pDisplayHolder->displays.push_back(std::move(pTilemapDisplay));
+	pDisplayHolder->displays.push_back(std::move(pAssetDisplay));
 
 	return true;
 }
@@ -655,6 +682,7 @@ void Application::RenderImGui()
 			ImGui::DockBuilderDockWindow("Dear ImGui Demo", leftNodeId);//Assigns named ImGui windows to specific dock areas
 			ImGui::DockBuilderDockWindow("Scene", centerNodeId);//Assigns named ImGui windows to specific dock areas 
 			ImGui::DockBuilderDockWindow("Tilemap Editor", centerNodeId);
+			ImGui::DockBuilderDockWindow("Assets", centerNodeId);
 			ImGui::DockBuilderDockWindow("Logs", LogNodeId);//Assigns named ImGui windows to specific dock areas 
 			ImGui::DockBuilderDockWindow("Tileset", LogNodeId);
 

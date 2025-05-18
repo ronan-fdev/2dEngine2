@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include "Texture.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
@@ -32,6 +33,12 @@ Texture::Texture(TEXTURETYPE::FILEPATH, TEXTURECATEGORY::TILESETTEXTURE, const c
 {
     m_bTileSetTexture = true;
     InitTextureFromFilePath(filePath);
+}
+
+Texture::Texture(TEXTURETYPE::TEXTURE_FROM_MEMORY, TEXTURECATEGORY::EDITORTEXTURE, const unsigned char* fileData, int fileSize)
+{
+    m_bEditorTexture = true;
+    InitTextureFromMemory(fileData, fileSize);
 }
 
 void Texture::InitTextureFromFilePath(const char* file_path)

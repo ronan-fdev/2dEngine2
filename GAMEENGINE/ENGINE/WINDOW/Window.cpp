@@ -91,9 +91,9 @@ bool Window::init(const char* title) {
 }
 
 void Window::processInput() {
-    if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    /*if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(m_window, true);
-    }
+    }*/
 }
 
 bool Window::shouldClose() {

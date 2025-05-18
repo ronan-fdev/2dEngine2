@@ -13,8 +13,8 @@ OpenALSoundComponent::OpenALSoundComponent()
 
 OpenALSoundComponent::~OpenALSoundComponent()
 {
-	//Stop();                         =>UNCOMMENT THESE TO SEE THE ERROR!
-	//alDeleteSources(1, &p_Source);  =>UNCOMMENT THESE TO SEE THE ERROR!
+	Stop();                         //=>UNCOMMENT THESE TO SEE THE ERROR!
+	alDeleteSources(1, &p_Source);  //=>UNCOMMENT THESE TO SEE THE ERROR!
 }
 
 void OpenALSoundComponent::Play(std::string name)
