@@ -294,6 +294,7 @@
     <Image Include="ASSETS\TILEDMAP\FireBoyWaterGirl\FBWGTileset.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GAMEENGINE\ENGINE\SOUNDS\ESSENTIALS\OpenALSound.cpp" />
     <ClCompile Include="SRC\EDITOR\DISPLAYS\AssetDisplay.cpp" />
     <ClCompile Include="SRC\EDITOR\SYSTEMS\GridSystem.cpp" />
     <ClCompile Include="SRC\EDITOR\DISPLAYS\LogDisplay.cpp" />
@@ -311,6 +312,7 @@
     <ClCompile Include="SRC\EDITOR\DISPLAYS\TilemapDisplay.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GAMEENGINE\ENGINE\SOUNDS\ESSENTIALS\OpenALSound.h" />
     <ClInclude Include="SRC\EDITOR\DISPLAYS\AssetDisplay.h" />
     <ClInclude Include="SRC\EDITOR\SYSTEMS\GridSystem.h" />
     <ClInclude Include="SRC\EDITOR\DISPLAYS\LogDisplay.h" />
