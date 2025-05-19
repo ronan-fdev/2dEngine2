@@ -134,6 +134,9 @@
     <ClCompile Include="SRC\EDITOR\DISPLAYS\AssetDisplay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GAMEENGINE\ENGINE\SOUNDS\ESSENTIALS\OpenALSound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\Application.h">
@@ -194,6 +197,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SRC\EDITOR\UTILITIES\EditorUtilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GAMEENGINE\ENGINE\SOUNDS\ESSENTIALS\OpenALSound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
