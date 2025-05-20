@@ -29,6 +29,7 @@ private:
 	unsigned int GetTextureID(const std::string& sAssetName) const;
 	bool DoRenameAsset(const std::string& sOldName, const std::string& sNewName) const;
 	void CheckRename(const std::string& sCheckName) const;
+	void OpenAssetContext(const std::string& sAssetName);
 
 public:
 	AssetDisplay();

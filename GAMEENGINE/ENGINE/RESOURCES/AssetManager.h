@@ -98,6 +98,8 @@ public:
 
 	bool CheckHasAsset(const std::string& sNameCheck, AssetType eAssetType);
 
+	bool DeleteAsset(const std::string& sAssetName, AssetType eAssetType);
+
 	//OpenAl Sound Buffer Setup:
 	bool AddSoundEffect(std::string name, const char* filename);
 	bool RemoveSoundEffect(std::string name);

@@ -227,6 +227,27 @@ bool AssetManager::CheckHasAsset(const std::string& sNameCheck, AssetType eAsset
     return false;
 }
 
+bool AssetManager::DeleteAsset(const std::string& sAssetName, AssetType eAssetType)
+{
+    switch (eAssetType)
+    {
+    case AssetType::TEXTURE: return std::erase_if(m_mapTextures, [&](const auto& pair) {//std::erase_if will return the number of elements deleted.
+        return pair.first == sAssetName;
+        }) > 0;
+    case AssetType::FONT: return std::erase_if(m_mapFonts, [&](const auto& pair) {//std::erase_if will return the number of elements deleted.
+        return pair.first == sAssetName;
+        }) > 0;
+    case AssetType::SOUNDFX: return std::erase_if(p_SoundEffectBuffers, [&](const auto& pair) {//std::erase_if will return the number of elements deleted.
+        return pair.first == sAssetName;
+        }) > 0;
+    case AssetType::MUSIC: return std::erase_if(p_MusicEffectBuffers, [&](const auto& pair) {//std::erase_if will return the number of elements deleted.
+        return pair.first == sAssetName;
+        }) > 0;
+    default: assert(false && "Cannot get this type!");
+    }
+    return false;
+}
+
 bool AssetManager::AddSoundEffect(std::string name, const char* filename)
 {
     // Check to see if the sound effect already exists

@@ -114,20 +114,8 @@ void AssetDisplay::DrawSelectedAssets()
 
 				if (bSelectedAsset && ImGui::BeginPopupContextItem())
 				{
-					/*ImGui::Selectable() creates a selectable text item that 
-						1.Looks like a clickable row or menu item
-						2.Can be clicked to trigger an action
-						3.Can be visually highlighted if selected
-						4.Can be used in lists, menus, popups, etc.*/
+					OpenAssetContext(*assetItr);
 
-					if (ImGui::Selectable("rename"))//Right click to see the option.
-					{
-						m_bRename = true;
-					}
-					if (ImGui::Selectable("delete"))//Right click to see the option.
-					{
-						LOG_ERROR("PLEASE DELETE [{}]", *assetItr);
-					}
 					ImGui::EndPopup();
 				}
 
@@ -280,6 +268,35 @@ void AssetDisplay::CheckRename(const std::string& sCheckName) const
 	if (bHasAsset)
 		ImGui::TextColored(ImVec4{ 1.f, 0.f, 0.f, 1.f },
 			std::format("Asset name [{}] already exists!", sCheckName).c_str());
+}
+
+void AssetDisplay::OpenAssetContext(const std::string& sAssetName)
+{
+	/*ImGui::Selectable() creates a selectable text item that
+						1.Looks like a clickable row or menu item
+						2.Can be clicked to trigger an action
+						3.Can be visually highlighted if selected
+						4.Can be used in lists, menus, popups, etc.*/
+
+	if (ImGui::Selectable("rename"))//Right click to see the option.
+	{
+		m_bRename = true;
+	}
+	if (ImGui::Selectable("delete"))//Right click to see the option.
+	{
+		if (m_eSelectedType == AssetType::SCENE)
+		{
+			// TODO: Check is scene name already exists
+		}
+		else
+		{
+			auto& assetManager = MAIN_REGISTRY().GetAssetManager();
+			if (!assetManager.DeleteAsset(sAssetName, m_eSelectedType))
+			{
+				LOG_ERROR("Failed to delete the asset {}.", sAssetName);
+			}
+		}
+	}
 }
 
 AssetDisplay::AssetDisplay()

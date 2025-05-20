@@ -17,9 +17,10 @@ local soundTest = Entity("soundTest", "")
 local sound = soundTest:add_component(OpenALSoundComponent())
 sound:Play("sample")
 
-
 local title = TitleState:Create(gStateStack)
 gStateStack:change_state(title)
+
+local i = 0
 
 main = {
 	[1] = {
@@ -43,6 +44,11 @@ main = {
 			-- 	sensor1:to_string()
 			-- 	sensor2:to_string()
 			-- end
+			i = i + 1
+			LUA_INFO({}, i)
+			if i==500 then 
+				soundTest:kill()
+			end
 
             Debug()
 
