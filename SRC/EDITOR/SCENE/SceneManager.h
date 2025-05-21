@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-class SceneObject;
+#include "SceneObject.h"
 
 #include "ENGINE/LOGGER/log.h"
 

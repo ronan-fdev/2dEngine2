@@ -23,6 +23,7 @@ public:
 	inline Canvas& GetCanvas() { return m_Canvas; }
 	inline const std::string& GetName() { return m_sSceneName; }
 	inline Registry& GetRegistry() { return m_Registry; }
+	inline Registry* GetRegistryPtr() { return &m_Registry; }
 	inline Registry& GetRuntimeRegistry() { return m_RuntimeRegistry; }
 };
 

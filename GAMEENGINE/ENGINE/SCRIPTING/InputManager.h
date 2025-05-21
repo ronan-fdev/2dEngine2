@@ -8,6 +8,8 @@
 #include "../ECS/Registry.h"
 #include "../RENDERER/CORE/Camera2D.h"
 
+#define INPUT_MANAGER() InputManager::GetInstance()
+
 class InputManager
 {
 private:

@@ -1,7 +1,5 @@
 #include "SceneManager.h"
 
-#include "SceneObject.h"
-
 SceneManager& SceneManager::GetInstance()
 {
 	static SceneManager instance{};//Since it is static it will be created only one time and same instance will be returned everytime.
