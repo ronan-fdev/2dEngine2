@@ -51,7 +51,7 @@ void AssetDisplay::DrawSelectedAssets()
 
 	if (m_eSelectedType == AssetType::SCENE)
 	{
-		// TODO: When we have the scene manager
+		assetNames = SCENE_MANAGER().GetSceneNames();
 	}
 	else
 		assetNames = assetManager.GetAssetKeyNames(m_eSelectedType);

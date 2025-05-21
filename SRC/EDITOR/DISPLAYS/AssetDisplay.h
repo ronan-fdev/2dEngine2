@@ -9,8 +9,12 @@
 #include "ENGINE/RESOURCES/AssetManager.h"
 
 #include "../../IMGUI/imgui_internal.h"
+
 #include "IDisplay.h"
+
 #include "../UTILITIES/EditorUtilities.h"
+
+#include "../SCENE/SceneManager.h"
 
 class AssetDisplay : public IDisplay
 {

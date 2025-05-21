@@ -295,6 +295,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GAMEENGINE\ENGINE\SOUNDS\ESSENTIALS\OpenALSound.cpp" />
+    <ClCompile Include="SRC\EDITOR\SCENE\SceneManager.cpp" />
+    <ClCompile Include="SRC\EDITOR\SCENE\SceneObject.cpp" />
     <ClCompile Include="SRC\EDITOR\DISPLAYS\AssetDisplay.cpp" />
     <ClCompile Include="SRC\EDITOR\SYSTEMS\GridSystem.cpp" />
     <ClCompile Include="SRC\EDITOR\DISPLAYS\LogDisplay.cpp" />
@@ -313,6 +315,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAMEENGINE\ENGINE\SOUNDS\ESSENTIALS\OpenALSound.h" />
+    <ClInclude Include="SRC\EDITOR\SCENE\SceneManager.h" />
+    <ClInclude Include="SRC\EDITOR\SCENE\SceneObject.h" />
     <ClInclude Include="SRC\EDITOR\DISPLAYS\AssetDisplay.h" />
     <ClInclude Include="SRC\EDITOR\SYSTEMS\GridSystem.h" />
     <ClInclude Include="SRC\EDITOR\DISPLAYS\LogDisplay.h" />

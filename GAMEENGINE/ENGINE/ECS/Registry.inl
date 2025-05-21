@@ -6,6 +6,11 @@ inline TContext Registry::AddToContext(TContext context)
 	return m_pRegistry->ctx().emplace<TContext>(context);
 }
 template<typename TContext>
+inline bool Registry::RemoveContext()
+{
+	return m_pRegistry->ctx().erase<TContext>();
+}
+template<typename TContext>
 inline TContext& Registry::GetContext()
 {
 	return m_pRegistry->ctx().get<TContext>();

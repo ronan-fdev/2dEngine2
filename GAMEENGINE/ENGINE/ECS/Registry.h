@@ -19,6 +19,8 @@ public:
 	*/
 	inline entt::entity CreateEntity() { return m_pRegistry->create(); }
 
+	inline void ClearRegistry() { m_pRegistry->clear(); }
+
 	/*
 	* @brief The context is a general purpose map that can hold any type of variable.
 	* The variable must be movable and constructable.
@@ -28,6 +30,10 @@ public:
 	*/
 	template <typename TContext>
 	TContext AddToContext(TContext context);
+
+	template <typename TContext>
+	bool RemoveContext();
+
 	/*
 	* @brief Checks the map for the desired context variable and returns
 	* that if it exists in the map.

@@ -13,16 +13,15 @@
 class RenderSystem
 {
 public:
-	RenderSystem(Registry& registry);
+	RenderSystem();
 	~RenderSystem() = default;
 	/*
 	* @brief Loops through all of the entities in the registry that have a sprite
 	* and transform component. Applies all the necessary transformations and adds them
 	* to a Batch to be rendered.
 	*/
-	void Update();
+	void Update(Registry& registry);
 private:
-	Registry& m_Registry;
 	std::unique_ptr<SpriteBatchRenderer> m_pBatchRenderer;
 };
 

@@ -58,6 +58,8 @@
 
 #include "EDITOR/SYSTEMS/GridSystem.h"
 
+#include "EDITOR/SCENE/SceneManager.h"
+
 class Application
 {
 public:

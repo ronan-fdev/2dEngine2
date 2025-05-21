@@ -1,15 +1,15 @@
 #include "RenderSystem.h"
 
-RenderSystem::RenderSystem(Registry& registry)
+RenderSystem::RenderSystem()
 	:
-	m_Registry(registry), m_pBatchRenderer{ nullptr }
+	m_pBatchRenderer{ nullptr }
 {
 	m_pBatchRenderer = std::make_unique<SpriteBatchRenderer>();
 }
 
-void RenderSystem::Update()
+void RenderSystem::Update(Registry& registry)
 {
-	auto& camera = m_Registry.GetContext<std::shared_ptr<Camera2D>>();
+	auto& camera = registry.GetContext<std::shared_ptr<Camera2D>>();
 	auto& mainRegistry = MAIN_REGISTRY();
 	auto& assetManager = mainRegistry.GetAssetManager();
 	auto& spriteShader = assetManager.GetShader("shader1");
@@ -23,7 +23,7 @@ void RenderSystem::Update()
 	spriteShader.use();
 	spriteShader.setMat4("uProjection", cam_mat);
 	m_pBatchRenderer->Begin();
-	auto view = m_Registry.GetRegistry().view<SpriteComponent, TransformComponent>();
+	auto view = registry.GetRegistry().view<SpriteComponent, TransformComponent>();
 	for (const auto& entity : view)
 	{
 		const auto& transform = view.get<TransformComponent>(entity);

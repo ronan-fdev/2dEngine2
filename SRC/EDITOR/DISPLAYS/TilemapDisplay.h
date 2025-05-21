@@ -3,9 +3,15 @@
 #include <string>
 
 #include "../../ImGui/imgui_internal.h"
+
 #include "IDisplay.h"
+
+#include "../SCENE/SceneManager.h"
+
 #include "../SYSTEMS/GridSystem.h"
+
 #include "../UTILITIES/EditorFrameBuffers.h"
+#include "../UTILITIES/EditorUtilities.h"
 
 #include "ENGINE/LOGGER/log.h"
 #include "ENGINE/ECS/MainRegistry.h"

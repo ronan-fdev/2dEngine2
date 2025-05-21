@@ -153,7 +153,7 @@ bool Application::Initialize()
 	}
 
 	//Setting up the render system:
-	auto renderSystem = std::make_shared<RenderSystem>(*pRegistry);
+	auto renderSystem = std::make_shared<RenderSystem>();
 	if (!renderSystem)
 	{
 		LOG_ERROR("Failed to create the render system!");
@@ -166,7 +166,7 @@ bool Application::Initialize()
 	}
 
 	//Setting up the render shape system
-	auto renderShapeSystem = std::make_shared<RenderShapeSystem>(*pRegistry);
+	auto renderShapeSystem = std::make_shared<RenderShapeSystem>();
 	if (!renderShapeSystem)
 	{
 		LOG_ERROR("Failed to create the render Shape system!");
@@ -180,7 +180,7 @@ bool Application::Initialize()
 	}
 
 	//Setting up the RenderUISystem:
-	auto renderUISystem = std::make_shared<RenderUISystem>(*pRegistry);
+	auto renderUISystem = std::make_shared<RenderUISystem>();
 	if (!renderUISystem)
 	{
 		LOG_ERROR("Failed to create the render UI system!");
@@ -324,7 +324,11 @@ bool Application::Initialize()
 		LOG_ERROR("Failed add the grid system registry context!");
 		return false;
 	}
-	
+
+	SCENE_MANAGER().AddScene("DefaultScene");
+	SCENE_MANAGER().AddScene("NewScene");
+	//SCENE_MANAGER().SetCurrentScene("DefaultScene");
+
 	return true;
 }
 

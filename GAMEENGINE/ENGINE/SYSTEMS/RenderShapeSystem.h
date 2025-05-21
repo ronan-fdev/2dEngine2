@@ -15,15 +15,13 @@
 class RenderShapeSystem
 {
 private:
-    Registry& m_Registry;
     std::unique_ptr<RectBatchRenderer> m_pRectRenderer;
     std::unique_ptr<CircleBatchRenderer> m_pCircleRenderer;
 
 public:
-    RenderShapeSystem() = default;
-    RenderShapeSystem(Registry& registry);
+    RenderShapeSystem();
     ~RenderShapeSystem() = default;
 
-    void Update();
+    void Update(Registry& registry);
 };
 

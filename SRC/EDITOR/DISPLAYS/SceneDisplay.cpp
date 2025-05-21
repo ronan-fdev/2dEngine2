@@ -2,12 +2,29 @@
 
 void SceneDisplay::LoadScene()
 {
-    auto& physicsWrappers = m_Registry.GetContext<std::shared_ptr<Box2DWrappers>>();
-    auto& scriptSystem = m_Registry.GetContext<std::shared_ptr<ScriptingSystem>>();
-    auto& lua = m_Registry.GetContext<std::shared_ptr<sol::state>>();
+    auto pCurrentScene = SCENE_MANAGER().GetCurrentScene();
 
-    /*auto& pMINIAudioSoundSystem = m_Registry.GetContext<std::shared_ptr<MINIAudioSoundSystem>>();
-    pMINIAudioSoundSystem->MINIAudioInitialize();*/
+    if (!pCurrentScene)
+    {
+        return;
+    }
+
+    auto& runtimeRegistry = pCurrentScene->GetRuntimeRegistry();
+
+    auto physicsWrappers = runtimeRegistry.AddToContext<std::shared_ptr<Box2DWrappers>>(std::make_shared<Box2DWrappers>());
+    auto pContactListener = runtimeRegistry.AddToContext<std::shared_ptr<ContactListener>>(std::make_shared<ContactListener>());
+    auto pSensorListener = runtimeRegistry.AddToContext<std::shared_ptr<SensorListener>>(std::make_shared<SensorListener>());
+
+    const auto& canvas = pCurrentScene->GetCanvas();
+    auto camera = runtimeRegistry.AddToContext<std::shared_ptr<Camera2D>>(std::make_shared<Camera2D>(canvas.width, canvas.height));
+
+    // Add necessary systems:
+    auto pPhysicsSystem = runtimeRegistry.AddToContext<std::shared_ptr<PhysicsSystem>>(std::make_shared<PhysicsSystem>(runtimeRegistry));
+    auto animationSystem = runtimeRegistry.AddToContext<std::shared_ptr<AnimationSystem>>(std::make_shared<AnimationSystem>(runtimeRegistry));
+
+    auto scriptSystem = runtimeRegistry.AddToContext<std::shared_ptr<ScriptingSystem>>(std::make_shared<ScriptingSystem>(runtimeRegistry));
+
+    auto lua = runtimeRegistry.AddToContext<std::shared_ptr<sol::state>>(std::make_shared<sol::state>());
 
     physicsWrappers->LoadBox2dWorld();
 
@@ -24,8 +41,8 @@ void SceneDisplay::LoadScene()
 
     ENGINE_CRASH_LOGGER().SetLuaState(*lua);
 
-    ScriptingSystem::RegisterLuaBindings(*lua, m_Registry);
-    ScriptingSystem::RegisterLuaFunctions(*lua, m_Registry);
+    ScriptingSystem::RegisterLuaBindings(*lua, runtimeRegistry);
+    ScriptingSystem::RegisterLuaFunctions(*lua, runtimeRegistry);
 
     if (!scriptSystem->LoadMainScript(*lua))
     {
@@ -39,23 +56,33 @@ void SceneDisplay::LoadScene()
 
 void SceneDisplay::UnloadScene()
 {
-    auto& physicsWrappers = m_Registry.GetContext<std::shared_ptr<Box2DWrappers>>();
     m_bPlayScene = false;
     m_bSceneLoaded = false;
-    m_Registry.GetRegistry().clear();
+    auto pCurrentScene = SCENE_MANAGER().GetCurrentScene();
+    auto& runtimeRegistry = pCurrentScene->GetRuntimeRegistry();
+
+    runtimeRegistry.ClearRegistry();
+
+    auto& physicsWrappers = runtimeRegistry.GetContext<std::shared_ptr<Box2DWrappers>>();
     physicsWrappers->UnLoadBox2dWorld();
 
-    auto& sensorListener = m_Registry.GetContext<std::shared_ptr<SensorListener>>();
+    auto& sensorListener = runtimeRegistry.GetContext<std::shared_ptr<SensorListener>>();
     sensorListener->ResetUserSensorAB();
 
-    auto& contactListener = m_Registry.GetContext<std::shared_ptr<ContactListener>>();
+    auto& contactListener = runtimeRegistry.GetContext<std::shared_ptr<ContactListener>>();
     contactListener->ResetUserContactsAB();
 
-    /*auto& pMINIAudioSoundSystem = m_Registry.GetContext<std::shared_ptr<MINIAudioSoundSystem>>();
-    pMINIAudioSoundSystem->MINIAudioCleanUp();*/
-
-    auto& lua = m_Registry.GetContext<std::shared_ptr<sol::state>>();
+    auto& lua = runtimeRegistry.GetContext<std::shared_ptr<sol::state>>();
     lua.reset();
+
+    //Remove all the context:
+    runtimeRegistry.RemoveContext<std::shared_ptr<Camera2D>>();
+    runtimeRegistry.RemoveContext<std::shared_ptr<sol::state>>();
+    runtimeRegistry.RemoveContext<std::shared_ptr<Box2DWrappers>>();
+    runtimeRegistry.RemoveContext<std::shared_ptr<ContactListener>>();
+    runtimeRegistry.RemoveContext<std::shared_ptr<SensorListener>>();
+    runtimeRegistry.RemoveContext<std::shared_ptr<AnimationSystem>>();
+    runtimeRegistry.RemoveContext<std::shared_ptr<PhysicsSystem>>();//Stopped at the video: 55:29
 }
 
 void SceneDisplay::RenderScene()
@@ -76,10 +103,15 @@ void SceneDisplay::RenderScene()
     glClearColor(0.f, 0.f, 0.f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //scriptSystem->Render();
-    renderSystem->Update();
-    renderShapeSystem->Update();
-    renderUISystem->Update(m_Registry.GetRegistry());
+    auto pCurrentScene = SCENE_MANAGER().GetCurrentScene();
+
+    if (pCurrentScene && m_bPlayScene)
+    {
+        //scriptSystem->Render();
+        renderSystem->Update(pCurrentScene->GetRuntimeRegistry());
+        renderShapeSystem->Update(pCurrentScene->GetRuntimeRegistry());
+        renderUISystem->Update(pCurrentScene->GetRuntimeRegistry());
+    }
 
     fb->Unbind();
 
@@ -88,8 +120,7 @@ void SceneDisplay::RenderScene()
 }
 
 SceneDisplay::SceneDisplay(Registry& registry)
-	: m_Registry{ registry }
-    , m_bPlayScene{ false }
+	: m_bPlayScene{ false }
     , m_bSceneLoaded{ false }
 {
 }
@@ -243,13 +274,21 @@ void SceneDisplay::Update()
     if (!m_bPlayScene)
         return;
 
+    auto pCurrentScene = SCENE_MANAGER().GetCurrentScene();
+    if (!pCurrentScene)
+    {
+        return;
+    }
+
+    auto& runtimeRegistry = pCurrentScene->GetRuntimeRegistry();
+
     auto& mainRegistry = MAIN_REGISTRY();
     auto& coreGlobals = CORE_GLOBALS();
 
-    auto& scriptSystem = m_Registry.GetContext<std::shared_ptr<ScriptingSystem>>();
+    auto& scriptSystem = runtimeRegistry.GetContext<std::shared_ptr<ScriptingSystem>>();
     scriptSystem->Update();
 
-    auto& camera = m_Registry.GetContext<std::shared_ptr<Camera2D>>();
+    auto& camera = runtimeRegistry.GetContext<std::shared_ptr<Camera2D>>();
     if (!camera)
     {
         LOG_ERROR("Failed to get the camera from the registry context!");
@@ -257,14 +296,14 @@ void SceneDisplay::Update()
     }
     camera->Update();
 
-    auto& animationSystem = m_Registry.GetContext<std::shared_ptr<AnimationSystem>>();
+    auto& animationSystem = runtimeRegistry.GetContext<std::shared_ptr<AnimationSystem>>();
     animationSystem->Update();
 
     ////Update SoundSystem
     //auto& soundSystem = m_Registry.GetContext<std::shared_ptr<SoundSystem>>();
     //soundSystem->Update(Window::getdt(), m_Registry);
 
-    auto& physics = m_Registry.GetContext<std::shared_ptr<Box2DWrappers>>();
+    auto& physics = runtimeRegistry.GetContext<std::shared_ptr<Box2DWrappers>>();
 
     if (coreGlobals.IsPhysicsEnabled())
     {
@@ -276,16 +315,16 @@ void SceneDisplay::Update()
     }
 
     // Reset active contacts before processing physics
-    auto& pSensorListener = m_Registry.GetContext<std::shared_ptr<SensorListener>>();
+    auto& pSensorListener = runtimeRegistry.GetContext<std::shared_ptr<SensorListener>>();
     // Process sensor contacts
     pSensorListener->ProcessSensorContactEvents(physics->GetWorldID());
 
     // Process contacts
-    auto& pContactListener = m_Registry.GetContext<std::shared_ptr<ContactListener>>();
+    auto& pContactListener = runtimeRegistry.GetContext<std::shared_ptr<ContactListener>>();
     pContactListener->BeginContact(physics->GetWorldID());
     pContactListener->EndContact(physics->GetWorldID());
 
     // Update physics system
-    auto& pPhysicsSystem = m_Registry.GetContext<std::shared_ptr<PhysicsSystem>>();
-    pPhysicsSystem->Update(m_Registry.GetRegistry());
+    auto& pPhysicsSystem = runtimeRegistry.GetContext<std::shared_ptr<PhysicsSystem>>();
+    pPhysicsSystem->Update(runtimeRegistry.GetRegistry());
 }

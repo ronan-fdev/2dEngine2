@@ -5,6 +5,9 @@
 #include "IDisplay.h"
 #include "../UTILITIES/EditorFrameBuffers.h"
 
+#include "../SCENE/SceneManager.h"
+#include "../SCENE/SceneObject.h"
+
 #include "ENGINE/RESOURCES/AssetManager.h"
 
 #include "ENGINE/LOGGER/log.h"
@@ -33,7 +36,6 @@
 class SceneDisplay : public IDisplay
 {
 private:
-    Registry& m_Registry;
     bool m_bPlayScene, m_bSceneLoaded;
 
 private:

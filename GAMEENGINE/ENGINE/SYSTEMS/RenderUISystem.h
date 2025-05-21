@@ -13,15 +13,14 @@
 class RenderUISystem
 {
 private:
-    Registry& m_Registry;
     std::unique_ptr<SpriteBatchRenderer> m_pSpriteRenderer;
     std::unique_ptr<TextBatchRenderer> m_pTextRenderer;
     std::unique_ptr<Camera2D> m_pCamera2D;
 
 public:
-    RenderUISystem(Registry& registry);
+    RenderUISystem();
     ~RenderUISystem() = default;
 
-    void Update(entt::registry& registry);
+    void Update(Registry& registry);
 };
 

@@ -1,8 +1,7 @@
 #include "RenderUISystem.h"
 
-RenderUISystem::RenderUISystem(Registry& registry)
-    : m_Registry{ registry }
-    , m_pSpriteRenderer{ std::make_unique<SpriteBatchRenderer>() }
+RenderUISystem::RenderUISystem()
+    : m_pSpriteRenderer{ std::make_unique<SpriteBatchRenderer>() }
     , m_pTextRenderer{ std::make_unique<TextBatchRenderer>() }
     , m_pCamera2D{ nullptr }
 {
@@ -10,7 +9,7 @@ RenderUISystem::RenderUISystem(Registry& registry)
     m_pCamera2D->Update();
 }
 
-void RenderUISystem::Update(entt::registry& registry)
+void RenderUISystem::Update(Registry& registry)
 {
     auto& mainRegistry = MAIN_REGISTRY();
     auto& assetManager = mainRegistry.GetAssetManager();
@@ -24,7 +23,7 @@ void RenderUISystem::Update(entt::registry& registry)
     }*/
 
     auto cam_mat = m_pCamera2D->GetCameraMatrix();
-    auto textView = registry.view<TextComponent, TransformComponent>();
+    auto textView = registry.GetRegistry().view<TextComponent, TransformComponent>();
 
     pFontShader.use();
     pFontShader.setMat4("uProjection", cam_mat);

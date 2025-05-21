@@ -64,6 +64,20 @@ void TilemapDisplay::Draw()
 
 		ImGui::Image((ImTextureID)fb->GetTextureID(), imageSize, ImVec2{ 0.f, 1.f }, ImVec2{ 1.f, 0.f });
 
+		// Accept Screen Drop Target
+		if (ImGui::BeginDragDropTarget())
+		{
+			const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(DROP_SCENE_SRC);
+			if (payload)
+			{
+				LOG_INFO("BEFORE {}", SCENE_MANAGER().GetCurrentSceneName());
+				SCENE_MANAGER().SetCurrentScene(std::string{ (const char*)payload->Data });
+				LOG_INFO("AFTER {}", SCENE_MANAGER().GetCurrentSceneName());
+			}
+
+			ImGui::EndDragDropTarget();
+		}
+
 		ImGui::EndChild();
 	}
 	ImGui::End();

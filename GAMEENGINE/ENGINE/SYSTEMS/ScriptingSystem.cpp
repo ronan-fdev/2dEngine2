@@ -128,7 +128,7 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	GLMBindings::CreateGLMBindings(lua);
 	InputManager::CreateLuaInputBindings(lua, registry);
 	AssetManager::CreateLuaAssetManager(lua, registry);
-	SoundSystem::CreateLuaSoundSystemBind(lua, registry);
+	//SoundSystem::CreateLuaSoundSystemBind(lua, registry);
 
 	create_timer(lua);
 
@@ -137,8 +137,8 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	AnimationComponent::CreateAnimationLuaBind(lua);
 	BoxColliderComponent::CreateLuaBoxColliderBind(lua);
 	CircleColliderComponent::CreateLuaCircleColliderBind(lua);
-	SoundEmitter::CreateLuaSoundEmitterBind(lua, registry);
-	SoundListener::CreateLuaSoundListenerBind(lua);
+	//SoundEmitter::CreateLuaSoundEmitterBind(lua, registry);
+	//SoundListener::CreateLuaSoundListenerBind(lua);
 	RendererBinder::CreateRenderingBind(lua, registry);
 	PhysicsComponent::CreatePhysicsLuaBind(lua, registry);
 	TextComponent::CreateLuaTextBindings(lua);
@@ -154,8 +154,8 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	Entity::RegisterMetaComponent<BoxColliderComponent>();
 	Entity::RegisterMetaComponent<CircleColliderComponent>();
 	Entity::RegisterMetaComponent<PhysicsComponent>();
-	Entity::RegisterMetaComponent<SoundEmitter>();
-	Entity::RegisterMetaComponent<SoundListener>();
+	//Entity::RegisterMetaComponent<SoundEmitter>();
+	//Entity::RegisterMetaComponent<SoundListener>();
 	Entity::RegisterMetaComponent<TextComponent>();
 	Entity::RegisterMetaComponent<RigidBodyComponent>();
 	Entity::RegisterMetaComponent<OpenALSoundComponent>();
@@ -166,8 +166,8 @@ void ScriptingSystem::RegisterLuaBindings(sol::state& lua, Registry& registry)
 	Registry::RegisterMetaComponent<BoxColliderComponent>();
 	Registry::RegisterMetaComponent<CircleColliderComponent>();
 	Registry::RegisterMetaComponent<PhysicsComponent>();
-	Registry::RegisterMetaComponent<SoundEmitter>();
-	Registry::RegisterMetaComponent<SoundListener>();
+	//Registry::RegisterMetaComponent<SoundEmitter>();
+	//Registry::RegisterMetaComponent<SoundListener>();
 	Registry::RegisterMetaComponent<TextComponent>();
 	Registry::RegisterMetaComponent<RigidBodyComponent>();
 	Registry::RegisterMetaComponent<OpenALSoundComponent>();
