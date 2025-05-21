@@ -446,6 +446,12 @@
     <ClInclude Include="ENGINE\ECS\COMPONENTS\OpenALSoundComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\AllComponents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\TileComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ENGINE\ECS\Entity.inl">

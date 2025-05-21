@@ -46,7 +46,7 @@ protected:
 	*/
 	virtual void ExamineMousePosition() = 0;
 
-	inline void SetMouseWorldPos(const glm::vec2& newCoords) { m_MouseWorldCoords = newCoords; }
+	inline void SetMouseWorldCoords(const glm::vec2& newCoords) { m_MouseWorldCoords = newCoords; }
 
 public:
 	AbstractTool();

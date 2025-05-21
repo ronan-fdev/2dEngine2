@@ -313,6 +313,7 @@
     <ClCompile Include="SRC\main.cpp" />
     <ClCompile Include="SRC\EDITOR\DISPLAYS\TilesetDisplay.cpp" />
     <ClCompile Include="SRC\EDITOR\DISPLAYS\TilemapDisplay.cpp" />
+    <ClCompile Include="SRC\EDITOR\TOOLS\TileTool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\EDITOR\TOOLS\AbstractTool.h" />
@@ -339,6 +340,7 @@
     <ClInclude Include="SRC\ImGui\imstb_truetype.h" />
     <ClInclude Include="SRC\EDITOR\DISPLAYS\TilesetDisplay.h" />
     <ClInclude Include="SRC\EDITOR\DISPLAYS\TilemapDisplay.h" />
+    <ClInclude Include="SRC\EDITOR\TOOLS\TileTool.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="GAMEENGINE\GAMEENGINE.vcxproj">

@@ -228,6 +228,8 @@
     <ClCompile Include="ENGINE\ECS\COMPONENTS\OpenALSoundComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\AllComponents.h" />
+    <ClInclude Include="ENGINE\ECS\COMPONENTS\TileComponent.h" />
     <ClInclude Include="ENGINE\LOGGER\CrashLogger.h" />
     <ClInclude Include="ENGINE\LOGGER\LuaLogBinding.h" />
     <ClInclude Include="ENGINE\RESOURCES\FONTS\default_font.h" />
