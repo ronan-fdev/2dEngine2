@@ -50,7 +50,7 @@ void TextBatchRenderer::GenerateBatches()
                             textGlyph->textStr[i] != '?' && text_size > 0)
                         {
                             i--;
-                            if (1 < 0)
+                            if (i < 0)
                             {
                                 LOG_ERROR("Failed to draw text [{}] - Wrap [{}] is too small for the text to wrap successfully!",
                                     textGlyph->textStr, textGlyph->wrap);

@@ -149,6 +149,12 @@
     <ClCompile Include="SRC\EDITOR\TOOLS\TileTool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SRC\EDITOR\TOOLS\CreateTileTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\EDITOR\TOOLS\ToolManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\Application.h">
@@ -224,6 +230,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SRC\EDITOR\TOOLS\TileTool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\EDITOR\TOOLS\CreateTileTool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\EDITOR\TOOLS\ToolAccessories.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\EDITOR\TOOLS\ToolManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -50,3 +50,29 @@ std::vector<std::string> SceneManager::GetSceneNames() const
 {
 	return GetKeys(m_mapScenes);
 }
+
+ToolManager& SceneManager::GetToolManager()
+{
+	if (!m_pToolManager)
+	{
+		m_pToolManager = std::make_unique <ToolManager>();
+	}
+	assert(m_pToolManager && "Tool manager must be valid");
+
+	return *m_pToolManager;
+}
+
+void SceneManager::SetTileSet(const std::string& sTileset)
+{
+	m_sCurrentTileSet = sTileset;
+	if (!m_pToolManager)
+	{
+		return;
+	}
+
+	auto pActiveTool = m_pToolManager->GetActiveTool();
+	if (pActiveTool)
+	{
+		pActiveTool->LoadSpriteTextureData(m_sCurrentTileSet);
+	}
+}

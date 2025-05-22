@@ -9,6 +9,8 @@
 #include "ENGINE/RENDERER/ESSENTIALS/Primitives.h"
 #include "ENGINE/RENDERER/ESSENTIALS/Vertex.h"
 
+#include "../SCENE/SceneObject.h"
+
 class RectBatchRenderer;
 class Camera2D;
 
@@ -21,6 +23,6 @@ public:
 	GridSystem();
 	~GridSystem() = default;
 
-	void Update( /*class SceneObject& currentScene, */ Camera2D& camera);
+	void Update(SceneObject& currentScene, Camera2D& camera);
 };
 

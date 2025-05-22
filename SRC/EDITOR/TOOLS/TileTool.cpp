@@ -141,7 +141,7 @@ void TileTool::LoadSpriteTextureData(const std::string& textureName)
 		.texture_name = textureName
 	};
 	auto& pTexture = MAIN_REGISTRY().GetAssetManager().GetTexture(textureName);
-	assert(pTexture && "Texture must exists");
+	assert(pTexture.getID() != 0 && "Texture must exists");
 	m_pMouseTile->sprite.generate_uvs(pTexture.getWidth(), pTexture.getHeight());
 }
 
@@ -199,7 +199,7 @@ void TileTool::SetSpriteRect(const glm::vec2& spriteRect)
 	sprite.height = m_MouseRect.y;
 
 	auto& pTexture = MAIN_REGISTRY().GetAssetManager().GetTexture(sprite.texture_name);
-	assert(pTexture && "Texture Must exist.");
+	assert(pTexture.getID() != 0 && "Texture Must exist.");
 	sprite.generate_uvs(pTexture.getWidth(), pTexture.getHeight());
 }
 

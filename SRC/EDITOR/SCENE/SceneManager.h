@@ -6,6 +6,8 @@
 #include <vector>
 
 #include "SceneObject.h"
+#include "../TOOLS/ToolManager.h"
+#include "../TOOLS/TileTool.h"
 
 #include "ENGINE/LOGGER/log.h"
 
@@ -17,7 +19,9 @@ class SceneManager
 {
 private:
 	std::map<std::string, std::shared_ptr<SceneObject>> m_mapScenes;
-	std::string m_sCurrentScene{ "" };
+	std::string m_sCurrentScene{ "" }, m_sCurrentTileSet{ "" };
+
+	std::unique_ptr<ToolManager> m_pToolManager{ nullptr };
 private:
 	SceneManager() = default;
 	~SceneManager() = default;
@@ -30,8 +34,11 @@ public:
 	std::shared_ptr<SceneObject> GetScene(const std::string& sSceneName);
 	std::shared_ptr<SceneObject> GetCurrentScene();
 	std::vector<std::string> GetSceneNames() const;
+	ToolManager& GetToolManager();
+	void SetTileSet(const std::string& sTileset);
 
 	inline void SetCurrentScene(const std::string& sSceneName) { m_sCurrentScene = sSceneName; }
 	inline const std::string& GetCurrentSceneName() const { return m_sCurrentScene; }
+	inline const std::string& GetCurrentTilesetName() const { return m_sCurrentTileSet; }
 };
 

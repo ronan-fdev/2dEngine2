@@ -5,10 +5,11 @@ GridSystem::GridSystem()
 {
 }
 
-void GridSystem::Update(Camera2D& camera)
+void GridSystem::Update(SceneObject& currentScene, Camera2D& camera)
 {
 	auto& assetManager = MAIN_REGISTRY().GetAssetManager();
 
+	const auto& canvas = currentScene.GetCanvas();
 	auto camMat = camera.GetCameraMatrix();
 
 	auto& pColorShader = assetManager.GetShader("color");

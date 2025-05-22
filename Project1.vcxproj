@@ -294,6 +294,7 @@
     <Image Include="ASSETS\TILEDMAP\FireBoyWaterGirl\FBWGTileset.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SRC\EDITOR\TOOLS\CreateTileTool.cpp" />
     <ClCompile Include="SRC\EDITOR\TOOLS\AbstractTool.cpp" />
     <ClCompile Include="GAMEENGINE\ENGINE\SOUNDS\ESSENTIALS\OpenALSound.cpp" />
     <ClCompile Include="SRC\EDITOR\SCENE\SceneManager.cpp" />
@@ -314,8 +315,10 @@
     <ClCompile Include="SRC\EDITOR\DISPLAYS\TilesetDisplay.cpp" />
     <ClCompile Include="SRC\EDITOR\DISPLAYS\TilemapDisplay.cpp" />
     <ClCompile Include="SRC\EDITOR\TOOLS\TileTool.cpp" />
+    <ClCompile Include="SRC\EDITOR\TOOLS\ToolManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SRC\EDITOR\TOOLS\CreateTileTool.h" />
     <ClInclude Include="SRC\EDITOR\TOOLS\AbstractTool.h" />
     <ClInclude Include="GAMEENGINE\ENGINE\SOUNDS\ESSENTIALS\OpenALSound.h" />
     <ClInclude Include="SRC\EDITOR\SCENE\SceneManager.h" />
@@ -326,6 +329,7 @@
     <ClInclude Include="SRC\EDITOR\DISPLAYS\IDisplay.h" />
     <ClInclude Include="SRC\EDITOR\DISPLAYS\SceneDisplay.h" />
     <ClInclude Include="SRC\Application.h" />
+    <ClInclude Include="SRC\EDITOR\TOOLS\ToolAccessories.h" />
     <ClInclude Include="SRC\EDITOR\UTILITIES\EditorFrameBuffers.h" />
     <ClInclude Include="SRC\EDITOR\UTILITIES\EditorTextures.h" />
     <ClInclude Include="SRC\EDITOR\UTILITIES\EditorUtilities.h" />
@@ -341,6 +345,7 @@
     <ClInclude Include="SRC\EDITOR\DISPLAYS\TilesetDisplay.h" />
     <ClInclude Include="SRC\EDITOR\DISPLAYS\TilemapDisplay.h" />
     <ClInclude Include="SRC\EDITOR\TOOLS\TileTool.h" />
+    <ClInclude Include="SRC\EDITOR\TOOLS\ToolManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="GAMEENGINE\GAMEENGINE.vcxproj">

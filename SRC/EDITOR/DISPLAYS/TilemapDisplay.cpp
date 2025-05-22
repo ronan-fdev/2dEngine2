@@ -2,13 +2,15 @@
 
 void TilemapDisplay::RenderTilemap()
 {
+	auto pCurrentScene = SCENE_MANAGER().GetCurrentScene();
+
 	auto& mainRegistry = MAIN_REGISTRY();
 	auto& editorFramebuffers = mainRegistry.GetContext<std::shared_ptr<EditorFramebuffers>>();
 	auto& renderer = mainRegistry.GetContext<std::shared_ptr<Renderer>>();
 
-	/*auto& renderSystem = mainRegistry.GetContext<std::shared_ptr<RenderSystem>>();
+	auto& renderSystem = mainRegistry.GetContext<std::shared_ptr<RenderSystem>>();
 	auto& renderUISystem = mainRegistry.GetContext<std::shared_ptr<RenderUISystem>>();
-	auto& renderShapeSystem = mainRegistry.GetContext<std::shared_ptr<RenderShapeSystem>>();*/
+	auto& renderShapeSystem = mainRegistry.GetContext<std::shared_ptr<RenderShapeSystem>>();
 
 	const auto& fb = editorFramebuffers->mapFramebuffers[FramebufferType::TILEMAP];
 
@@ -17,12 +19,24 @@ void TilemapDisplay::RenderTilemap()
 	renderer->SetClearColor(0.f, 0.f, 0.f, 1.f);
 	renderer->ClearBuffers(true, true, false);
 
-	auto& gridSystem = mainRegistry.GetContext<std::shared_ptr<GridSystem>>();
-	gridSystem->Update(*m_pTilemapCam);
+	if (!pCurrentScene)
+	{
+		fb->Unbind();
+		return;
+	}
 
-	/*renderSystem->Update();
-	renderShapeSystem->Update();
-	renderUISystem->Update( m_Registry.GetRegistry() );*/
+	auto& gridSystem = mainRegistry.GetContext<std::shared_ptr<GridSystem>>();
+	gridSystem->Update(*pCurrentScene ,*m_pTilemapCam);
+
+	renderSystem->Update(pCurrentScene->GetRegistry());
+	renderShapeSystem->Update(pCurrentScene->GetRegistry());
+	renderUISystem->Update(pCurrentScene->GetRegistry());
+
+	auto pActiveTool = SCENE_MANAGER().GetToolManager().GetActiveTool();
+	if (pActiveTool)
+	{
+		pActiveTool->Draw();
+	}
 
 	fb->Unbind();
 	fb->CheckResize();
@@ -30,6 +44,30 @@ void TilemapDisplay::RenderTilemap()
 	renderer->SetClearColor(0.f, 0.f, 0.f, 1.f);
 	renderer->ClearBuffers(true, true, false);
 
+}
+
+void TilemapDisplay::LoadNewScene()
+{
+	auto pCurrentScene = SCENE_MANAGER().GetCurrentScene();
+	if (!pCurrentScene)
+	{
+		return;
+	}
+
+	auto pActiveTool = SCENE_MANAGER().GetToolManager().GetActiveTool();
+	if (pActiveTool)
+	{
+		if (!pActiveTool->SetupTool(pCurrentScene->GetRegistryPtr(), m_pTilemapCam.get()))
+		{
+			assert(false && "This should work!");
+			__debugbreak();
+		}
+	}
+
+	if (!SCENE_MANAGER().GetCurrentTilesetName().empty())
+	{
+		pActiveTool->LoadSpriteTextureData(SCENE_MANAGER().GetCurrentTilesetName());
+	}
 }
 
 TilemapDisplay::TilemapDisplay()
@@ -70,9 +108,9 @@ void TilemapDisplay::Draw()
 			const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(DROP_SCENE_SRC);
 			if (payload)
 			{
-				LOG_INFO("BEFORE {}", SCENE_MANAGER().GetCurrentSceneName());
+				
 				SCENE_MANAGER().SetCurrentScene(std::string{ (const char*)payload->Data });
-				LOG_INFO("AFTER {}", SCENE_MANAGER().GetCurrentSceneName());
+				LoadNewScene();
 			}
 
 			ImGui::EndDragDropTarget();
@@ -85,5 +123,18 @@ void TilemapDisplay::Draw()
 
 void TilemapDisplay::Update()
 {
+	auto pCurrentScene = SCENE_MANAGER().GetCurrentScene();
+	if (!pCurrentScene)
+	{
+		return;
+	}
+
+	auto pActiveTool = SCENE_MANAGER().GetToolManager().GetActiveTool();
+	if (pActiveTool && !ImGui::GetDragDropPayload())
+	{
+		pActiveTool->Update(pCurrentScene->GetCanvas());
+		pActiveTool->Create();
+	}
+
 	m_pTilemapCam->Update();
 }

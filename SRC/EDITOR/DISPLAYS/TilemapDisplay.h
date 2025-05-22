@@ -7,6 +7,10 @@
 #include "IDisplay.h"
 
 #include "../SCENE/SceneManager.h"
+#include "../SCENE/SceneObject.h"
+
+#include "../TOOLS/ToolManager.h"
+#include "../TOOLS/CreateTileTool.h"
 
 #include "../SYSTEMS/GridSystem.h"
 
@@ -18,6 +22,9 @@
 #include "ENGINE/RESOURCES/AssetManager.h"
 #include "ENGINE/RENDERER/CORE/Camera2D.h"
 #include "ENGINE/RENDERER/CORE/Renderer.h"
+#include "ENGINE/SYSTEMS/RenderShapeSystem.h"
+#include "ENGINE/SYSTEMS/RenderSystem.h"
+#include "ENGINE/SYSTEMS/RenderUISystem.h"
 
 class TilemapDisplay : public IDisplay
 {
@@ -26,6 +33,7 @@ private:
 
 private:
 	void RenderTilemap();
+	void LoadNewScene();
 
 public:
 	TilemapDisplay();
