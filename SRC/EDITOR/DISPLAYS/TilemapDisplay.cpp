@@ -53,6 +53,7 @@ void TilemapDisplay::LoadNewScene()
 	{
 		return;
 	}
+	pCurrentScene->GetRegistry().AddToContext<std::shared_ptr<Camera2D>>(std::make_shared<Camera2D>(640, 480));
 
 	auto pActiveTool = SCENE_MANAGER().GetToolManager().GetActiveTool();
 	if (pActiveTool)
@@ -99,6 +100,19 @@ void TilemapDisplay::Draw()
 		float y = (windowSize.y - imageSize.y) * 0.5f;
 
 		ImGui::SetCursorPos(ImVec2{ x, y });
+
+		ImGuiIO io = ImGui::GetIO();
+		auto relativePos = ImGui::GetCursorScreenPos();
+		auto windowPos = ImGui::GetWindowPos();
+
+		auto pActiveTool = SCENE_MANAGER().GetToolManager().GetActiveTool();
+		if (pActiveTool)
+		{
+			pActiveTool->SetRelativeCoords(glm::vec2{ relativePos.x, relativePos.y });
+			pActiveTool->SetCursorCoords(glm::vec2{ io.MousePos.x, io.MousePos.y });
+			pActiveTool->SetWindowPos(glm::vec2{ windowPos.x, windowPos.y });
+			pActiveTool->SetWindowSize(glm::vec2{ windowSize.x, windowSize.y });
+		}
 
 		ImGui::Image((ImTextureID)fb->GetTextureID(), imageSize, ImVec2{ 0.f, 1.f }, ImVec2{ 1.f, 0.f });
 

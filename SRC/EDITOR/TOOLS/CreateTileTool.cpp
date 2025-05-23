@@ -21,7 +21,7 @@ void CreateTileTool::Draw()
 		return;
 	}
 
-	auto& pShader = MAIN_REGISTRY().GetAssetManager().GetShader("basic");
+	auto& pShader = MAIN_REGISTRY().GetAssetManager().GetShader("shader1");
 	assert(pShader.getID() != 0 && "Basic shader doesn't exist!");
 
 	pShader.use();

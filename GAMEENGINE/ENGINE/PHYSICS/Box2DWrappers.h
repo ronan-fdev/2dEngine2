@@ -34,6 +34,8 @@ struct BodyDestroyer
 				}
 			}
 
+			//=>A similar thing for the contact listener has to be implemented!
+
 			b2DestroyBody(body->bodyId);
 			LOG_INFO("Body Destroyed!");
 		}
@@ -56,6 +58,7 @@ public:
 
 	b2WorldId GetWorldID() const { return worldId; }
 private:
+	bool isBox2dLoaded;
 	b2WorldId worldId;
 };
 

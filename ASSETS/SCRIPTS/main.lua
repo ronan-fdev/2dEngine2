@@ -45,7 +45,7 @@ main = {
 			-- 	sensor2:to_string()
 			-- end
 			i = i + 1
-			LUA_INFO({}, i)
+			--LUA_INFO({}, i)
 			if i==500 then 
 				soundTest:kill()
 			end

@@ -19,7 +19,7 @@ void GridSystem::Update(SceneObject& currentScene, Camera2D& camera)
 
 	m_pBatchRenderer->Begin();
 
-	int tileWidth{ 32 }, tileHeight{ 32 }, canvasWidth{ 640 }, canvasHeight{ 480 };
+	int tileWidth{ canvas.tileWidth }, tileHeight{ canvas.tileHeight }, canvasWidth{ canvas.width }, canvasHeight{ canvas.height };
 
 	int cols = canvasWidth / tileWidth;
 	int rows = canvasHeight / tileHeight;

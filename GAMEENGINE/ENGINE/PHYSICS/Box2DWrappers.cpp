@@ -2,6 +2,7 @@
 
 Box2DWrappers::Box2DWrappers()
     :
+    isBox2dLoaded{false},
     worldId(b2_nullWorldId)
 {
     
@@ -9,7 +10,10 @@ Box2DWrappers::Box2DWrappers()
 
 Box2DWrappers::~Box2DWrappers()
 {
-    b2DestroyWorld(worldId);
+    if (isBox2dLoaded)
+    {
+        b2DestroyWorld(worldId);
+    }
 }
 
 void Box2DWrappers::LoadBox2dWorld()
@@ -21,9 +25,11 @@ void Box2DWrappers::LoadBox2dWorld()
     {
         LOG_ERROR("Failed to create the Box2D world [{0}]", worldId.index1);
     }
+    isBox2dLoaded = true;
 }
 
 void Box2DWrappers::UnLoadBox2dWorld()
 {
     b2DestroyWorld(worldId);
+    isBox2dLoaded = false;
 }

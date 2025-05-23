@@ -18,10 +18,17 @@ void TilesetDisplay::Draw()
 		{
 			bool bIsSelected = m_sTileset == sTileset;
 			if (ImGui::Selectable(sTileset.c_str(), bIsSelected))
+			{
 				m_sTileset = sTileset;
+				SCENE_MANAGER().SetTileSet(sTileset);
+			}
+				
 
-			if (bIsSelected)
+			if (bIsSelected) 
+			{
 				ImGui::SetItemDefaultFocus();
+			}
+			
 		}
 
 		ImGui::EndCombo();
@@ -72,7 +79,12 @@ void TilesetDisplay::Draw()
 				if (ImGui::ImageButton("##tile", (ImTextureID)pTexture.getID(), ImVec2{16.f * 1.5, 16.f * 1.5,}, ImVec2{ux, uy}, ImVec2{vx, vy}))
 				{
 					m_Selected = id;
-					LOG_INFO("StartX: {}, StartY: {}", j, i);
+					//LOG_INFO("StartX: {}, StartY: {}", j, i);
+					auto pActiveTool = SCENE_MANAGER().GetToolManager().GetActiveTool();
+					if (pActiveTool)
+					{
+						pActiveTool->SetSpriteUVs(j, i);
+					}
 				}
 
 				ImGui::PopID();

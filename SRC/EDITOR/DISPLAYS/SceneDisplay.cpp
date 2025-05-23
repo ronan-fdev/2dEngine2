@@ -12,6 +12,7 @@ void SceneDisplay::LoadScene()
     auto& runtimeRegistry = pCurrentScene->GetRuntimeRegistry();
 
     auto physicsWrappers = runtimeRegistry.AddToContext<std::shared_ptr<Box2DWrappers>>(std::make_shared<Box2DWrappers>());
+    physicsWrappers->LoadBox2dWorld();
     auto pContactListener = runtimeRegistry.AddToContext<std::shared_ptr<ContactListener>>(std::make_shared<ContactListener>());
     auto pSensorListener = runtimeRegistry.AddToContext<std::shared_ptr<SensorListener>>(std::make_shared<SensorListener>());
 
@@ -25,8 +26,6 @@ void SceneDisplay::LoadScene()
     auto scriptSystem = runtimeRegistry.AddToContext<std::shared_ptr<ScriptingSystem>>(std::make_shared<ScriptingSystem>(runtimeRegistry));
 
     auto lua = runtimeRegistry.AddToContext<std::shared_ptr<sol::state>>(std::make_shared<sol::state>());
-
-    physicsWrappers->LoadBox2dWorld();
 
     if (!lua)
         lua = std::make_shared<sol::state>();

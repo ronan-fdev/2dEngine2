@@ -5,7 +5,11 @@
 #include "../../ImGui/imgui_internal.h"
 
 #include "IDisplay.h"
-#include "ENGINE//LOGGER/log.h"
+#include "../SCENE/SceneManager.h"
+#include "../TOOLS/ToolManager.h"
+#include "../TOOLS/TileTool.h"
+
+#include "ENGINE/LOGGER/log.h"
 #include "ENGINE/RESOURCES/AssetManager.h"
 #include "ENGINE/ECS/MainRegistry.h"
 
