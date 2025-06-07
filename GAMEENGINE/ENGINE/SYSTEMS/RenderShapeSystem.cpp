@@ -6,18 +6,16 @@ RenderShapeSystem::RenderShapeSystem()
 {
 }
 
-void RenderShapeSystem::Update(Registry& registry)
+void RenderShapeSystem::Update(Registry& registry, Camera2D& camera)
 {
     if (!CoreEngineData::GetInstance().RenderCollidersEnabled())
         return;
-
-    auto& camera = registry.GetContext<std::shared_ptr<Camera2D>>();
 
     auto& mainRegistry = MAIN_REGISTRY();
     auto& assetManager = mainRegistry.GetAssetManager();
 
     auto& colorShader = assetManager.GetShader("color");
-    auto cam_mat = camera->GetCameraMatrix();
+    auto cam_mat = camera.GetCameraMatrix();
 
     colorShader.use();
     colorShader.setMat4("uProjection", cam_mat);

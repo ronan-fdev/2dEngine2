@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <glm/glm.hpp>
 
 #include "../../ImGui/imgui_internal.h"
 
@@ -25,6 +26,8 @@
 #include "ENGINE/SYSTEMS/RenderShapeSystem.h"
 #include "ENGINE/SYSTEMS/RenderSystem.h"
 #include "ENGINE/SYSTEMS/RenderUISystem.h"
+#include "ENGINE/SCRIPTING/InputManager.h"
+#include "ENGINE/WINDOW/INPUT/Mouse.h"
 
 class TilemapDisplay : public IDisplay
 {
@@ -34,6 +37,7 @@ private:
 private:
 	void RenderTilemap();
 	void LoadNewScene();
+	void PanZoomCamera(const glm::vec2& mousePos);
 
 public:
 	TilemapDisplay();

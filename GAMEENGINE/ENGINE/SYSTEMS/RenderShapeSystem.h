@@ -22,6 +22,6 @@ public:
     RenderShapeSystem();
     ~RenderShapeSystem() = default;
 
-    void Update(Registry& registry);
+    void Update(Registry& registry, Camera2D& camera);
 };
 

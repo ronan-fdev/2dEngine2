@@ -7,13 +7,18 @@ RenderSystem::RenderSystem()
 	m_pBatchRenderer = std::make_unique<SpriteBatchRenderer>();
 }
 
-void RenderSystem::Update(Registry& registry)
+void RenderSystem::Update(Registry& registry, Camera2D& camera)
 {
-	auto& camera = registry.GetContext<std::shared_ptr<Camera2D>>();
+	auto view = registry.GetRegistry().view<SpriteComponent, TransformComponent>();
+	if (view.size_hint() < 1)
+	{
+		return;
+	}
+
 	auto& mainRegistry = MAIN_REGISTRY();
 	auto& assetManager = mainRegistry.GetAssetManager();
 	auto& spriteShader = assetManager.GetShader("shader1");
-	auto cam_mat = camera->GetCameraMatrix();
+	auto cam_mat = camera.GetCameraMatrix();
 	if (spriteShader.getID() == 0)
 	{
 		LOG_ERROR("Sprite shader program has not been set correctly!");
@@ -23,11 +28,31 @@ void RenderSystem::Update(Registry& registry)
 	spriteShader.use();
 	spriteShader.setMat4("uProjection", cam_mat);
 	m_pBatchRenderer->Begin();
-	auto view = registry.GetRegistry().view<SpriteComponent, TransformComponent>();
+	//auto view = registry.GetRegistry().view<SpriteComponent, TransformComponent>();
 	for (const auto& entity : view)
 	{
 		const auto& transform = view.get<TransformComponent>(entity);
 		const auto& sprite = view.get<SpriteComponent>(entity);
+
+		////Checking Whether Entity Is Present Within the Camera View Or Not:
+		//const auto& cameraPos = camera.GetPosition() - camera.GetScreenOffset();
+		//const auto& cameraWidth = camera.GetWidth();
+		//const auto& cameraHeight = camera.GetHeight();
+		//const auto& cameraScale = camera.GetScale();
+
+		//if (
+		//	(transform.position.x <= ((cameraPos.x - (sprite.width * transform.scale.x * cameraScale)) / cameraScale))
+		//	||
+		//	(transform.position.x >= ((cameraPos.x + cameraWidth) / cameraScale))
+		//	||
+		//	(transform.position.y <= ((cameraPos.y - (sprite.height * transform.scale.y * cameraScale)) / cameraScale))
+		//	||
+		//	(transform.position.y >= ((cameraPos.y + cameraHeight) / cameraScale))
+		//	)
+		//{
+		//	return;
+		//}
+
 		if (sprite.texture_name.empty() || sprite.bHidden)
 			continue;
 		const auto& texture = assetManager.GetTexture(sprite.texture_name);

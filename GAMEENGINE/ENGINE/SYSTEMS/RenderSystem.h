@@ -20,7 +20,7 @@ public:
 	* and transform component. Applies all the necessary transformations and adds them
 	* to a Batch to be rendered.
 	*/
-	void Update(Registry& registry);
+	void Update(Registry& registry, Camera2D& camera);
 private:
 	std::unique_ptr<SpriteBatchRenderer> m_pBatchRenderer;
 };

@@ -16,17 +16,16 @@ private:
 	glm::vec2 m_GUICursorCoords, m_GUIRelativeCoords;
 	glm::vec2 m_WindowPos, m_WindowSize;
 
-	bool m_bAtivated, m_bOutOfBounds;
+	bool m_bAtivated, m_bOutOfBounds, m_bOverTileMapWindow;
 
 private:
 	void UpdateMouseWorldCoords();
-	void CheckOutOfBounds(Canvas& canvas);
+	void CheckOutOfBounds(const Canvas& canvas);
 
 protected:
 	enum class EMouseButton
 	{
-		UNKNOWN = 0,
-		LEFT,
+		LEFT = 0,
 		MIDDLE,
 		RIGHT,
 		LAST
@@ -73,7 +72,10 @@ public:
 
 	inline void Activate() { m_bAtivated = true; }
 	inline void DeActivate() { m_bAtivated = false; }
+	inline void SetOverTilemapWindow(bool bOverWindow) { m_bOverTileMapWindow = bOverWindow; }
+
 	inline const bool IsActivated() const { return m_bAtivated; }
 	inline const bool OutOfBounds() const { return m_bOutOfBounds; }
+	inline const bool IsOverTilemapWindow() const { return m_bOverTileMapWindow; }
 };
 

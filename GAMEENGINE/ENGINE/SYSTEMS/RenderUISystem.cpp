@@ -9,9 +9,15 @@ RenderUISystem::RenderUISystem()
     m_pCamera2D->Update();
 }
 
-void RenderUISystem::Update(Registry& registry)
+void RenderUISystem::Update(Registry& registry, Camera2D& camera)
 {
     auto& mainRegistry = MAIN_REGISTRY();
+
+    // If there are no entities in the view, leave
+    auto textView = registry.GetRegistry().view<TextComponent, TransformComponent>();
+    if (textView.size_hint() < 1)
+        return;
+
     auto& assetManager = mainRegistry.GetAssetManager();
 
     auto& pFontShader = assetManager.GetShader("font");
@@ -22,8 +28,8 @@ void RenderUISystem::Update(Registry& registry)
         return;
     }*/
 
-    auto cam_mat = m_pCamera2D->GetCameraMatrix();
-    auto textView = registry.GetRegistry().view<TextComponent, TransformComponent>();
+    auto cam_mat = camera.GetCameraMatrix();
+    //auto textView = registry.GetRegistry().view<TextComponent, TransformComponent>();
 
     pFontShader.use();
     pFontShader.setMat4("uProjection", cam_mat);

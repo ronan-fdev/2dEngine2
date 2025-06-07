@@ -10,6 +10,10 @@
 
 class CreateTileTool : public TileTool
 {
+private:
+	void CreateNewTile();
+	void RemoveTile();
+
 public:
 	CreateTileTool();
 	virtual ~CreateTileTool();

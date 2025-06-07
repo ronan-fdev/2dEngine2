@@ -28,9 +28,9 @@ void TilemapDisplay::RenderTilemap()
 	auto& gridSystem = mainRegistry.GetContext<std::shared_ptr<GridSystem>>();
 	gridSystem->Update(*pCurrentScene ,*m_pTilemapCam);
 
-	renderSystem->Update(pCurrentScene->GetRegistry());
-	renderShapeSystem->Update(pCurrentScene->GetRegistry());
-	renderUISystem->Update(pCurrentScene->GetRegistry());
+	renderSystem->Update(pCurrentScene->GetRegistry(), *m_pTilemapCam);
+	renderShapeSystem->Update(pCurrentScene->GetRegistry(), *m_pTilemapCam);
+	renderUISystem->Update(pCurrentScene->GetRegistry(), *m_pTilemapCam);
 
 	auto pActiveTool = SCENE_MANAGER().GetToolManager().GetActiveTool();
 	if (pActiveTool)
@@ -53,7 +53,7 @@ void TilemapDisplay::LoadNewScene()
 	{
 		return;
 	}
-	pCurrentScene->GetRegistry().AddToContext<std::shared_ptr<Camera2D>>(std::make_shared<Camera2D>(640, 480));
+	//pCurrentScene->GetRegistry().AddToContext<std::shared_ptr<Camera2D>>(std::make_shared<Camera2D>(640, 480));
 
 	auto pActiveTool = SCENE_MANAGER().GetToolManager().GetActiveTool();
 	if (pActiveTool)
@@ -69,6 +69,69 @@ void TilemapDisplay::LoadNewScene()
 	{
 		pActiveTool->LoadSpriteTextureData(SCENE_MANAGER().GetCurrentTilesetName());
 	}
+}
+
+void TilemapDisplay::PanZoomCamera(const glm::vec2& mousePos)
+{
+	if (!m_pTilemapCam)
+	{
+		return;
+	}
+
+	auto& mouse = INPUT_MANAGER().GetMouse();
+	if (!mouse.IsBtnJustPressed(MOUSE_MIDDLE) && !mouse.IsBtnPressed(MOUSE_MIDDLE) && mouse.GetMouseWheelY() == 0)
+	{
+		return;
+	}
+
+	static glm::vec2 startPosition{ 0.f };
+	auto screenOffset = m_pTilemapCam->GetScreenOffset();
+	bool bOffsetChanged{ false }, bScaledChanged{ false };
+	
+	if (mouse.IsBtnJustPressed(MOUSE_MIDDLE))
+	{
+		startPosition = mousePos;
+	}
+
+	if (mouse.IsBtnPressed(MOUSE_MIDDLE))
+	{
+		screenOffset += mousePos - startPosition;
+		bOffsetChanged = true;
+	}
+
+	glm::vec2 currentWorldPos = m_pTilemapCam->ScreenCoordsToWorld(mousePos);
+	float scale = m_pTilemapCam->GetScale();
+
+	if (mouse.GetMouseWheelY() == 1)
+	{
+		scale += 0.2f;
+		bScaledChanged = true;
+		bOffsetChanged = true;
+	}
+	else if (mouse.GetMouseWheelY() == -1)
+	{
+		scale -= 0.2f;
+		bScaledChanged = true;
+		bOffsetChanged = true;
+	}
+
+	scale = std::clamp(scale, 1.0f, 10.f);
+
+	if (bScaledChanged)
+	{
+		m_pTilemapCam->SetScale(scale);
+	}
+
+	glm::vec2 afterMovePos = m_pTilemapCam->ScreenCoordsToWorld(mousePos);
+
+	screenOffset += (afterMovePos - currentWorldPos);
+
+	if (bOffsetChanged)
+	{
+		m_pTilemapCam->SetScreenOffset(screenOffset);
+	}
+
+	startPosition = mousePos;
 }
 
 TilemapDisplay::TilemapDisplay()
@@ -105,6 +168,9 @@ void TilemapDisplay::Draw()
 		auto relativePos = ImGui::GetCursorScreenPos();
 		auto windowPos = ImGui::GetWindowPos();
 
+		// Check for window size changes:
+
+
 		auto pActiveTool = SCENE_MANAGER().GetToolManager().GetActiveTool();
 		if (pActiveTool)
 		{
@@ -112,6 +178,8 @@ void TilemapDisplay::Draw()
 			pActiveTool->SetCursorCoords(glm::vec2{ io.MousePos.x, io.MousePos.y });
 			pActiveTool->SetWindowPos(glm::vec2{ windowPos.x, windowPos.y });
 			pActiveTool->SetWindowSize(glm::vec2{ windowSize.x, windowSize.y });
+
+			pActiveTool->SetOverTilemapWindow(ImGui::IsWindowHovered());
 		}
 
 		ImGui::Image((ImTextureID)fb->GetTextureID(), imageSize, ImVec2{ 0.f, 1.f }, ImVec2{ 1.f, 0.f });
@@ -125,9 +193,17 @@ void TilemapDisplay::Draw()
 				
 				SCENE_MANAGER().SetCurrentScene(std::string{ (const char*)payload->Data });
 				LoadNewScene();
+				m_pTilemapCam->Reset();
 			}
 
 			ImGui::EndDragDropTarget();
+		}
+
+		// Check for resize based on the window size:
+		if (fb->Width() != static_cast<int>(windowSize.x) || fb->Height() != static_cast<int>(windowSize.y))
+		{
+			fb->Resize(static_cast<int>(windowSize.x), static_cast<int>(windowSize.y));
+			m_pTilemapCam->Resize(static_cast<int>(windowSize.x), static_cast<int>(windowSize.y));
 		}
 
 		ImGui::EndChild();
@@ -144,8 +220,10 @@ void TilemapDisplay::Update()
 	}
 
 	auto pActiveTool = SCENE_MANAGER().GetToolManager().GetActiveTool();
-	if (pActiveTool && !ImGui::GetDragDropPayload())
+	if (pActiveTool && pActiveTool->IsOverTilemapWindow() && !ImGui::GetDragDropPayload())
 	{
+		PanZoomCamera(pActiveTool->GetMouseScreenCoords());
+
 		pActiveTool->Update(pCurrentScene->GetCanvas());
 		pActiveTool->Create();
 	}

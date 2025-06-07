@@ -106,10 +106,12 @@ void SceneDisplay::RenderScene()
 
     if (pCurrentScene && m_bPlayScene)
     {
+        auto& camera = pCurrentScene->GetRuntimeRegistry().GetContext<std::shared_ptr<Camera2D>>();
+
         //scriptSystem->Render();
-        renderSystem->Update(pCurrentScene->GetRuntimeRegistry());
-        renderShapeSystem->Update(pCurrentScene->GetRuntimeRegistry());
-        renderUISystem->Update(pCurrentScene->GetRuntimeRegistry());
+        renderSystem->Update(pCurrentScene->GetRuntimeRegistry(), *camera);
+        renderShapeSystem->Update(pCurrentScene->GetRuntimeRegistry(), *camera);
+        renderUISystem->Update(pCurrentScene->GetRuntimeRegistry(), *camera);
     }
 
     fb->Unbind();
@@ -263,6 +265,16 @@ void SceneDisplay::Draw()
         );
 
         ImGui::EndChild();
+
+        if (isSceneLoaded)
+        {
+            // Check for resize based on the window size:
+            ImVec2 windowSize{ ImGui::GetWindowSize() };
+            if (fb->Width() != static_cast<int>(windowSize.x) || fb->Height() != static_cast<int>(windowSize.y))
+            {
+                fb->Resize(static_cast<int>(windowSize.x), static_cast<int>(windowSize.y));
+            }
+        }
     }
     ImGui::PopStyleVar();
     ImGui::End();

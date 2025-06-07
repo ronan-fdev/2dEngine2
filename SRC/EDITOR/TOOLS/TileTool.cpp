@@ -83,20 +83,19 @@ void TileTool::ExamineMousePosition()
 
 	if (m_bGridSnap)
 	{
-		glm::vec2 mouseGrid{ 0.f };
-		if (mouseWorldPos.x >= 0.0f)
-		{
-			mouseGrid.x = static_cast<int>((mouseWorldPos.x / (m_MouseRect.x * transform.scale.x) * cameraScale));
-		}
-		if (mouseWorldPos.y >= 0.0f)
-		{
-			mouseGrid.y = static_cast<int>((mouseWorldPos.y / (m_MouseRect.y * transform.scale.y) * cameraScale));
-		}
-		transform.position.x = std::floorf((mouseGrid.x / cameraScale)) * m_MouseRect.x * transform.scale.x;
-		transform.position.y = std::floorf((mouseGrid.y / cameraScale)) * m_MouseRect.y * transform.scale.y;
+		glm::vec2 mouseGrid{ 
+			mouseWorldPos.x / (m_MouseRect.x * transform.scale.x) * cameraScale,
+			mouseWorldPos.y / (m_MouseRect.y * transform.scale.y) * cameraScale
+		};
+		
+		auto scaledGridToCamX = std::floor(mouseGrid.x / cameraScale);
+		auto scaledGridToCamY = std::floor(mouseGrid.y / cameraScale);
 
-		m_GridCoords.x = mouseGrid.x / cameraScale;
-		m_GridCoords.y = mouseGrid.y / cameraScale;
+		transform.position.x = scaledGridToCamX * m_MouseRect.x * transform.scale.x;
+		transform.position.y = scaledGridToCamY * m_MouseRect.y * transform.scale.y;
+
+		m_GridCoords.x = scaledGridToCamX;
+		m_GridCoords.y = scaledGridToCamY;
 
 		SetMouseWorldCoords(transform.position);
 	}
