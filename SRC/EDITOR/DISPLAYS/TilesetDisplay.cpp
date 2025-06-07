@@ -76,7 +76,7 @@ void TilesetDisplay::Draw()
 				//The main reason begind using the PushID and PopID is to distinguish between the button which have the same labelID("##Tile")
 				ImGui::PushID(k++);
 
-				if (ImGui::ImageButton("##tile", (ImTextureID)pTexture.getID(), ImVec2{16.f * 1.5, 16.f * 1.5,}, ImVec2{ux, uy}, ImVec2{vx, vy}))
+				if (ImGui::ImageButton("##tile", (ImTextureID)(intptr_t)pTexture.getID(), ImVec2{16.f * 1.5, 16.f * 1.5,}, ImVec2{ux, uy}, ImVec2{vx, vy}))
 				{
 					m_Selected = id;
 					//LOG_INFO("StartX: {}, StartY: {}", j, i);

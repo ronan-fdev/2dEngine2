@@ -186,7 +186,7 @@ void SceneDisplay::Draw()
         ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.f, 0.9f, 0.f, 0.3 });
     }
 
-    if (ImGui::ImageButton("##play", (ImTextureID)pPlayTexture.getID(),
+    if (ImGui::ImageButton("##play", (ImTextureID)(intptr_t)pPlayTexture.getID(),
         ImVec2{
             (float)pPlayTexture.getWidth() * 0.25f,
             (float)pPlayTexture.getHeight() * 0.25f,

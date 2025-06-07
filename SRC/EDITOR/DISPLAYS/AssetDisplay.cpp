@@ -99,7 +99,7 @@ void AssetDisplay::DrawSelectedAssets()
 				if (textureID == 0)
 					break;
 
-				ImGui::ImageButton("##AssetTexture", (ImTextureID)textureID, ImVec2{m_AssetSize, m_AssetSize});
+				ImGui::ImageButton("##AssetTexture", (ImTextureID)(intptr_t)textureID, ImVec2{m_AssetSize, m_AssetSize});
 
 				if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(0) && !m_bRename)
 					m_SelectedID = id;
