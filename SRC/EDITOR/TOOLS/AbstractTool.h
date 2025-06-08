@@ -6,6 +6,7 @@
 #include "ENGINE/SCRIPTING/InputManager.h"
 #include "ENGINE/RENDERER/CORE/Camera2D.h"
 #include "ENGINE/ECS/Registry.h"
+#include "ENGINE/WINDOW/INPUT/MouseButtons.h"
 
 #include "../UTILITIES/EditorUtilities.h"
 
@@ -25,10 +26,10 @@ private:
 protected:
 	enum class EMouseButton
 	{
-		LEFT = 0,
-		MIDDLE,
-		RIGHT,
-		LAST
+		LEFT = MOUSE_LEFT,
+		MIDDLE = MOUSE_MIDDLE,
+		RIGHT = MOUSE_RIGHT,
+		LAST = MOUSE_UNKNOWN
 	};
 
 	Registry* m_pRegistry{ nullptr };

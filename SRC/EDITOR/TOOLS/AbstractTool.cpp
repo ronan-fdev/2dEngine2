@@ -58,7 +58,8 @@ AbstractTool::AbstractTool()
 	m_WindowPos{0.f}, 
 	m_WindowSize{0.f},
 	m_bAtivated{false}, 
-	m_bOutOfBounds{false}
+	m_bOutOfBounds{false},
+	m_bOverTileMapWindow{false}
 {
 }
 

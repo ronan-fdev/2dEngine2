@@ -5,7 +5,7 @@
 
 struct Color
 {
-	GLubyte r, g, b, a;
+	GLubyte r{ 255 }, g{ 255 }, b{ 255 }, a{ 255 };
 };
 
 struct Vertex

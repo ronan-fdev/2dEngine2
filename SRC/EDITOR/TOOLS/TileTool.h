@@ -64,6 +64,7 @@ public:
 	void SetPhysics(bool bPhysics);
 
 	const bool SpriteValid() const;
+	const bool CanDrawOrCreate() const;
 
 	inline void EnableGridSnap() { m_bGridSnap = true; }
 	inline void DisableGridSnap() { m_bGridSnap = false; }

@@ -5,6 +5,7 @@
 
 #include "ToolAccessories.h"
 #include "CreateTileTool.h"
+#include "RectFillTool.h"
 
 class ToolManager
 {

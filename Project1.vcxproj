@@ -294,6 +294,7 @@
     <Image Include="ASSETS\TILEDMAP\FireBoyWaterGirl\FBWGTileset.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SRC\EDITOR\TOOLS\RectFillTool.cpp" />
     <ClCompile Include="SRC\EDITOR\TOOLS\CreateTileTool.cpp" />
     <ClCompile Include="SRC\EDITOR\TOOLS\AbstractTool.cpp" />
     <ClCompile Include="GAMEENGINE\ENGINE\SOUNDS\ESSENTIALS\OpenALSound.cpp" />
@@ -318,6 +319,7 @@
     <ClCompile Include="SRC\EDITOR\TOOLS\ToolManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SRC\EDITOR\TOOLS\RectFillTool.h" />
     <ClInclude Include="SRC\EDITOR\TOOLS\CreateTileTool.h" />
     <ClInclude Include="SRC\EDITOR\TOOLS\AbstractTool.h" />
     <ClInclude Include="GAMEENGINE\ENGINE\SOUNDS\ESSENTIALS\OpenALSound.h" />

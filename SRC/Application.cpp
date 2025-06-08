@@ -686,7 +686,7 @@ void Application::RenderImGui()
 			ImGui::DockBuilderDockWindow("Dear ImGui Demo", leftNodeId);//Assigns named ImGui windows to specific dock areas
 			ImGui::DockBuilderDockWindow("Scene", centerNodeId);//Assigns named ImGui windows to specific dock areas 
 			ImGui::DockBuilderDockWindow("Tilemap Editor", centerNodeId);
-			ImGui::DockBuilderDockWindow("Assets", centerNodeId);
+			ImGui::DockBuilderDockWindow("Assets", LogNodeId);
 			ImGui::DockBuilderDockWindow("Logs", LogNodeId);//Assigns named ImGui windows to specific dock areas 
 			ImGui::DockBuilderDockWindow("Tileset", LogNodeId);
 

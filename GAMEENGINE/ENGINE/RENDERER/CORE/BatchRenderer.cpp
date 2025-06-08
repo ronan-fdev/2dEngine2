@@ -40,7 +40,7 @@ void SpriteBatchRenderer::AddSprite(const glm::vec4& spriteRect, const glm::vec4
 {
 	if (checkMaxNumSprites++ > MAX_SPRITES)
 	{
-		LOG_WARN("ENGINE:BatchRenderer: The number of sprites is exeeding the volume of what the engine is capable of!!");
+		LOG_WARN("ENGINE:BatchRenderer: The number of sprites is exeeding the volume of what the engine is capable of!!. {0} REQUIRED MORE", checkMaxNumSprites);
 	}
 
 	auto newSprite = std::make_shared<SpriteGlyph>(
