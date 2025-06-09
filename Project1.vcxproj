@@ -135,15 +135,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\libsndfile\include;$(SolutionDir)EXTERNAL\OpenAL-Soft\include;$(SolutionDir)EXTERNAL\IMGUI;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\INCLUDE;$(SolutionDir)EXTERNAL\libsndfile\include;$(SolutionDir)EXTERNAL\OpenAL-Soft\include;$(SolutionDir)EXTERNAL\IMGUI;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GAMEENGINE.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\DEBUG;$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GAMEENGINE.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;Tiny-File-Dialoges.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -154,7 +154,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\libsndfile\include;$(SolutionDir)EXTERNAL\OpenAL-Soft\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\INCLUDE;$(SolutionDir)EXTERNAL\libsndfile\include;$(SolutionDir)EXTERNAL\OpenAL-Soft\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -163,8 +163,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GAMEENGINE.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\RELEASE;$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GAMEENGINE.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;Tiny-File-Dialoges.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RELEASE_DEBUG|Win32'">
@@ -195,15 +195,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\libsndfile\include;$(SolutionDir)EXTERNAL\OpenAL-Soft\include;$(SolutionDir)EXTERNAL\IMGUI;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\INCLUDE;$(SolutionDir)EXTERNAL\libsndfile\include;$(SolutionDir)EXTERNAL\OpenAL-Soft\include;$(SolutionDir)EXTERNAL\IMGUI;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GAMEENGINE.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\DEBUG;$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GAMEENGINE.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;Tiny-File-Dialoges.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -214,7 +214,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\libsndfile\include;$(SolutionDir)EXTERNAL\OpenAL-Soft\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\INCLUDE;$(SolutionDir)EXTERNAL\libsndfile\include;$(SolutionDir)EXTERNAL\OpenAL-Soft\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -223,8 +223,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GAMEENGINE.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\RELEASE;$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GAMEENGINE.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;Tiny-File-Dialoges.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RELEASE_DEBUG|x64'">
@@ -294,6 +294,7 @@
     <Image Include="ASSETS\TILEDMAP\FireBoyWaterGirl\FBWGTileset.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SRC\EDITOR\DISPLAYS\MenuDisplay.cpp" />
     <ClCompile Include="SRC\EDITOR\TOOLS\RectFillTool.cpp" />
     <ClCompile Include="SRC\EDITOR\TOOLS\CreateTileTool.cpp" />
     <ClCompile Include="SRC\EDITOR\TOOLS\AbstractTool.cpp" />
@@ -319,6 +320,7 @@
     <ClCompile Include="SRC\EDITOR\TOOLS\ToolManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SRC\EDITOR\DISPLAYS\MenuDisplay.h" />
     <ClInclude Include="SRC\EDITOR\TOOLS\RectFillTool.h" />
     <ClInclude Include="SRC\EDITOR\TOOLS\CreateTileTool.h" />
     <ClInclude Include="SRC\EDITOR\TOOLS\AbstractTool.h" />

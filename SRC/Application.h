@@ -53,6 +53,7 @@
 #include "EDITOR/DISPLAYS/TilesetDisplay.h"
 #include "EDITOR/DISPLAYS/TilemapDisplay.h"
 #include "EDITOR/DISPLAYS/AssetDisplay.h"
+#include "EDITOR/DISPLAYS/MenuDisplay.h"
 
 #include "EDITOR/UTILITIES/EditorFrameBuffers.h"
 

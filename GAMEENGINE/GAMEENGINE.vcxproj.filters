@@ -210,6 +210,9 @@
     <ClCompile Include="ENGINE\ECS\COMPONENTS\OpenALSoundComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ENGINE\FILESYSTEM\DIALOGS\FileDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ENGINE\ECS\COMPONENTS\AnimationComponent.h">
@@ -450,6 +453,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ENGINE\ECS\COMPONENTS\TileComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENGINE\FILESYSTEM\DIALOGS\FileDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

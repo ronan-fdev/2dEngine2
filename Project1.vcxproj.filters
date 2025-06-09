@@ -158,6 +158,9 @@
     <ClCompile Include="SRC\EDITOR\TOOLS\RectFillTool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SRC\EDITOR\DISPLAYS\MenuDisplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\Application.h">
@@ -245,6 +248,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SRC\EDITOR\TOOLS\RectFillTool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\EDITOR\DISPLAYS\MenuDisplay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

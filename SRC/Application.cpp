@@ -554,6 +554,13 @@ bool Application::CreateDisplays()
 		return false;
 	}
 
+	auto pMenuDisplay = std::make_unique<MenuDisplay>();
+	if (!pMenuDisplay)
+	{
+		LOG_ERROR("Failed to Create Menu Display!");
+		return false;
+	}
+
 	auto pLogDisplay = std::make_unique<LogDisplay>();
 	if (!pLogDisplay)
 	{
@@ -584,6 +591,8 @@ bool Application::CreateDisplays()
 
 	// TODO: Create and add other displays as needed
 
+
+	pDisplayHolder->displays.push_back(std::move(pMenuDisplay));
 	pDisplayHolder->displays.push_back(std::move(pSceneDisplay));
 	pDisplayHolder->displays.push_back(std::move(pLogDisplay));
 	pDisplayHolder->displays.push_back(std::move(pTilesetDisplay));
@@ -681,6 +690,8 @@ void Application::RenderImGui()
 			/*Split the dock node into a left pane(20 % width) and remaining center pane.
 				The original dockSpaceId becomes the left node; centerNodeId becomes the center portion.*/
 
+			const auto rightNodeId = ImGui::DockBuilderSplitNode(centerNodeId, ImGuiDir_Right, 0.2, nullptr, &centerNodeId);
+
 			const auto LogNodeId = ImGui::DockBuilderSplitNode(centerNodeId, ImGuiDir_Down, 0.25f, nullptr, &centerNodeId);
 			//Further splits the center node downward to create a bottom log panel (25% height).
 			ImGui::DockBuilderDockWindow("Dear ImGui Demo", leftNodeId);//Assigns named ImGui windows to specific dock areas
@@ -688,7 +699,7 @@ void Application::RenderImGui()
 			ImGui::DockBuilderDockWindow("Tilemap Editor", centerNodeId);
 			ImGui::DockBuilderDockWindow("Assets", LogNodeId);
 			ImGui::DockBuilderDockWindow("Logs", LogNodeId);//Assigns named ImGui windows to specific dock areas 
-			ImGui::DockBuilderDockWindow("Tileset", LogNodeId);
+			ImGui::DockBuilderDockWindow("Tileset", rightNodeId);
 
 			ImGui::DockBuilderFinish(dockSpaceId);//Finalizes the layout and applies it.
 		}
