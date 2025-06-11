@@ -218,7 +218,7 @@ void SceneDisplay::Draw()
 
     RenderScene();
 
-    if (ImGui::ImageButton("##stop",(ImTextureID)pStopTexture.getID(),
+    if (ImGui::ImageButton("##stop",(ImTextureID)(intptr_t)pStopTexture.getID(),
         ImVec2{
             (float)pStopTexture.getWidth() * 0.25f,
             (float)pStopTexture.getHeight() * 0.25f,
@@ -259,7 +259,7 @@ void SceneDisplay::Draw()
         // 3. NOW display at correct size
         ImGui::SetCursorPos(ImVec2(0, 0));
         ImGui::Image(
-            (ImTextureID)fb->GetTextureID(),
+            (ImTextureID)(intptr_t)fb->GetTextureID(),
             availableSize, // Use validated available size
             ImVec2(0, 1), ImVec2(1, 0)//These UV coordinates flip the image vertically
         );

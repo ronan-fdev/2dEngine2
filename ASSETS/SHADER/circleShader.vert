@@ -1,4 +1,4 @@
-#version 330
+#version 430
  
  layout (location = 0) in vec2 aPosition;
  layout (location = 1) in vec2 aUVs;

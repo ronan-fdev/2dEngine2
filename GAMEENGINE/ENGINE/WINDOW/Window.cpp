@@ -21,7 +21,7 @@ bool Window::init(const char* title) {
     }
 
     // Configure GLFW
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
@@ -29,6 +29,12 @@ bool Window::init(const char* title) {
     glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);          // start maximized :contentReference[oaicite:0]{index=0}
 
     GLFWmonitor* primary = glfwGetPrimaryMonitor();
+
+    //Getting the other monitors
+    int count;
+    GLFWmonitor** monitors = glfwGetMonitors(&count);
+    GLFWmonitor* secondMonitor = monitors[1];
+
     const GLFWvidmode* mode = glfwGetVideoMode(primary); // get width, height :contentReference[oaicite:1]{index=1}
 
     //Initialize variables:
@@ -79,8 +85,16 @@ bool Window::init(const char* title) {
     ////Setup of KeyListener:
     //glfwSetKeyCallback(m_window, KeyListener::keyCallback);
 
+    glEnable(GL_DEPTH_TEST);
+
+    glfwSwapInterval(1);
+
     // Set initial viewport
     glViewport(0, 0, m_width, m_height);
+
+    OpenGLDebugger::init();
+    OpenGLDebugger::breakOnError(true);
+    OpenGLDebugger::breakOnWarning(true);
 
     //Delta Time Initialization:
     beginTime = Time::getTime();
@@ -113,7 +127,7 @@ void Window::update() {
 void Window::clearScreen()
 {
     glClearColor(r, g, b, a);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 GLFWwindow* Window::getGLFWWindow()

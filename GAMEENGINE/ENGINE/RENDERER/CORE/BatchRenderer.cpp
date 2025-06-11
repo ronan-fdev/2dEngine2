@@ -29,8 +29,9 @@ void SpriteBatchRenderer::Render()
 	for (const auto& batch : m_Batches)
 	{
 		//glBindTextureUnit(0, batch->textureID);
-		glActiveTexture(0);
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, batch->textureID);
+		//LOG_INFO("{}", static_cast<int>(batch->textureID));
 		glDrawElements(GL_TRIANGLES, batch->numIndices, GL_UNSIGNED_INT, (void*)(sizeof(GLuint) * batch->offset));
 	}
 	DisableVAO();

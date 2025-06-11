@@ -9,6 +9,7 @@
 #include "../INPUT/MouseListener.h"
 #include "../INPUT/KeyListener.h"
 #include "../UTILITIES/Time.h"
+#include "../RENDERER/UTILS/OpenGLDebugger.h"
 
 class Window {
 public:

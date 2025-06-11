@@ -123,7 +123,7 @@ bool Application::Initialize()
 		return false;
 	}
 
-	renderer->SetLineWidth(4.f);
+	//renderer->SetLineWidth(4.f);
 
 	//Create the lua state
 	auto lua = std::make_shared<sol::state>();
