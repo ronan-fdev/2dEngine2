@@ -100,7 +100,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\RAPIDJSON;$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\INCLUDE;$(SolutionDir)EXTERNAL\libsndfile\include;$(SolutionDir)EXTERNAL\OpenAL-Soft\include;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\GLEW\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\RAPIDJSON\include;$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\INCLUDE;$(SolutionDir)EXTERNAL\libsndfile\include;$(SolutionDir)EXTERNAL\OpenAL-Soft\include;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\GLEW\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8
  %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -144,7 +144,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\RAPIDJSON;$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\INCLUDE;$(SolutionDir)EXTERNAL\libsndfile\include;$(SolutionDir)EXTERNAL\OpenAL-Soft\include;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\GLEW\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)EXTERNAL\RAPIDJSON\include;$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\INCLUDE;$(SolutionDir)EXTERNAL\libsndfile\include;$(SolutionDir)EXTERNAL\OpenAL-Soft\include;$(SolutionDir)EXTERNAL\BOX2D\include;$(SolutionDir)EXTERNAL\SOIL\include;$(SolutionDir)EXTERNAL\GLEW\include;$(SolutionDir)EXTERNAL\GLFW\include;$(SolutionDir)EXTERNAL\SPDLOG\include;$(SolutionDir)EXTERNAL\STBI;$(SolutionDir)EXTERNAL\GLM;$(SolutionDir)EXTERNAL\EnTT;$(SolutionDir)EXTERNAL\LUA\include;$(SolutionDir)EXTERNAL\SOL3;$(SolutionDir)EXTERNAL\FMOD_API\core\inc;$(SolutionDir)EXTERNAL\FMOD_API\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8
  %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -161,6 +161,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ENGINE\ECS\ComponentSerializer.cpp" />
     <ClCompile Include="ENGINE\LOGGER\CrashLogger.cpp" />
     <ClCompile Include="ENGINE\PHYSICS\UserData.cpp" />
     <ClCompile Include="ENGINE\SCRIPTING\ContactListenerBind.cpp" />
@@ -228,8 +229,10 @@
     <ClCompile Include="ENGINE\ECS\COMPONENTS\OpenALSoundComponent.cpp" />
     <ClCompile Include="ENGINE\FILESYSTEM\DIALOGS\FileDialog.cpp" />
     <ClCompile Include="ENGINE\RENDERER\UTILS\OpenGLDebugger.cpp" />
+    <ClCompile Include="ENGINE\FILESYSTEM\SERIALIZERS\JSONSerializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ENGINE\ECS\ComponentSerializer.h" />
     <ClInclude Include="ENGINE\ECS\COMPONENTS\AllComponents.h" />
     <ClInclude Include="ENGINE\ECS\COMPONENTS\TileComponent.h" />
     <ClInclude Include="ENGINE\LOGGER\CrashLogger.h" />
@@ -312,10 +315,13 @@
     <ClInclude Include="ENGINE\ECS\COMPONENTS\OpenALSoundComponent.h" />
     <ClInclude Include="ENGINE\FILESYSTEM\DIALOGS\FileDialog.h" />
     <ClInclude Include="ENGINE\RENDERER\UTILS\OpenGLDebugger.h" />
+    <ClInclude Include="ENGINE\FILESYSTEM\SERIALIZERS\JSONSerializer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ENGINE\ECS\ComponentSerializer.inl" />
     <None Include="ENGINE\ECS\Entity.inl" />
     <None Include="ENGINE\ECS\Registry.inl" />
+    <None Include="ENGINE\FILESYSTEM\SERIALIZERS\JSONSerializer.inl" />
     <None Include="ENGINE\LOGGER\log.inl" />
     <None Include="ENGINE\SCRIPTING\UserDataBinding.inl" />
   </ItemGroup>

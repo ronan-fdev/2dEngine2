@@ -87,8 +87,6 @@ bool Window::init(const char* title) {
 
     glEnable(GL_DEPTH_TEST);
 
-    glfwSwapInterval(1);
-
     // Set initial viewport
     glViewport(0, 0, m_width, m_height);
 
