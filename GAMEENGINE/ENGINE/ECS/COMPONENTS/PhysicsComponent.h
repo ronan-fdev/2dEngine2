@@ -56,6 +56,9 @@ public:
 
     const bool IsSensor() const;
     UserData* GetUserData() { return m_pUserData.get(); }
+
+    PhysicsAttributes& GetAttributes() { return m_InitialAttribs; }
+
     static void CreatePhysicsLuaBind(sol::state& lua, Registry& registry);
 
 private:

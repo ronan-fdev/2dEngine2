@@ -6,7 +6,8 @@
 #include "COMPONENTS/AllComponents.h"
 
 #define SERIALIZE_COMPONENT(serializer, component) ComponentSerializer::Serialize(serializer, component)
-#define DESERIALIZE_COMPONENT(COMP, serializer) ComponentSerializer::Deserialize<COMP>(serializer)
+#define DESERIALIZE_COMPONENT(serializer, compref) ComponentSerializer::Deserialize(serializer, compref)
+#define DESERIALIZE_COMPONENT_DEPRICARTED(COMP, serializer) ComponentSerializer::Deserialize<COMP>(serializer)
 
 class ComponentSerializer
 {
@@ -14,7 +15,10 @@ public:
 	ComponentSerializer() = delete;
 
 	template <typename TComponent, typename TSerializer>
-	static void Serialize(TSerializer& serializer, const TComponent& component);
+	static void Serialize(TSerializer& serializer, TComponent& component);
+
+	template <typename TComponent, typename TTable>
+	static void Deserialize(const TTable& table, TComponent& component);
 
 	template <typename TComponent, typename TTable>
 	static auto Deserialize(const TTable& table);
@@ -22,14 +26,25 @@ public:
 private:
 	// JSON Serializer
 
-	static void SerializeComponent(JSONSerializer& serializer, const TransformComponent& transform); 
-	static void SerializeComponent(JSONSerializer& serializer, const SpriteComponent& sprite); 
-	static void SerializeComponent(JSONSerializer& serializer, const AnimationComponent& animation); 
-	static void SerializeComponent(JSONSerializer& serializer, const BoxColliderComponent& boxcollider); 
-	static void SerializeComponent(JSONSerializer& serializer, const CircleColliderComponent& circlecollider); 
-	static void SerializeComponent(JSONSerializer& serializer, const TextComponent& text); 
-	static void SerializeComponent(JSONSerializer& serializer, const PhysicsComponent& physics); 
-	static void SerializeComponent(JSONSerializer& serializer, const RigidBodyComponent& rigidbody); 
+	static void SerializeComponent(JSONSerializer& serializer, TransformComponent& transform); 
+	static void SerializeComponent(JSONSerializer& serializer, SpriteComponent& sprite); 
+	static void SerializeComponent(JSONSerializer& serializer, AnimationComponent& animation); 
+	static void SerializeComponent(JSONSerializer& serializer, BoxColliderComponent& boxcollider); 
+	static void SerializeComponent(JSONSerializer& serializer, CircleColliderComponent& circlecollider); 
+	static void SerializeComponent(JSONSerializer& serializer, TextComponent& text); 
+	static void SerializeComponent(JSONSerializer& serializer, PhysicsComponent& physics); 
+	static void SerializeComponent(JSONSerializer& serializer, RigidBodyComponent& rigidbody); 
+
+	static void DeserializeComponent(const rapidjson::Value& jsonValue, TransformComponent& transform); 
+	static void DeserializeComponent(const rapidjson::Value& jsonValue, SpriteComponent& sprite);
+	static void DeserializeComponent(const rapidjson::Value& jsonValue, AnimationComponent& animation);
+	static void DeserializeComponent(const rapidjson::Value& jsonValue, BoxColliderComponent& boxCollider);
+	static void DeserializeComponent(const rapidjson::Value& jsonValue, CircleColliderComponent& circleCollider);
+	static void DeserializeComponent(const rapidjson::Value& jsonValue, TextComponent& text);
+	static void DeserializeComponent(const rapidjson::Value& jsonValue, PhysicsComponent& physics);
+	static void DeserializeComponent(const rapidjson::Value& jsonValue, RigidBodyComponent& rigidBody);
+
+	//The below functions are depreciated.
 
 	static TransformComponent DeserializeTransformComponent(const rapidjson::Value& jsonValue);
 	static SpriteComponent DeserializeSpriteComponent(const rapidjson::Value& jsonValue);

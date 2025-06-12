@@ -26,7 +26,28 @@ void MenuDisplay::Draw()
 
 			if (ImGui::MenuItem("Save", "Ctrl + S"))
 			{
-				LOG_ERROR("SAVE PRESSED");
+				std::string basePath = std::filesystem::current_path().string();
+
+				FileDialog fd{};
+				auto file = fd.SaveFileDialog("Save Tilemap Test", basePath, { "*.json" });
+				if (!file.empty())
+				{
+					auto pCurrentScene = SCENE_MANAGER().GetCurrentScene();
+					if (pCurrentScene)
+					{
+						TilemapLoader tl{};
+						if (!tl.SaveTilemap(pCurrentScene->GetRegistry(), file, true))
+						{
+							LOG_ERROR("Failed to save the tilemap!.");
+						}
+					}
+					else
+					{
+						LOG_ERROR("Failed to save tilemap. No active scene.");
+						return;
+					}
+
+				}
 			}
 
 			if (ImGui::MenuItem("Exit"))

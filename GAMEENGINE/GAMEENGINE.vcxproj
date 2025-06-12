@@ -162,6 +162,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ENGINE\ECS\ComponentSerializer.cpp" />
+    <ClCompile Include="ENGINE\LOADERS\TilemapLoader.cpp" />
     <ClCompile Include="ENGINE\LOGGER\CrashLogger.cpp" />
     <ClCompile Include="ENGINE\PHYSICS\UserData.cpp" />
     <ClCompile Include="ENGINE\SCRIPTING\ContactListenerBind.cpp" />
@@ -235,6 +236,7 @@
     <ClInclude Include="ENGINE\ECS\ComponentSerializer.h" />
     <ClInclude Include="ENGINE\ECS\COMPONENTS\AllComponents.h" />
     <ClInclude Include="ENGINE\ECS\COMPONENTS\TileComponent.h" />
+    <ClInclude Include="ENGINE\LOADERS\TilemapLoader.h" />
     <ClInclude Include="ENGINE\LOGGER\CrashLogger.h" />
     <ClInclude Include="ENGINE\LOGGER\LuaLogBinding.h" />
     <ClInclude Include="ENGINE\RESOURCES\FONTS\default_font.h" />
