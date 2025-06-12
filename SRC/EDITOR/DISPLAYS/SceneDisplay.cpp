@@ -216,7 +216,7 @@ void SceneDisplay::Draw()
         ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.f, 0.9f, 0.f, 0.3 });
     }
 
-    
+    RenderScene();
 
     if (ImGui::ImageButton("##stop",(ImTextureID)(intptr_t)pStopTexture.getID(),
         ImVec2{
@@ -256,8 +256,6 @@ void SceneDisplay::Draw()
         if (fb->Width() != (int)availableSize.x || fb->Height() != (int)availableSize.y)
             fb->Resize((int)availableSize.x, (int)availableSize.y);
 
-        RenderScene();
-
         // 3. NOW display at correct size
         ImGui::SetCursorPos(ImVec2(0, 0));
         ImGui::Image(
@@ -268,15 +266,15 @@ void SceneDisplay::Draw()
 
         ImGui::EndChild();
 
-        //if (isSceneLoaded)
-        //{
-        //    // Check for resize based on the window size:
-        //    ImVec2 windowSize{ ImGui::GetWindowSize() };
-        //    if (fb->Width() != static_cast<int>(windowSize.x) || fb->Height() != static_cast<int>(windowSize.y))
-        //    {
-        //        fb->Resize(static_cast<int>(windowSize.x), static_cast<int>(windowSize.y));
-        //    }
-        //}
+        if (isSceneLoaded)
+        {
+            // Check for resize based on the window size:
+            ImVec2 windowSize{ ImGui::GetWindowSize() };
+            if (fb->Width() != static_cast<int>(windowSize.x) || fb->Height() != static_cast<int>(windowSize.y))
+            {
+                fb->Resize(static_cast<int>(windowSize.x), static_cast<int>(windowSize.y));
+            }
+        }
     }
     ImGui::PopStyleVar();
     ImGui::End();
