@@ -88,7 +88,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\DEBUG;$(SolutionDir)EXTERNAL\libsndfile\lib;$(SolutionDir)EXTERNAL\OpenAL-Soft\lib;$(SolutionDir)EXTERNAL\BOX2D\lib\Debug;$(SolutionDir)EXTERNAL\SOIL\lib\debug;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\DEBUG;$(SolutionDir)EXTERNAL\libsndfile\lib;$(SolutionDir)EXTERNAL\OpenAL-Soft\lib;$(SolutionDir)EXTERNAL\BOX2D\lib\DEBUG;$(SolutionDir)EXTERNAL\SOIL\lib\DEBUG;$(SolutionDir)EXTERNAL\GLEW\lib\RELEASE;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\;$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sndfile.lib;OpenAL32.lib;box2dd.lib;soil.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;Tiny-File-Dialoges.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
@@ -112,7 +112,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\RELEASE;$(SolutionDir)EXTERNAL\libsndfile\lib;$(SolutionDir)EXTERNAL\OpenAL-Soft\lib;$(SolutionDir)EXTERNAL\BOX2D\lib\Release;$(SolutionDir)EXTERNAL\SOIL\lib\release;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\RELEASE;$(SolutionDir)EXTERNAL\libsndfile\lib;$(SolutionDir)EXTERNAL\OpenAL-Soft\lib;$(SolutionDir)EXTERNAL\BOX2D\lib\RELEASE\;$(SolutionDir)EXTERNAL\SOIL\lib\RELEASE\;$(SolutionDir)EXTERNAL\GLEW\lib\RELEASE\;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\;$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sndfile.lib;OpenAL32.lib;box2d.lib;soil.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;Tiny-File-Dialoges.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
@@ -132,7 +132,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\DEBUG;$(SolutionDir)EXTERNAL\libsndfile\lib;$(SolutionDir)EXTERNAL\OpenAL-Soft\lib;$(SolutionDir)EXTERNAL\BOX2D\lib\Debug;$(SolutionDir)EXTERNAL\SOIL\lib\debug;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\DEBUG;$(SolutionDir)EXTERNAL\libsndfile\lib;$(SolutionDir)EXTERNAL\OpenAL-Soft\lib;$(SolutionDir)EXTERNAL\BOX2D\lib\DEBUG;$(SolutionDir)EXTERNAL\SOIL\lib\DEBUG;$(SolutionDir)EXTERNAL\GLEW\lib\RELEASE;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\;$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sndfile.lib;OpenAL32.lib;box2dd.lib;soil.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;Tiny-File-Dialoges.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
@@ -156,7 +156,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\RELEASE;$(SolutionDir)EXTERNAL\libsndfile\lib;$(SolutionDir)EXTERNAL\OpenAL-Soft\lib;$(SolutionDir)EXTERNAL\BOX2D\lib\Release;$(SolutionDir)EXTERNAL\SOIL\lib\release;$(SolutionDir)EXTERNAL\GLEW\lib\Release\x64;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\x64;$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)EXTERNAL\TINYFILEDIALOGES\RELEASE;$(SolutionDir)EXTERNAL\libsndfile\lib;$(SolutionDir)EXTERNAL\OpenAL-Soft\lib;$(SolutionDir)EXTERNAL\BOX2D\lib\RELEASE\;$(SolutionDir)EXTERNAL\SOIL\lib\RELEASE\;$(SolutionDir)EXTERNAL\GLEW\lib\RELEASE\;$(SolutionDir)EXTERNAL\GLFW\lib-vc2022;$(SolutionDir)EXTERNAL\LUA\lib;$(SolutionDir)EXTERNAL\FMOD_API\core\lib\;$(SolutionDir)EXTERNAL\FMOD_API\studio\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sndfile.lib;OpenAL32.lib;box2d.lib;soil.lib;lua54.lib;opengl32.lib;glfw3.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;Tiny-File-Dialoges.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>

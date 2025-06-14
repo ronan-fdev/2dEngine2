@@ -96,6 +96,7 @@ void SceneDisplay::RenderScene()
 
     const auto& fb = editorFramebuffers->mapFramebuffers[FramebufferType::SCENE];
 
+    fb->CheckResize();
     fb->Bind();
 
     glViewport(0, 0, fb->Width(), fb->Height());
@@ -115,8 +116,6 @@ void SceneDisplay::RenderScene()
     }
 
     fb->Unbind();
-
-    fb->CheckResize();
 
 }
 

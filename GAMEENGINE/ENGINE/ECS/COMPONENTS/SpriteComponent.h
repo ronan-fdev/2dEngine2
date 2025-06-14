@@ -26,6 +26,16 @@ struct SpriteComponent
 
 		uvs.u = start_x * uvs.uv_width;
 		uvs.v = start_y * uvs.uv_height;
+
+		//// Use half-texel offset to avoid bleeding
+		//float texelOffsetU = 0.5f / textureWidth;
+		//float texelOffsetV = 0.5f / textureHeight;
+
+		//uvs.uv_width = (width / textureWidth) - (2.0f * texelOffsetU);
+		//uvs.uv_height = (height / textureHeight) - (2.0f * texelOffsetV);
+
+		//uvs.u = start_x * (width / textureWidth) + texelOffsetU;
+		//uvs.v = start_y * (height / textureHeight) + texelOffsetV;
 	}
 
 	static void CreateSpriteLuaBind(sol::state& lua, Registry& registry);
