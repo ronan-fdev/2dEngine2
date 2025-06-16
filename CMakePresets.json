@@ -1,0 +1,51 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "x64-MSVC-Release",
+            "displayName": "x64-MSVC-Release",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            },
+            "toolset": {
+                "value": "host=x64",
+                "strategy": "external"
+            },
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            }
+        },
+        {
+            "name": "x64-MSVC-Debug",
+            "displayName": "x64-MSVC-Debug",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "toolset": {
+                "value": "host=x64",
+                "strategy": "external"
+            },
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "x64-MSVC-Release",
+            "configurePreset": "x64-MSVC-Release",
+            "jobs": 22
+        },
+        {
+            "name": "x64-MSVC-Debug",
+            "configurePreset": "x64-MSVC-Debug",
+            "jobs": 22
+        }
+    ]
+}
